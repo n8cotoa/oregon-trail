@@ -8,6 +8,8 @@ function Character(name) {
 // wagon/inventory constructor
 function Wagon() {
   this.food = 2000;
+  this.money = 500;
+  this.time = "";
 }
 // illness generator
 Character.prototype.illnessGenerator = function() {
@@ -56,6 +58,7 @@ Wagon.prototype.eventGrabber = function() {
     neutralEvent()
     //call neutral event
   } else if (num < 20 && num > 5) {
+    negativeEvent()
     //call negative event
   } else {
     //call death event
@@ -112,9 +115,32 @@ function negativeEvent() {
     //Your wagon wheel broke, in the distance you hear Jesus Take The Wheel
   } else if (num === 5){
     //Some of your food rots because CharacterName wet themselves as they napped on it.
-    //food -= number 
+    //food -= number
   }
 }
+//Hunting
+Wagon.prototype.huntingTime = function() {
+  this.food += Math.floor(Math.random() * Math.floor(150))
+}
+//Profession checker
+Wagon.prototype.profession = function() {
+  if ("[name=profession][value=1]:checked") {
+    this.money += 500
+  } else if ("[name=profession][value=2]:checked") {
+    this.money += 300
+  } else if ("[name=profession][value=3]:checked") {
+    this.food += 500
+  } else if ("[name=profession][value=4]:checked") {
+    this.food += 250
+    this.money += 250
+  } else if ("[name=profession][value=5]:checked") {
+    this.money += 400
+    this.food += 100
+  } else if ("[name=profession][value=6]:checked") {
+    this.money += 50
+  }
+}
+
 
 $(document).ready(function(){
   $("#startBTN").click(function(){
