@@ -10,20 +10,102 @@
 </head>
 <body>
   <div class="container">
-    <div id="start">
-      <h1>The Oregon Trail</h1>
-      <span id="startBTN" class="btn btn-success">Start</span>
+    <!-- Character setup screen -->
+    <div id="characterSetup">
+      <div id="start">
+        <h1>The Oregon Trail</h1>
+        <span id="startBTN" class="btn btn-success">Start</span>
+      </div>
+        <div id="characterInput">
+          <h1>The Oregon Trail</h1>
+          <div class="row">
+            <div id="profession" class="col-md-3">
+              <p>Select your profession</p>
+              <div class="prettyColumn">
+                <div class="radio">
+                  <label><input type="radio" name="profession" value="1"> Banker</label>
+                </div>
+                <div class="radio">
+                  <label><input type="radio" name="profession" value="2"> Doctor</label>
+                </div>
+                <div class="radio">
+                  <label><input type="radio" name="profession" value="3"> Farmer</label>
+                </div>
+                <div class="radio">
+                  <label><input type="radio" name="profession" value="4"> Rancher</label>
+                </div>
+                <div class="radio">
+                  <label><input type="radio" name="profession" value="5"> Merchant</label>
+                </div>
+                <div class="radio">
+                  <label><input type="radio" name="profession" value="6"> Teacher</label>
+                </div>
+              </div>
+            </div>
+            <div id="charNameInput" class="col-md-3">
+              <p>Type in the names of your party:</p>
+              <div class="prettyColumn">
+                <input id="char1" type="text" placeholder="name player 1">
+                <input id="char2" type="text" placeholder="name player 2">
+                <input id="char3" type="text" placeholder="name player 3">
+                <input id="char4" type="text" placeholder="name player 4">
+                <input id="char5" type="text" placeholder="name player 5">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <span id="characterBTN" class="btn btn-success">Next</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- inital store screen -->
+    <div id="store">
+      <div class="store-fields">
+        <h2>Mercantile</h2>
+        <div class="row">
+          <div class="col-md-3">
+            <input type="text" name="food" placeholder="0">
+          </div>
+          <div class="col-md-3">
+            <p>Pounds of Food</p>
+          </div>
+          <div class="col-md-3">
+            <p>$20.00</p>
+          </div>
+          <div class="col-md-3">
+            <p class="store-total">$.00</p>
+          </div>
+        </div>
+        <span id="storeBTN" class="btn btn-success">Buy</span>
+      </div>
     </div>
-    <div id="characterInput">
-      <p>Type in the names of your party:</p>
-      <input id="char1" type="text">
-      <input id="char2" type="text">
-      <input id="char3" type="text">
-      <input id="char4" type="text">
-      <input id="char5" type="text">
-      <span id="characterBTN" class="btn btn-success">Next</span>
+    <!-- main gameplay screen -->
+    <div id="gameMainScreen">
+      <div class="row">
+        <div class="col-md-8">
+          <h1>The Oregon Trail</h1>
+          <img src="img/ormap.jpg" alt="oregon trail map">
+          <div id="ongoing-text-box">
+            <p id="ongoing-events"> ongoing prepended text for </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <h2>Team Conditions</h2>
+          <p>Date: <span class="current-date"></span></p>
+          <ul>
+            <li><span id="player-one-name"></span>: <span id="player-one-status"></span></li>
+            <li><span id="player-two-name"></span>: <span id="player-two-status"></span></li>
+            <li><span id="player-three-name"></span>: <span id="player-three-status"></span></li>
+            <li><span id="player-four-name"></span>: <span id="player-four-status"></span></li>
+            <li><span id="player-five-name"></span>: <span id="player-five-status"></span></li>
+          </ul>
+          <p>Food left: <span id="food-remaining"></span></p>
+          <span id="rest-button" class="btn btn-success">Rest</span>
+          <span id="continue-button" class="btn btn-success">Continue</span>
+          <span id="hunt-button" class="btn btn-success">Hunt</span>
+        </div>
+      </div>
     </div>
-    
   </div>
 </body>
 </html>
