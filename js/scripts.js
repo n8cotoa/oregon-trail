@@ -14,16 +14,16 @@ function Wagon() {
 }
 // illness generator
 Character.prototype.illnessGenerator = function() {
-  var num = Math.floor(Math.random() * Math.floor(20))
-  if (num === 1) {
+  // var num = Math.floor(Math.random() * Math.floor(20))
+  if (num === 1 && this.illness != "Dysentery") {
     this.illness.push("Dysentery")
-  } else if (num === 2) {
+  } else if (num === 2 && this.illness != "Gonorrhea") {
     this.illness.push("Gonorrhea")
-  } else if (num === 3) {
+  } else if (num === 3 && this.illness != "Yellow Fever") {
     this.illness.push("Yellow Fever")
-  } else if (num === 4) {
+  } else if (num === 4 && this.illness != "Pertussis") {
     this.illness.push("Pertussis")
-  } else if (num === 5){
+  } else if (num === 5 && this.illness != "Broken Arm"){
     this.illness.push("Broken Arm")
   }
 }
@@ -49,7 +49,7 @@ Character.prototype.statusAdjuster = function() {
     this.status = "dead"
   }
 }
-
+//calculates potential illnesses
 Wagon.prototype.turn = function() {
   wagon.characters.forEach(function(char){
     char.illnessGenerator()
@@ -91,19 +91,19 @@ function positiveEvent() {
   var num = Math.floor(Math.random() * Math.floor(5))
   var ranSupplyIncrease = Math.floor(Math.random() * (200 - 100) + 100)
   if (num === 1) {
-    $("#ongoing-events").prepend("'As you rest by the river, you find some gold.' <br>")
+    $("#ongoing-events").prepend("As you rest by the river, you find some gold. <br>")
     wagon.money += ranSupplyIncrease
   } else if (num === 2) {
-    $("#ongoing-events").prepend("'You come across an abandoned wagon, you find some unspoiled food' <br>")
+    $("#ongoing-events").prepend("You come across an abandoned wagon, you find some unspoiled food <br>")
     wagon.food += ranSupplyIncrease
   } else if (num === 3) {
-    $("#ongoing-events").prepend("'You found a wounded deer' <br>")
+    $("#ongoing-events").prepend("You found a wounded deer <br>")
     wagon.food += ranSupplyIncrease
   } else if (num === 4) {
-    $("#ongoing-events").prepend("'As you travel along, you come across a group of suckers. You got some free shit.' <br>")
+    $("#ongoing-events").prepend("As you travel along, you come across a group of suckers. You got some free shit. <br>")
     wagon.money += ranSupplyIncrease
   } else if (num === 5){
-    $("#ongoing-events").prepend("'You ambush and murder another party. We feast tonight.' <br>")
+    $("#ongoing-events").prepend("You ambush and murder another party. We feast tonight. <br> You got " + ranSupplyIncrease + " pounds of food and " + (ranSupplyIncrease/2) + " dollars" )
     wagon.money += (ranSupplyIncrease/2)
     wagon.food += ranSupplyIncrease
   }
@@ -112,26 +112,31 @@ function positiveEvent() {
 function neutralEvent() {
   var num = Math.floor(Math.random() * Math.floor(5))
   if (num === 1) {
-    //One of you ox was pregnant and gave birth. The baby died and she is sad, but continues on.
+    $("#ongoing-events").prepend("One of you ox was pregnant and gave birth. The baby died and she is sad, but continues on. <br>")
   } else if (num === 2) {
-    //You get a letter from home
+    $("#ongoing-events").prepend("You get a letter from home. <br>")
   } else if (num === 3) {
-    //Your party finds a small lake and decides to go for a swim
+    $("#ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. <br>")
   } else if (num === 4) {
-    //You find a small bunny and decide to keep it (not as food, what's wrong with you.)
+    $("#ongoing-events").prepend("You find a small bunny and decide to keep it (not as food, what's wrong with you.) <br>")
   } else if (num === 5){
-    //A member of your party explores their sexuality with a neighbor boy.
+    $("#ongoing-events").prepend("A member of your party explores their sexuality with a neighbor boy. <br>")
   }
 }
 
 function negativeEvent() {
   var num = Math.floor(Math.random() * Math.floor(5))
+  var ranSupplyDecrease = Math.floor(Math.random() * (200 - 100) + 100)
+  var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
+  console.log(index);
   if (num === 1) {
-    //Your party finds a small lake and decides to go for a swim. Unfortunately the lake was full of phirranas
-  } else if (num === 2) {
-    //You find a small bunny and decide to keep it. The bunny bites CharacterName. CharacterName has gonorrhea
+    $("#ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. Unfortunately the lake was full of phirranas. <br>" + wagon.characters[index].name + " got hurt! <br>")
+    wagon.characters[index].health -= 10
+  } else if (num === 2 && wagon.characters[index].illness != "Gonorrhea") {
+    $("#ongoing-events").prepend("You find a small bunny and decide to keep it. The bunny bites" + wagon.characters[index].name + "." + wagon.characters[index].name + "has gonorrhea.")
+    wagon.characters[index].illness.push("Gonorrhea")
   } else if (num === 3) {
-    //Your party is ambush, they hold you hostage and take some of your food
+    $("#ongoing-events").prepend("Your party is ambush, they hold you hostage and take some of your food. <br>")
     //food -= number
     //days += number
   } else if (num === 4) {
