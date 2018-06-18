@@ -16,20 +16,44 @@
         <h1>The Oregon Trail</h1>
         <span id="startBTN" class="btn btn-success">Start</span>
       </div>
-      <div id="profession">
-        <p>Select your profession</p>
-        <!-- Radio buttons for this go here -->
         <div id="characterInput">
-          <p>Type in the names of your party:</p>
-          <input id="char1" type="text">
-          <input id="char2" type="text">
-          <input id="char3" type="text">
-          <input id="char4" type="text">
-          <input id="char5" type="text">
-          <span id="characterBTN" class="btn btn-success">Next</span>
+          <h1>The Oregon Trail</h1>
+          <div class="row">
+            <div id="profession" class="col-md-6">
+              <p>Select your profession</p>
+              <div class="radio">
+                <label><input type="radio" name="profession" value="1"> Banker</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" name="profession" value="2"> Doctor</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" name="profession" value="3"> Farmer</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" name="profession" value="4"> Rancher</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" name="profession" value="5"> Merchant</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" name="profession" value="6"> Teacher</label>
+              </div>
+            </div>
+            <div id="charNameInput" class="col-md-6">
+              <p>Type in the names of your party:</p>
+              <input id="char1" type="text">
+              <input id="char2" type="text">
+              <input id="char3" type="text">
+              <input id="char4" type="text">
+              <input id="char5" type="text">
+            </div>
+            <div class="col-md-12">
+              <span id="characterBTN" class="btn btn-success">Next</span>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
     <!-- inital store screen -->
     <div id="store">
       <h2>Mercantile</h2>
