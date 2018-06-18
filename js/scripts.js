@@ -50,24 +50,24 @@ Character.prototype.statusAdjuster = function() {
   }
 }
 
-function turn() {
+Wagon.prototype.turn = function() {
   wagon.characters.forEach(function(char){
-    this.illnessGenerator()
-    this.illnessChecker()
-    this.statusAdjuster()
+    char.illnessGenerator()
+    char.illnessChecker()
+    char.statusAdjuster()
   });
   wagon.food -= (wagon.characters.length * 5 )
   wagon.eventGrabber()
   wagon.dayCounter()
 }
 // function for resting -- cure illness, gain some health
-function rest() {
-  wagon.characters.forEach(function(char){
-    this.illness = []
-    if (this.health < 99) {
-    this.health += 2
+Wagon.prototype.rest = function() {
+  wagon.characters.forEach(function(character){
+    char.illness = []
+    if (char.health < 99) {
+    char.health += 2
     }
-    this.statusAdjuster()
+    char.statusAdjuster()
   });
 }
 //event grabber
@@ -89,22 +89,23 @@ Wagon.prototype.eventGrabber = function() {
 
 function positiveEvent() {
   var num = Math.floor(Math.random() * Math.floor(5))
+  var ranSupplyIncrease = Math.floor(Math.random() * (200 - 100) + 100)
   if (num === 1) {
-    //"As you rest by the river, you find some gold"
-    //wagon.money += numbergenerator
+    $("#ongoing-events").prepend("'As you rest by the river, you find some gold.' <br>")
+    wagon.money += ranSupplyIncrease
   } else if (num === 2) {
-    //"You come across an abandoned wagon, you find some unspoiled food"
-    // wagon.food += ranNum
+    $("#ongoing-events").prepend("'You come across an abandoned wagon, you find some unspoiled food' <br>")
+    wagon.food += ranSupplyIncrease
   } else if (num === 3) {
-    //"You found a wounded deer"
-    //wagon.food += ranNum
+    $("#ongoing-events").prepend("'You found a wounded deer' <br>")
+    wagon.food += ranSupplyIncrease
   } else if (num === 4) {
-    //As you travel along, you come across a group of suckers. You got some free shit.
-    //give food or gold
+    $("#ongoing-events").prepend("'As you travel along, you come across a group of suckers. You got some free shit.' <br>")
+    wagon.money += ranSupplyIncrease
   } else if (num === 5){
-    //You ambush and murder another party. We feast tonight.
-    //wagon.money += 250
-    //wagon.food += 200
+    $("#ongoing-events").prepend("'You ambush and murder another party. We feast tonight.' <br>")
+    wagon.money += (ranSupplyIncrease/2)
+    wagon.food += ranSupplyIncrease
   }
 }
 
@@ -191,7 +192,7 @@ $(document).ready(function(){
     char4 = new Character(playerFourName)
     char5 = new Character(playerFiveName)
     wagon = new Wagon()
-    newWagon.characters.push(char1, char2, char3, char4, char5)
+    wagon.characters.push(char1, char2, char3, char4, char5)
     wagon.profession()
   });
 
