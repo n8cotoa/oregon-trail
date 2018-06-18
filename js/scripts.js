@@ -141,10 +141,30 @@ Wagon.prototype.profession = function() {
   }
 }
 
-
 $(document).ready(function(){
+  var playerOneName = $("#char1").val()
+  var playerTwoName = $("#char2").val()
+  var playerThreeName = $("#char3").val()
+  var playerFourName = $("#char4").val()
+  var playerFiveName = $("#char5").val()
+
   $("#startBTN").click(function(){
     $("#start").fadeOut(500);
     $("#characterInput").delay(500).fadeIn(500);
+  });
+  $("#characterBTN").click(function(){
+    var playerOneName = $("#char1").val()
+    var playerTwoName = $("#char2").val()
+    var playerThreeName = $("#char3").val()
+    var playerFourName = $("#char4").val()
+    var playerFiveName = $("#char5").val()
+
+    char1 = new Character(playerOneName)
+    char2 = new Character(playerTwoName)
+    char3 = new Character(playerThreeName)
+    char4 = new Character(playerFourName)
+    char5 = new Character(playerFiveName)
+    wagon = new Wagon()
+    wagon.profession()
   });
 });
