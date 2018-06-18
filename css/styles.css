@@ -68,12 +68,17 @@ body {
   bottom: 0;
   width: 70%;
   right: 0;
+  background-color: #f2f2f2;
+  border: 2px solid black;
+  border-bottom: 0;
+  border-right: 0;
 }
 
 #store .col-md-3 {
   border: 1px solid black;
   text-align: right;
   line-height: 41px;
+  background: white;
 }
 
 #store .col-md-3:first-of-type {
