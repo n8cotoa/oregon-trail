@@ -3,6 +3,7 @@
 <head>
   <title>Oregon Trail</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Londrina+Solid:300,400,900" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link href="css/styles.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -84,22 +85,37 @@
       <div class="row">
         <div class="col-md-8">
           <h1>The Oregon Trail</h1>
-          <img src="img/ormap.jpg" alt="oregon trail map">
+          <div class="row" id="wagon-images">
+            <div class="col-md-3">
+              <img src="img/wagon.png" id="wagon-4" alt="wagon">
+            </div>
+            <div class="col-md-3">
+              <img src="img/wagon.png" id="wagon-3" alt="wagon">
+            </div>
+            <div class="col-md-3">
+              <img src="img/wagon.png" id="wagon-2" alt="wagon">
+            </div>
+            <div class="col-md-3">
+              <img src="img/wagon.png" id="wagon-1" alt="wagon">
+            </div>
+          </div>
           <div id="ongoing-text-box">
             <p id="ongoing-events"> ongoing prepended text for </p>
           </div>
         </div>
         <div class="col-md-4">
           <h2>Team Conditions</h2>
-          <p>Date: <span class="current-date"></span></p>
-          <ul>
-            <li><span id="player-one-name"></span>: <span id="player-one-status"></span></li>
-            <li><span id="player-two-name"></span>: <span id="player-two-status"></span></li>
-            <li><span id="player-three-name"></span>: <span id="player-three-status"></span></li>
-            <li><span id="player-four-name"></span>: <span id="player-four-status"></span></li>
-            <li><span id="player-five-name"></span>: <span id="player-five-status"></span></li>
-          </ul>
-          <p>Food left: <span id="food-remaining"></span></p>
+          <div class="prettyColumn">
+            <p class="bold">Date: <span class="current-date"></span></p>
+            <ul>
+              <li><span id="player-one-name"></span>: <span id="player-one-status"></span></li>
+              <li><span id="player-two-name"></span>: <span id="player-two-status"></span></li>
+              <li><span id="player-three-name"></span>: <span id="player-three-status"></span></li>
+              <li><span id="player-four-name"></span>: <span id="player-four-status"></span></li>
+              <li><span id="player-five-name"></span>: <span id="player-five-status"></span></li>
+            </ul>
+            <p class="bold" >Food left: <span id="wagon-food-remaining"></span></p>
+          </div>
           <span id="rest-button" class="btn btn-success">Rest</span>
           <span id="continue-button" class="btn btn-success">Continue</span>
           <span id="hunt-button" class="btn btn-success">Hunt</span>

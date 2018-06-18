@@ -201,23 +201,19 @@ Wagon.prototype.dayCounter = function() {
 }
 
 $(document).ready(function(){
+  var x = 1;
+  $('#wagon-images').addClass('sky1');
 
   $("#startBTN").click(function(){
     $("#start").fadeOut(500);
     $("#characterInput").delay(500).fadeIn(500);
   });
   $("#characterBTN").click(function(){
-    // var playerOneName = $("#char1").val()
-    // var playerTwoName = $("#char2").val()
-    // var playerThreeName = $("#char3").val()
-    // var playerFourName = $("#char4").val()
-    // var playerFiveName = $("#char5").val()
-
-    var playerOneName = "Pork"
-    var playerTwoName = "Bobbie"
-    var playerThreeName = "Hulk"
-    var playerFourName = "Dick Chenney"
-    var playerFiveName = "Mushu"
+    var playerOneName = $("#char1").val()
+    var playerTwoName = $("#char2").val()
+    var playerThreeName = $("#char3").val()
+    var playerFourName = $("#char4").val()
+    var playerFiveName = $("#char5").val()
 
     char1 = new Character(playerOneName)
     char2 = new Character(playerTwoName)
@@ -225,8 +221,47 @@ $(document).ready(function(){
     char4 = new Character(playerFourName)
     char5 = new Character(playerFiveName)
     wagon = new Wagon()
+
     wagon.characters.push(char1, char2, char3, char4, char5)
     wagon.profession()
+    $("#characterInput").fadeOut(500);
+    $("#store").delay(500).fadeIn(500);
+    $('#player-one-name').text(char1.name);
+    $('#player-two-name').text(char2.name);
+    $('#player-three-name').text(char3.name);
+    $('#player-four-name').text(char4.name);
+    $('#player-five-name').text(char5.name);
+    $('#player-one-status').text(char1.status);
+    $('#player-two-status').text(char2.status);
+    $('#player-three-status').text(char3.status);
+    $('#player-four-status').text(char4.status);
+    $('#player-five-status').text(char5.status);
+    $('#wagon-food-remaining').text(wagon.food);
+
+  });
+$("#storeBTN").click(function(){
+  $("#store").fadeOut(500);
+  $("#gameMainScreen").delay(500).fadeIn(500);
+  /* button will eventually add items to wagon's inventory count. presently hardcoded, so, no effect */
+});
+
+  $("#continue-button").click(function(){
+
+    // turn()
+    console.log("working!")
+    if (x < 4) {
+      $('#wagon-' + x).toggle();
+      $('#wagon-images').removeClass('sky' + x);
+      x++;
+      $('#wagon-' + x).toggle();
+      $('#wagon-images').addClass('sky' + x);
+    } else {
+      $('#wagon-' + x).toggle();
+      $('#wagon-images').removeClass('sky' + x);
+      x = 1;
+      $('#wagon-' + x).toggle();
+      $('#wagon-images').addClass('sky' + x);
+    }
   });
 
   $("#continue-btn").click(function(){
