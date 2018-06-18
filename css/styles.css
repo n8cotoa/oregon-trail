@@ -7,3 +7,15 @@
  border: none;
  border-bottom: 3px green solid;
 }
+
+#store {
+ background: aliceblue;
+}
+
+#ongoing-text-box {
+  background: lightgrey;
+  height: 300px;
+  overflow: scroll;
+  margin-top: 2rem;
+  padding: 10px;
+}

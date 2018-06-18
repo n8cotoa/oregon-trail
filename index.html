@@ -10,20 +10,74 @@
 </head>
 <body>
   <div class="container">
-    <div id="start">
-      <h1>The Oregon Trail</h1>
-      <span id="startBTN" class="btn btn-success">Start</span>
+    <!-- Character setup screen -->
+    <div id="characterSetup">
+      <div id="start">
+        <h1>The Oregon Trail</h1>
+        <span id="startBTN" class="btn btn-success">Start</span>
+      </div>
+      <div id="profession">
+        <p>Select your profession</p>
+        <!-- Radio buttons for this go here -->
+        <div id="characterInput">
+          <p>Type in the names of your party:</p>
+          <input id="char1" type="text">
+          <input id="char2" type="text">
+          <input id="char3" type="text">
+          <input id="char4" type="text">
+          <input id="char5" type="text">
+          <span id="characterBTN" class="btn btn-success">Next</span>
+        </div>
+      </div>
     </div>
-    <div id="characterInput">
-      <p>Type in the names of your party:</p>
-      <input id="char1" type="text">
-      <input id="char2" type="text">
-      <input id="char3" type="text">
-      <input id="char4" type="text">
-      <input id="char5" type="text">
-      <span id="characterBTN" class="btn btn-success">Next</span>
+    <!-- inital store screen -->
+    <div id="store">
+      <h2>Mercantile</h2>
+      <div class="row">
+        <div class="col-md-3">
+        <input type="text" name="food">
+        </div>
+        <div class="col-md-3">
+        <p>Pounds of Food</p>
+        </div>
+        <div class="col-md-3">
+        <p>$20.00</p>
+        </div>
+        <div class="col-md-3">
+        <p class="store-total">$.00</p>
+        </div>
+        <span id="characterBTN" class="btn btn-success">Next</span>
+      </div>
     </div>
-    
+
+
+    <!-- main gameplay screen -->
+    <div id="gameMainScreen">
+      <div class="row">
+        <div class="col-md-8">
+          <h1>The Oregon Trail</h1>
+          <img src="img/ormap.jpg" alt="oregon trail map">
+          <div id="ongoing-text-box">
+            <p id="ongoing-events"> ongoing prepended text for </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <h2>Team Conditions</h2>
+          <p>Date: <span class="current-date"></span></p>
+          <ul>
+            <li><span id="player-one-name"></span>: <span id="player-one-status"></span></li>
+            <li><span id="player-two-name"></span>: <span id="player-two-status"></span></li>
+            <li><span id="player-three-name"></span>: <span id="player-three-status"></span></li>
+            <li><span id="player-four-name"></span>: <span id="player-four-status"></span></li>
+            <li><span id="player-five-name"></span>: <span id="player-five-status"></span></li>
+          </ul>
+          <p>Food left: <span id="food-remaining"></span></p>
+          <span id="rest-button" class="btn btn-success">Rest</span>
+          <span id="continue-button" class="btn btn-success">Continue</span>
+          <span id="hunt-button" class="btn btn-success">Hunt</span>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 </html>
