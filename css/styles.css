@@ -1,0 +1,9 @@
+#characterInput {
+  display: none;
+}
+
+#characterInput input {
+ display: block;
+ border: none;
+ border-bottom: 3px green solid;
+}
