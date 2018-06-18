@@ -10,6 +10,7 @@ function Wagon() {
   this.food = 2000;
   this.money = 500;
   this.days = 0;
+  this.characters = []
 }
 // illness generator
 Character.prototype.illnessGenerator = function() {
@@ -47,6 +48,27 @@ Character.prototype.statusAdjuster = function() {
   } else {
     this.status = "dead"
   }
+}
+
+function turn() {
+  wagon.characters.forEach(function(char){
+    this.illnessGenerator()
+    this.illnessChecker()
+    this.statusAdjuster()
+  });
+  wagon.food -= (wagon.characters.length * 5 )
+  wagon.eventGrabber()
+  wagon.dayCounter()
+}
+// function for resting -- cure illness, gain some health
+function rest() {
+  wagon.characters.forEach(function(char){
+    this.illness = []
+    if (this.health < 99) {
+    this.health += 2
+    }
+    this.statusAdjuster()
+  });
 }
 //event grabber
 Wagon.prototype.eventGrabber = function() {
@@ -169,11 +191,11 @@ $(document).ready(function(){
     char4 = new Character(playerFourName)
     char5 = new Character(playerFiveName)
     wagon = new Wagon()
+    newWagon.characters.push(char1, char2, char3, char4, char5)
     wagon.profession()
   });
 
   $("#continue-btn").click(function(){
-    wagon.dayCounter()
-    wagon.eventGrabber()
+    turn()
   });
 });
