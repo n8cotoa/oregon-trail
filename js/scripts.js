@@ -176,6 +176,7 @@ $(document).ready(function(){
   var x = 1;
   $('#wagon-images').addClass('sky1');
 
+
   $("#startBTN").click(function(){
     $("#start").fadeOut(500);
     $("#characterInput").delay(500).fadeIn(500);
@@ -193,6 +194,7 @@ $(document).ready(function(){
     char4 = new Character(playerFourName)
     char5 = new Character(playerFiveName)
     wagon = new Wagon()
+
     wagon.characters.push(char1, char2, char3, char4, char5)
     wagon.profession()
     $("#characterInput").fadeOut(500);
@@ -233,6 +235,9 @@ $("#storeBTN").click(function(){
       $('#wagon-' + x).toggle();
       $('#wagon-images').addClass('sky' + x);
     }
+  });
 
+  $("#continue-btn").click(function(){
+    turn()
   });
 });
