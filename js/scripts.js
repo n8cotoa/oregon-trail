@@ -14,7 +14,7 @@ function Wagon() {
 }
 // illness generator
 Character.prototype.illnessGenerator = function() {
-  // var num = Math.floor(Math.random() * Math.floor(20))
+  var num = Math.floor(Math.random() * Math.floor(20))
   if (num === 1 && this.illness != "Dysentery") {
     this.illness.push("Dysentery")
   } else if (num === 2 && this.illness != "Gonorrhea") {
@@ -62,8 +62,8 @@ Wagon.prototype.turn = function() {
 }
 // function for resting -- cure illness, gain some health
 Wagon.prototype.rest = function() {
-  wagon.characters.forEach(function(character){
-    char.illness = []
+  wagon.characters.forEach(function(char){
+    char.illness.splice(0, 1)
     if (char.health < 99) {
     char.health += 2
     }
@@ -74,7 +74,7 @@ Wagon.prototype.rest = function() {
 Wagon.prototype.eventGrabber = function() {
   var num = Math.floor(Math.random() * Math.floor(100))
   if (num >= 80) {
-    postiveEvent()
+    positiveEvent()
     //call positive event
   } else if (num < 80 && num >= 20) {
     neutralEvent()
@@ -83,6 +83,7 @@ Wagon.prototype.eventGrabber = function() {
     negativeEvent()
     //call negative event
   } else {
+    deathEvent()
     //call death event
   }
 }
@@ -137,13 +138,35 @@ function negativeEvent() {
     wagon.characters[index].illness.push("Gonorrhea")
   } else if (num === 3) {
     $("#ongoing-events").prepend("Your party is ambush, they hold you hostage and take some of your food. <br>")
-    //food -= number
-    //days += number
+    wagon.food -= ranSupplyDecrease
+    wagon.days += index
   } else if (num === 4) {
-    //Your wagon wheel broke, in the distance you hear Jesus Take The Wheel
+    $("#ongoing-events").prepend("Your wagon wheel broke, in the distance you hear Jesus Take The Wheel playing. <br>")
   } else if (num === 5){
-    //Some of your food rots because CharacterName wet themselves as they napped on it.
-    //food -= number
+    $("#ongoing-events").prepend("Some of your food rots because " + wagon.characters[index].name + " wet themselves as they napped on it.")
+    wagon.food -= ranSupplyDecrease
+  }
+}
+
+function deathEvent() {
+  var num = Math.floor(Math.random() * Math.floor(5))
+  var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
+  if (num === 1 && wagon.characters[index].health < 65) {
+    $("#ongoing-events").prepend(wagon.characters[index].name + " has been shot and killed by Dick Chenney while straying away from the party.")
+    wagon.characters.splice(index, 1)
+  } else if (num === 2 && wagon.characters[index].illness == "Dysentery" && wagon.characters[index].health < 65) {
+    $("#ongoing-events").prepend(wagon.characters[index].name + " wakes up screaming in the middle of their nap. They hunch over and fall to the ground. Their chest bursts open and the creature inside jumps out and attacks " + wagon.characters[0].name + " with acid and scurries off into the wilderness. " + wagon.characters[index].name + " is dead." )
+    wagon.characters.splice(index, 1)
+    wagon.characters[0].health -= 15
+    wagon.characters[0].illness.push("Acid Burns")
+  } else if (num === 3 && wagon.characters[index].health < 45 ) {
+    $("#ongoing-events").prepend(wagon.characters[index].name + " has developed Pica and has been secretly snackin' on the gold. They die of heavy metal toxicity. You lose 25% of your gold.")
+    wagon.money -= (wagon.money * 0.25)
+    wagon.characters.splice(index, 1)
+  } else if (num === 4) {
+
+  } else if (num === 5) {
+
   }
 }
 //Hunting
@@ -174,22 +197,23 @@ Wagon.prototype.dayCounter = function() {
 }
 
 $(document).ready(function(){
-  var playerOneName = $("#char1").val()
-  var playerTwoName = $("#char2").val()
-  var playerThreeName = $("#char3").val()
-  var playerFourName = $("#char4").val()
-  var playerFiveName = $("#char5").val()
 
   $("#startBTN").click(function(){
     $("#start").fadeOut(500);
     $("#characterInput").delay(500).fadeIn(500);
   });
   $("#characterBTN").click(function(){
-    var playerOneName = $("#char1").val()
-    var playerTwoName = $("#char2").val()
-    var playerThreeName = $("#char3").val()
-    var playerFourName = $("#char4").val()
-    var playerFiveName = $("#char5").val()
+    // var playerOneName = $("#char1").val()
+    // var playerTwoName = $("#char2").val()
+    // var playerThreeName = $("#char3").val()
+    // var playerFourName = $("#char4").val()
+    // var playerFiveName = $("#char5").val()
+
+    var playerOneName = "Pork"
+    var playerTwoName = "Bobbie"
+    var playerThreeName = "Hulk"
+    var playerFourName = "Dick Chenney"
+    var playerFiveName = "Mushu"
 
     char1 = new Character(playerOneName)
     char2 = new Character(playerTwoName)
