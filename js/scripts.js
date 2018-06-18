@@ -142,6 +142,8 @@ function negativeEvent() {
     wagon.days += index
   } else if (num === 4) {
     $("#ongoing-events").prepend("Your wagon wheel broke, in the distance you hear Jesus Take The Wheel playing. <br>")
+    wagon.days += 5
+    wagon.food -= ((wagon.characters.length * 5 ) * 5)
   } else if (num === 5){
     $("#ongoing-events").prepend("Some of your food rots because " + wagon.characters[index].name + " wet themselves as they napped on it.")
     wagon.food -= ranSupplyDecrease
@@ -164,9 +166,11 @@ function deathEvent() {
     wagon.money -= (wagon.money * 0.25)
     wagon.characters.splice(index, 1)
   } else if (num === 4) {
-
-  } else if (num === 5) {
-
+    $("#ongoing-events").prepend(wagon.characters[index].name + " got like stupid stoned the night before and ate a lot of food when their munchies kicked in.")
+    wagon.food -= (wagon.money * 0.5)
+  } else if (num === 5 && wagon.characters[index].illness == "Gonorrhea") {
+    $("#ongoing-events").prepend(wagon.characters[index].name  + " has also contracted chlymida and it has run rampant. They run off into the woods, never to be seen again.")
+    wagon.characters.splice(index, 1)
   }
 }
 //Hunting
@@ -191,9 +195,9 @@ Wagon.prototype.profession = function() {
     this.money += 50
   }
 }
-
+// IF we change how this works it is referenced in the different event grabbers
 Wagon.prototype.dayCounter = function() {
-  this.day += 1
+  this.days += 1
 }
 
 $(document).ready(function(){
