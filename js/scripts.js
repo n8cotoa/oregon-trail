@@ -11,8 +11,7 @@ function Wagon() {
 }
 // illness generator
 Character.prototype.illnessGenerator = function() {
-  var num = Math.floor(Math.random() * Math.floor(5))
-
+  var num = Math.floor(Math.random() * Math.floor(20))
   if (num === 1) {
     this.illness.push("Dysentery")
   } else if (num === 2) {
@@ -21,8 +20,19 @@ Character.prototype.illnessGenerator = function() {
     this.illness.push("Yellow Fever")
   } else if (num === 4) {
     this.illness.push("Pertussis")
-  } else {
+  } else if (num === 5){
     this.illness.push("Broken Arm")
+  }
+}
+
+//illness checker
+Character.prototype.illnessChecker = function() {
+  if (this.illness.length === 1) {
+    this.health -= 2
+  } else if (this.illness.length === 2) {
+    this.health -= 4
+  } else if (this.illness.length === 3) {
+    this.health -= 6
   }
 }
 
