@@ -9,7 +9,7 @@ function Character(name) {
 function Wagon() {
   this.food = 2000;
   this.money = 500;
-  this.time = "";
+  this.days = 0;
 }
 // illness generator
 Character.prototype.illnessGenerator = function() {
@@ -141,6 +141,10 @@ Wagon.prototype.profession = function() {
   }
 }
 
+Wagon.prototype.dayCounter = function() {
+  this.day += 1
+}
+
 $(document).ready(function(){
   var playerOneName = $("#char1").val()
   var playerTwoName = $("#char2").val()
@@ -166,5 +170,10 @@ $(document).ready(function(){
     char5 = new Character(playerFiveName)
     wagon = new Wagon()
     wagon.profession()
+  });
+
+  $("#continue-btn").click(function(){
+    wagon.dayCounter()
+    wagon.eventGrabber()
   });
 });
