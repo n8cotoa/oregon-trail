@@ -173,6 +173,8 @@ $(document).ready(function(){
   var playerThreeName = $("#char3").val()
   var playerFourName = $("#char4").val()
   var playerFiveName = $("#char5").val()
+  var x = 1;
+  $('#wagon-images').addClass('sky1');
 
   $("#startBTN").click(function(){
     $("#start").fadeOut(500);
@@ -194,7 +196,7 @@ $(document).ready(function(){
     wagon.characters.push(char1, char2, char3, char4, char5)
     wagon.profession()
     $("#characterInput").fadeOut(500);
-    $("#gameMainScreen").delay(500).fadeIn(500);
+    $("#store").delay(500).fadeIn(500);
     $('#player-one-name').text(char1.name);
     $('#player-two-name').text(char2.name);
     $('#player-three-name').text(char3.name);
@@ -208,8 +210,29 @@ $(document).ready(function(){
     $('#wagon-food-remaining').text(wagon.food);
 
   });
+$("#storeBTN").click(function(){
+  $("#store").fadeOut(500);
+  $("#gameMainScreen").delay(500).fadeIn(500);
+  /* button will eventually add items to wagon's inventory count. presently hardcoded, so, no effect */
+});
 
-  $("#continue-btn").click(function(){
-    turn()
+  $("#continue-button").click(function(){
+
+    // turn()
+    console.log("working!")
+    if (x < 4) {
+      $('#wagon-' + x).toggle();
+      $('#wagon-images').removeClass('sky' + x);
+      x++;
+      $('#wagon-' + x).toggle();
+      $('#wagon-images').addClass('sky' + x);
+    } else {
+      $('#wagon-' + x).toggle();
+      $('#wagon-images').removeClass('sky' + x);
+      x = 1;
+      $('#wagon-' + x).toggle();
+      $('#wagon-images').addClass('sky' + x);
+    }
+
   });
 });

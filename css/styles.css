@@ -1,8 +1,12 @@
 body {
   height: 100%;
   background-image: url(../img/topography.png);
+  font-family: 'Londrina Solid', cursive;
 }
-
+span {
+  font-weight: 300;
+  letter-spacing: 1px;
+}
 /* section to hide things */
 
 #characterInput {
@@ -15,6 +19,13 @@ body {
 
 #gameMainScreen {
   display: none;
+
+}
+
+#wagon-4,
+#wagon-3,
+#wagon-2 {
+  display: none;
 }
 
 /* page formatting */
@@ -26,12 +37,54 @@ body {
   min-height: 244px;
 }
 
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border: 4px double black;
+  padding: 30px;
+  min-height: 599px;
+}
+
+#wagon-images {
+  background-image: url(../img/mountains.png);
+  background-size: cover;
+  background-position: bottom;
+  padding: 10px;
+  border: 2px solid black;
+  margin: 0;
+}
+
+.sky1 {
+    background: aliceblue;
+}
+.sky2 {
+  background: #002b80;
+}
+.sky3 {
+    background: black;
+}
+.sky4 {
+  background: #002b80;
+}
+
+img {
+  max-width: 100%;
+}
+
 #gameMainScreen .prettyColumn {
   margin-bottom: 2rem;
 }
 
-#gameMainScreen .col-md-4 .btn{
-  width: 32.3%;
+#gameMainScreen h1 {
+    margin-bottom: 0px;
+}
+
+#gameMainScreen .col-md-4 .btn {
+  width: 100%;
+  margin-bottom: 1rem;
 }
 
 #characterInput .col-md-12 {
@@ -59,6 +112,8 @@ body {
   overflow: scroll;
   margin-top: 2rem;
   padding: 10px;
+  font-weight: 300;
+  letter-spacing: 1px;
 }
 
 #player-one-name,
