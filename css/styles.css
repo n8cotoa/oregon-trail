@@ -26,6 +26,14 @@ body {
   min-height: 244px;
 }
 
+#gameMainScreen .prettyColumn {
+  margin-bottom: 2rem;
+}
+
+#gameMainScreen .col-md-4 .btn{
+  width: 32.3%;
+}
+
 #characterInput .col-md-12 {
    text-align: left;
    margin-top: 20px;
@@ -51,6 +59,20 @@ body {
   overflow: scroll;
   margin-top: 2rem;
   padding: 10px;
+}
+
+#player-one-name,
+#player-two-name,
+#player-three-name,
+#player-four-name,
+#player-five-name,
+.bold {
+  font-weight: bold;
+}
+
+#wagon-food-remaining,
+.current-date {
+  font-weight: normal;
 }
 
  #store {
