@@ -2,33 +2,56 @@ body {
   height: 100%;
   background-image: url(../img/topography.png);
 }
+
+/* section to hide things */
+
 #characterInput {
   display: none;
 }
 
+#store {
+  display: none;
+}
+
+#gameMainScreen {
+  display: none;
+}
+
+/* page formatting */
+
+.prettyColumn {
+  background-color: #f2f2f2;
+  border: 2px solid black;
+  padding: 10px;
+  min-height: 244px;
+}
+
+#characterInput .col-md-12 {
+   text-align: left;
+   margin-top: 20px;
+ }
+
 #charNameInput input {
   display: block;
   border: none;
-  border-bottom: 3px green solid;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+#gameMainScreen ul{
+  list-style: none;
+  margin: 10px 0;
+  padding-left: 0;
 }
 
 #ongoing-text-box {
-  background: lightgrey;
+  background: #f2f2f2;
   height: 300px;
   overflow: scroll;
   margin-top: 2rem;
   padding: 10px;
 }
-
-#characterInput .col-md-12 {
-   text-align: center;
- }
-
- #gameMainScreen ul{
-   list-style: none;
-   margin: 10px 0;
-   padding-left: 0;
- }
 
  #store {
   background-image: url(../img/merc.png);
