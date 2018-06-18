@@ -24,7 +24,6 @@ Character.prototype.illnessGenerator = function() {
     this.illness.push("Broken Arm")
   }
 }
-
 //illness checker
 Character.prototype.illnessChecker = function() {
   if (this.illness.length === 1) {
@@ -33,6 +32,18 @@ Character.prototype.illnessChecker = function() {
     this.health -= 4
   } else if (this.illness.length === 3) {
     this.health -= 6
+  }
+}
+//status checker
+Character.prototype.statusAdjuster = function() {
+  if (this.health >= 80) {
+    this.status = "good"
+  } else if (this.health < 80 && this.health >= 20) {
+    this.status = "fair"
+  } else if (this.health < 20 && this.health > 0) {
+    this.status = "poor"
+  } else {
+    this.status = "dead"
   }
 }
 
