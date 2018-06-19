@@ -182,6 +182,10 @@ img {
   text-align: right;
 }
 
+#lower-store-fields {
+  margin-bottom: 10px;
+}
+
 #lower-store-fields .col-md-3 {
   border: 1px solid black;
   text-align: right;
@@ -307,7 +311,54 @@ img {
 .modal-child img{
   width: 50%;
 }
+#profession input {
+  margin-right: 10px;
+}
 
+#profession #radio1,
+#profession #radio2,
+#profession #radio3,
+#profession #radio4,
+#profession #radio5,
+#profession #radio6 {
+  position: relative;
+}
+
+#profession .tooltiptext {
+  visibility: hidden;
+  width: 300px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 16px;
+  position: absolute;
+  z-index: 1;
+}
+
+#radio1:hover .tooltiptext {
+  visibility: visible;
+}
+
+#radio2:hover .tooltiptext {
+  visibility: visible;
+}
+
+#radio3:hover .tooltiptext {
+  visibility: visible;
+}
+
+#radio4:hover .tooltiptext {
+  visibility: visible;
+}
+
+#radio5:hover .tooltiptext {
+  visibility: visible;
+}
+
+#radio6:hover .tooltiptext {
+  visibility: visible;
+}
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px){
     .modal-content {

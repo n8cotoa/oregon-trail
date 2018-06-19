@@ -184,7 +184,7 @@ function negativeEvent() {
 }
 
 function storeModal() {
-  $('.modal-child').html('<div id="popup-text"><h2>Here is what is in your cart currently</h2><span id="wagon-food-remaining"></span></div>' + wagon.money + '</div>')
+  $('.modal-child').html('<div id="popup-text"><h2>Here is what is in your cart currently</h2><span id="wagon-food-remaining"></span></div>' + wagon.money + '<span id="back-button" class="btn btn-danger">Back</span></div>')
 }
 
 function buildModal(value) {
@@ -307,7 +307,6 @@ $(document).ready(function(){
     char4 = new Character(playerFourName)
     char5 = new Character(playerFiveName)
     wagon = new Wagon()
-debugger;
     wagon.characters.push(char1, char2, char3, char4, char5)
     wagon.profession(professionValue)
     $("#characterInput").fadeOut(500);
@@ -344,6 +343,10 @@ $("#preCheckout").click(function(){
   $('#myModal').toggle();
 });
 
+$("#back-button").click(function(){
+  $("#store").fadeOut(500);
+  $("#characterInput").delay(500).fadeIn(500);
+});
 
   $("#continue-button").click(function(){
     wagon.turn()
