@@ -298,19 +298,19 @@ function storeSubTotal(food, bullets) {
 }
 
 function storeBuy(food, bullets) {
-    wagon.food += food
-    wagon.money -= (food * 0.2)
-    wagon.bullets += bullets
-    wagon.money -= (bullets * 0.2)
+    wagon.food + food
+    wagon.money - (food * 0.2)
+    wagon.bullets + bullets
+    wagon.money - (bullets * 0.2)
     var total = ((food * 0.2) + (bullets * 0.1))
 
-    if (total == NaN || isNaN(total)) {
+    if (total == NaN || isNaN(total) || wagon.money < total) {
       console.log(total);
       $("#store").effect("shake", {times:3}, 700);
     }
     else {
-      wagon.food += food
-      wagon.money -= (food * 0.2)
+      wagon.food + food
+      wagon.money - (food * 0.2)
       $("#store").fadeOut(500);
       $("#gameMainScreen").delay(500).fadeIn(500);
       return total
