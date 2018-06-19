@@ -56,6 +56,10 @@ span {
   margin: 0;
 }
 
+#start img {
+  width:100%;
+  margin-bottom:10px;
+}
 .sky1 {
     background: aliceblue;
 }
@@ -71,6 +75,10 @@ span {
 
 img {
   max-width: 100%;
+}
+
+#characterBTN {
+  margin-top: 10px;
 }
 
 #gameMainScreen .prettyColumn {
