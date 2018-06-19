@@ -14,17 +14,24 @@ function Wagon() {
 }
 // illness generator
 Character.prototype.illnessGenerator = function() {
-  var num = Math.floor(Math.random() * Math.floor(20))
-  if (num === 1 && this.illness != "Dysentery") {
+  var num = Math.floor(Math.random() * Math.floor(80))
+  if (num === 1 && this.illness.includes("Dysentery") == false ) {
+    console.log(this.illness);
+    console.log(num);
     this.illness.push("Dysentery")
-  } else if (num === 2 && this.illness != "Gonorrhea") {
+    $("#ongoing-events").prepend(this.name + " got Dysentery <br>")
+  } else if (num === 2 && this.illness.includes("Gonorrhea") == false) {
     this.illness.push("Gonorrhea")
-  } else if (num === 3 && this.illness != "Yellow Fever") {
+    $("#ongoing-events").prepend(this.name + " got Gonorrhea <br>")
+  } else if (num === 3 && this.illness.includes("Yellow Fever") == false) {
     this.illness.push("Yellow Fever")
-  } else if (num === 4 && this.illness != "Pertussis") {
+    $("#ongoing-events").prepend(this.name + " got Yellow Fever <br>")
+  } else if (num === 4 && this.illness.includes("Pertussis") == false) {
     this.illness.push("Pertussis")
-  } else if (num === 5 && this.illness != "Broken Arm"){
+    $("#ongoing-events").prepend(this.name + " got Pertussis <br>")
+  } else if (num === 5 && this.illness.includes("Broken Arm") == false){
     this.illness.push("Broken Arm")
+    $("#ongoing-events").prepend(this.name + " got a Broken Arm <br>")
   }
 }
 //illness checker
@@ -33,9 +40,19 @@ Character.prototype.illnessChecker = function() {
     this.health -= 2
   } else if (this.illness.length === 2) {
     this.health -= 4
-  } else if (this.illness.length === 3) {
+  } else if (this.illness.length >= 3) {
     this.health -= 6
   }
+}
+
+//death checker
+Wagon.prototype.deathChecker = function() {
+  wagon.characters.forEach(function(char){
+    if (char.health <= 0) {
+      var index = wagon.characters.indexOf(char)
+      wagon.characters.splice(index, 1)
+    }
+  })
 }
 //status adjuster
 Character.prototype.statusAdjuster = function() {
@@ -51,14 +68,15 @@ Character.prototype.statusAdjuster = function() {
 }
 //calculates potential illnesses
 Wagon.prototype.turn = function() {
+  wagon.eventGrabber()
   wagon.characters.forEach(function(char){
+    console.log(char);
     char.illnessGenerator()
-    char.illnessChecker()
-    char.statusAdjuster()
+    char.illnessChecker() //reduces health if infected
+    char.statusAdjuster() //updates status on screen based on health
   });
   wagon.food -= (wagon.characters.length * 5 )
-  wagon.eventGrabber()
-  wagon.dayCounter()
+  this.days += 1
 }
 // function for resting -- cure illness, gain some health
 Wagon.prototype.rest = function() {
@@ -69,6 +87,8 @@ Wagon.prototype.rest = function() {
     }
     char.statusAdjuster()
   });
+  wagon.food -= (wagon.characters.length * 5 )
+  this.days += 1
 }
 //event grabber
 Wagon.prototype.eventGrabber = function() {
@@ -76,13 +96,13 @@ Wagon.prototype.eventGrabber = function() {
   if (num >= 80) {
     positiveEvent()
     //call positive event
-  } else if (num < 80 && num >= 20) {
+  } else if (num < 80 && num >= 60) {
     neutralEvent()
     //call neutral event
-  } else if (num < 20 && num > 5) {
+  } else if (num < 60 && num >= 40) {
     negativeEvent()
     //call negative event
-  } else {
+  } else if (num < 40 && num >= 35){
     deathEvent()
     //call death event
   }
@@ -129,11 +149,10 @@ function negativeEvent() {
   var num = Math.floor(Math.random() * Math.floor(5))
   var ranSupplyDecrease = Math.floor(Math.random() * (200 - 100) + 100)
   var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
-  console.log(index);
   if (num === 1) {
     $("#ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. Unfortunately the lake was full of phirranas. <br>" + wagon.characters[index].name + " got hurt! <br>")
     wagon.characters[index].health -= 10
-  } else if (num === 2 && wagon.characters[index].illness != "Gonorrhea") {
+  } else if (num === 2 && wagon.characters[index].illness.includes("Gonorrhea") == false) {
     $("#ongoing-events").prepend("You find a small bunny and decide to keep it. The bunny bites" + wagon.characters[index].name + "." + wagon.characters[index].name + "has gonorrhea.")
     wagon.characters[index].illness.push("Gonorrhea")
   } else if (num === 3) {
@@ -155,22 +174,26 @@ function deathEvent() {
   var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
   if (num === 1 && wagon.characters[index].health < 65) {
     $("#ongoing-events").prepend(wagon.characters[index].name + " has been shot and killed by Dick Chenney while straying away from the party.")
-    wagon.characters.splice(index, 1)
-  } else if (num === 2 && wagon.characters[index].illness == "Dysentery" && wagon.characters[index].health < 65) {
+    wagon.characters[index].health = 0
+    wagon.characters[index].status = "Dead"
+  } else if (num === 2 && wagon.characters[index].illness.includes("Dysentery") == true && wagon.characters[index].health < 65) {
     $("#ongoing-events").prepend(wagon.characters[index].name + " wakes up screaming in the middle of their nap. They hunch over and fall to the ground. Their chest bursts open and the creature inside jumps out and attacks " + wagon.characters[0].name + " with acid and scurries off into the wilderness. " + wagon.characters[index].name + " is dead." )
-    wagon.characters.splice(index, 1)
+    wagon.characters[index].health = 0
+    wagon.characters[index].status = "Dead"
     wagon.characters[0].health -= 15
     wagon.characters[0].illness.push("Acid Burns")
-  } else if (num === 3 && wagon.characters[index].health < 45 ) {
+  } else if (num === 3 && wagon.characters[index].health < 65 ) {
     $("#ongoing-events").prepend(wagon.characters[index].name + " has developed Pica and has been secretly snackin' on the gold. They die of heavy metal toxicity. You lose 25% of your gold.")
     wagon.money -= (wagon.money * 0.25)
-    wagon.characters.splice(index, 1)
+    wagon.characters[index].health = 0
+    wagon.characters[index].status = "Dead"
   } else if (num === 4) {
     $("#ongoing-events").prepend(wagon.characters[index].name + " got like stupid stoned the night before and ate a lot of food when their munchies kicked in.")
     wagon.food -= (wagon.money * 0.5)
   } else if (num === 5 && wagon.characters[index].illness == "Gonorrhea") {
     $("#ongoing-events").prepend(wagon.characters[index].name  + " has also contracted chlymida and it has run rampant. They run off into the woods, never to be seen again.")
-    wagon.characters.splice(index, 1)
+    wagon.characters[index].health = 0
+    wagon.characters[index].status = "Dead"
   }
 }
 //Hunting
@@ -194,10 +217,6 @@ Wagon.prototype.profession = function() {
   } else if ("[name=profession][value=6]:checked") {
     this.money += 50
   }
-}
-// IF we change how this works it is referenced in the different event grabbers
-Wagon.prototype.dayCounter = function() {
-  this.days += 1
 }
 
 function storeSubTotal(food) {
@@ -263,17 +282,18 @@ $("#storeBTN").click(function(){
   var buyFood = parseInt($("#store input").val())
   storeBuy(buyFood)
   $('#wagon-food-remaining').text(wagon.food);
-  /* button will eventually add items to wagon's inventory count. presently hardcoded, so, no effect */
 });
 
   $("#continue-button").click(function(){
     wagon.turn()
+    wagon.deathChecker()
     $('#player-one-status').text(char1.status);
     $('#player-two-status').text(char2.status);
     $('#player-three-status').text(char3.status);
     $('#player-four-status').text(char4.status);
     $('#player-five-status').text(char5.status);
     $('#wagon-food-remaining').text(wagon.food);
+    $('.current-date').text(wagon.days)
     console.log(wagon)
     if (x < 4) {
       $('#wagon-' + x).toggle();
@@ -298,5 +318,6 @@ $("#storeBTN").click(function(){
     $('#player-four-status').text(char4.status);
     $('#player-five-status').text(char5.status);
     $('#wagon-food-remaining').text(wagon.food);
+    $('.current-date').text(wagon.days);
   });
 });
