@@ -84,6 +84,7 @@ Character.prototype.statusAdjuster = function() {
 //calculates potential illnesses
 Wagon.prototype.turn = function() {
   wagon.eventGrabber()
+  landmarkEvent()
   wagon.characters.forEach(function(char){
     char.illnessGenerator()
     char.illnessChecker() //reduces health if infected
@@ -206,8 +207,9 @@ var num = wagon.distance
 console.log(num);
   if (num === 100) {
     buildModal(num)
-    $(".ongoing-events").prepend("You have reached a river. You can choose to go across the river. <br>")
+    $(".ongoing-events").prepend("You have reached a river. You can choose to risk supplies and your party to cross the river or take 7 days to go around. <br>")
     $("#myModal").toggle();
+    wagon.days += 7
   } else if (num === 200) {
     $(".ongoing-events").prepend("You get a letter from home. <br>")
   } else if (num === 300) {
@@ -402,9 +404,9 @@ $("#back-button").click(function(){
 
   $("#continue-button").click(function(){
     wagon.turn()
+    landmarkEvent()
     wagon.foodChecker()
     wagon.deathChecker()
-    landmarkEvent()
     $('#player-one-status').text(char1.status);
     $('#player-two-status').text(char2.status);
     $('#player-three-status').text(char3.status);
