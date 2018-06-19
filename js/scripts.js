@@ -296,10 +296,6 @@ function storeSubTotal(food, bullets) {
 }
 
 function storeBuy(food, bullets) {
-    wagon.food += food
-    wagon.money -= (food * 0.2)
-    wagon.bullets += bullets
-    wagon.money -= (bullets * 0.2)
     var total = ((food * 0.2) + (bullets * 0.1))
 
     if (total == NaN || isNaN(total)) {
@@ -308,7 +304,8 @@ function storeBuy(food, bullets) {
     }
     else {
       wagon.food += food
-      wagon.money -= (food * 0.2)
+      wagon.bullets += bullets
+      wagon.money -= ((food * 0.2) + (bullets * 0.2))
       $("#store").fadeOut(500);
       $("#gameMainScreen").delay(500).fadeIn(500);
       return total
@@ -329,15 +326,17 @@ $(document).ready(function(){
   var x = 1;
   $('#wagon-images').addClass('sky1');
 
-  // Get the modal
+  // modal that closes with click anywhere
   var modal = document.getElementById('myModal');
-
-  // Get the <span> element that closes the modal
   var span = document.getElementById('myModal');
-
-  // When the user clicks on <span> (x), close the modal
   span.onclick = function() {
     modal.style.display = "none";
+  }
+  // modal that closes with click on button
+var popup = document.getElementById('buttonModal');
+var close = document.getElementsByClassName("close")[0];
+  close.onclick = function() {
+    popup.style.display = "none";
   }
 
   $("#startBTN").click(function(){
@@ -374,7 +373,7 @@ $(document).ready(function(){
     $('#player-four-status').text(char4.status);
     $('#player-five-status').text(char5.status);
     $('#wagon-food-remaining').text(wagon.food);
-    $('#wagon-money-remaining').text('you have: $' + wagon.money);
+    $('.wagon-money-remaining').text(wagon.money);
 
   });
   $("#subtotal").click(function(){
@@ -388,6 +387,8 @@ $(document).ready(function(){
     var buyBullets = parseInt($("#bullet-fields input").val())
     storeBuy(buyFood, buyBullets)
     $('#wagon-food-remaining').text(wagon.food);
+    $('.wagon-money-remaining').text(wagon.money.toFixed(2));
+    $('#wagon-bullets-remaining').text(wagon.bullets);
   });
 
 $("#preCheckout").click(function(){
