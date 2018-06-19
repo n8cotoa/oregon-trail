@@ -182,11 +182,8 @@ img {
   text-align: right;
 }
 
-#lower-store-fields {
-  margin-bottom: 10px;
-}
-
-#lower-store-fields .col-md-3 {
+#food-fields .col-md-3,
+#bullet-fields .col-md-3 {
   border: 1px solid black;
   text-align: right;
   line-height: 41px;
@@ -194,7 +191,8 @@ img {
   font-weight: 300;
 }
 
-#lower-store-fields .col-md-3:first-of-type {
+#food-fields .col-md-3:first-of-type,
+#bullet-fields .col-md-3:first-of-type {
   padding: 0px;
 }
 
@@ -218,6 +216,12 @@ img {
   margin-left: 0;
 }
 
+.store-total  {
+  float: right;
+  margin-right: 10px;
+  font-size: 20px;
+  margin-top: 10px;
+}
 /*Modal Popup*/
 
 
@@ -359,6 +363,8 @@ img {
 #radio6:hover .tooltiptext {
   visibility: visible;
 }
+
+
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px){
     .modal-content {
