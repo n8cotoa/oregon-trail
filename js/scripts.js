@@ -147,7 +147,7 @@ function positiveEvent() {
 function neutralEvent() {
   var num = Math.floor(Math.random() * Math.floor(5))
   if (num === 1) {
-    $(".ongoing-events").prepend("One of you ox was pregnant and gave birth. The baby died and she is sad, but continues on. <br>")
+    $(".ongoing-events").prepend("One of you oxen was pregnant and gave birth. The baby died and she is sad, but continues on. <br>")
   } else if (num === 2) {
     $(".ongoing-events").prepend("You get a letter from home. <br>")
   } else if (num === 3) {
@@ -164,13 +164,13 @@ function negativeEvent() {
   var ranSupplyDecrease = Math.floor(Math.random() * (200 - 100) + 100)
   var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
   if (num === 1) {
-    $(".ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. Unfortunately the lake was full of phirranas. <br>" + wagon.characters[index].name + " got hurt! <br>")
+    $(".ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. Unfortunately the lake was full of piranhas. <br>" + wagon.characters[index].name + " got hurt! <br>")
     wagon.characters[index].health -= 10
   } else if (num === 2 && wagon.characters[index].illness.includes("Gonorrhea") == false) {
-    $(".ongoing-events").prepend("You find a small bunny and decide to keep it. The bunny bites" + wagon.characters[index].name + "." + wagon.characters[index].name + "has gonorrhea.")
+    $(".ongoing-events").prepend("You find a small bunny and decide to keep it. The bunny bites " + wagon.characters[index].name + "." + wagon.characters[index].name + " has gonorrhea.<br>")
     wagon.characters[index].illness.push("Gonorrhea")
   } else if (num === 3) {
-    $(".ongoing-events").prepend("Your party is ambush, they hold you hostage and take some of your food. <br>")
+    $(".ongoing-events").prepend("Your party is ambushed, they hold you hostage and take some of your food. <br>")
     wagon.food -= ranSupplyDecrease
     wagon.days += index
   } else if (num === 4) {
@@ -181,6 +181,10 @@ function negativeEvent() {
     $(".ongoing-events").prepend("Some of your food rots because " + wagon.characters[index].name + " wet themselves as they napped on it.")
     wagon.food -= ranSupplyDecrease
   }
+}
+
+function storeModal() {
+  $('.modal-child').html('<div id="popup-text"><h2>Here is what is in your cart currently</h2><span id="wagon-food-remaining"></span></div>' + wagon.money + '<span id="back-button" class="btn btn-danger">Back</span></div>')
 }
 
 function buildModal(value) {
@@ -195,13 +199,13 @@ function deathEvent() {
   var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
   if (num === 1 && wagon.characters[index].health < 65) {
     buildModal(num);
-    $(".ongoing-events").prepend(wagon.characters[index].name + " has been shot and killed by Dick Chenney while straying away from the party.")
+    $(".ongoing-events").prepend(wagon.characters[index].name + " has been shot and killed by Dick Cheney while straying away from the party.<br>")
      $("#myModal").toggle();
     wagon.characters[index].health = 0
     wagon.characters[index].status = "Dead"
   } else if (num === 2 && wagon.characters[index].illness.includes("Dysentery") == true && wagon.characters[index].health < 65) {
     buildModal(num);
-    $(".ongoing-events").prepend(wagon.characters[index].name + " wakes up screaming in the middle of their nap. They hunch over and fall to the ground. Their chest bursts open and the creature inside jumps out and attacks " + wagon.characters[0].name + " with acid and scurries off into the wilderness. " + wagon.characters[index].name + " is dead." )
+    $(".ongoing-events").prepend(wagon.characters[index].name + " wakes up screaming in the middle of their nap. They hunch over and fall to the ground. Their chest bursts open and the creature inside jumps out and attacks " + wagon.characters[0].name + " with acid and scurries off into the wilderness.<br>" + wagon.characters[index].name + " is dead." )
     $("#myModal").toggle();
     wagon.characters[index].health = 0
     wagon.characters[index].status = "Dead"
@@ -209,19 +213,19 @@ function deathEvent() {
     wagon.characters[0].illness.push("Acid Burns")
   } else if (num === 3 && wagon.characters[index].health < 65 ) {
     buildModal(num);
-    $(".ongoing-events").prepend(wagon.characters[index].name + " has developed Pica and has been secretly snackin' on the gold. They die of heavy metal toxicity. You lose 25% of your gold.")
+    $(".ongoing-events").prepend(wagon.characters[index].name + " has developed Pica and has been secretly snackin' on the gold. They die of heavy metal toxicity. You lose 25% of your gold.<br>")
     $("#myModal").toggle();
     wagon.money -= (wagon.money * 0.25)
     wagon.characters[index].health = 0
     wagon.characters[index].status = "Dead"
   } else if (num === 4) {
     buildModal(num);
-    $(".ongoing-events").prepend(wagon.characters[index].name + " got like stupid stoned the night before and ate a lot of food when their munchies kicked in.")
+    $(".ongoing-events").prepend(wagon.characters[index].name + " got like stupid stoned the night before and ate a lot of food when their munchies kicked in.<br>")
     $("#myModal").toggle();
     wagon.food -= (wagon.money * 0.5)
   } else if (num === 5 && wagon.characters[index].illness == "Gonorrhea") {
     buildModal(num);
-    $(".ongoing-events").prepend(wagon.characters[index].name  + " has also contracted chlymida and it has run rampant. They run off into the woods, never to be seen again.")
+    $(".ongoing-events").prepend(wagon.characters[index].name  + " has also contracted chlymida and it has run rampant. They run off into the woods, never to be seen again.<br>")
     $("#myModal").toggle();
     wagon.characters[index].health = 0
     wagon.characters[index].status = "Dead"
@@ -238,20 +242,21 @@ Wagon.prototype.huntingTime = function() {
   });
 }
 //Profession checker
-Wagon.prototype.profession = function() {
-  if ("[name=profession][value=1]:checked") {
+Wagon.prototype.profession = function(input) {
+  if (input == 1) {
+    console.log("pop!");
     this.money += 500
-  } else if ("[name=profession][value=2]:checked") {
+  } else if (input == 2) {
     this.money += 300
-  } else if ("[name=profession][value=3]:checked") {
+  } else if (input == 3) {
     this.food += 500
-  } else if ("[name=profession][value=4]:checked") {
+  } else if (input == 4) {
     this.food += 250
     this.money += 250
-  } else if ("[name=profession][value=5]:checked") {
+  } else if (input == 5) {
     this.money += 400
     this.food += 100
-  } else if ("[name=profession][value=6]:checked") {
+  } else if (input == 6) {
     this.money += 50
   }
 }
@@ -318,17 +323,21 @@ $(document).ready(function(){
     var playerThreeName = $("#char3").val()
     var playerFourName = $("#char4").val()
     var playerFiveName = $("#char5").val()
-    var profession = $("input:radio[name=profession]:checked").val()
-    validateNames(profession, playerOneName, playerTwoName, playerThreeName, playerFourName, playerFiveName)
+    var professionValue = $("input:radio[name=profession]:checked").val()
+
+    validateNames(professionValue, playerOneName, playerTwoName, playerThreeName, playerFourName, playerFiveName)
     char1 = new Character(playerOneName)
     char2 = new Character(playerTwoName)
     char3 = new Character(playerThreeName)
     char4 = new Character(playerFourName)
     char5 = new Character(playerFiveName)
     wagon = new Wagon()
-
     wagon.characters.push(char1, char2, char3, char4, char5)
-    wagon.profession()
+
+    wagon.profession(professionValue)
+    $("#characterInput").fadeOut(500);
+    $("#store").delay(500).fadeIn(500);
+
     $('#player-one-name').text(char1.name);
     $('#player-two-name').text(char2.name);
     $('#player-three-name').text(char3.name);
@@ -340,6 +349,8 @@ $(document).ready(function(){
     $('#player-four-status').text(char4.status);
     $('#player-five-status').text(char5.status);
     $('#wagon-food-remaining').text(wagon.food);
+    $('#wagon-money-remaining').text('you have: $' + wagon.money);
+
   });
   $("#subtotal").click(function(){
     var buyFood = parseInt($("#store input").val())
@@ -351,6 +362,16 @@ $(document).ready(function(){
     storeBuy(buyFood)
     $('#wagon-food-remaining').text(wagon.food);
   });
+
+$("#preCheckout").click(function(){
+  storeModal();
+  $('#myModal').toggle();
+});
+
+$("#back-button").click(function(){
+  $("#store").fadeOut(500);
+  $("#characterInput").delay(500).fadeIn(500);
+});
 
   $("#continue-button").click(function(){
     wagon.turn()

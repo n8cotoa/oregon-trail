@@ -47,6 +47,18 @@ span {
   min-height: 599px;
 }
 
+.store-titles {
+  height: 53px;
+}
+
+.store-titles h2{
+  float: left;
+}
+
+.store-titles h3 {
+  float: right;
+}
+
 #wagon-images {
   background-image: url(../img/mountains.png);
   background-size: cover;
@@ -123,6 +135,14 @@ img {
   letter-spacing: 1px;
 }
 
+#ongoing-text-box p:before {
+ content: "\2605";
+}
+
+#ongoing-text-box br {
+  line-height: 200%;
+}
+
 #player-one-name,
 #player-two-name,
 #player-three-name,
@@ -158,14 +178,23 @@ img {
   border-right: 0;
 }
 
-#store .col-md-3 {
+#upper-store-fields .col-md-3 {
+  text-align: right;
+}
+
+#lower-store-fields {
+  margin-bottom: 10px;
+}
+
+#lower-store-fields .col-md-3 {
   border: 1px solid black;
   text-align: right;
   line-height: 41px;
   background: white;
+  font-weight: 300;
 }
 
-#store .col-md-3:first-of-type {
+#lower-store-fields .col-md-3:first-of-type {
   padding: 0px;
 }
 
@@ -282,7 +311,54 @@ img {
 .modal-child img{
   width: 50%;
 }
+#profession input {
+  margin-right: 10px;
+}
 
+#profession #radio1,
+#profession #radio2,
+#profession #radio3,
+#profession #radio4,
+#profession #radio5,
+#profession #radio6 {
+  position: relative;
+}
+
+#profession .tooltiptext {
+  visibility: hidden;
+  width: 300px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 16px;
+  position: absolute;
+  z-index: 1;
+}
+
+#radio1:hover .tooltiptext {
+  visibility: visible;
+}
+
+#radio2:hover .tooltiptext {
+  visibility: visible;
+}
+
+#radio3:hover .tooltiptext {
+  visibility: visible;
+}
+
+#radio4:hover .tooltiptext {
+  visibility: visible;
+}
+
+#radio5:hover .tooltiptext {
+  visibility: visible;
+}
+
+#radio6:hover .tooltiptext {
+  visibility: visible;
+}
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px){
     .modal-content {

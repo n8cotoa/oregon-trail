@@ -25,23 +25,29 @@
             <div id="profession" class="col-md-3">
               <p>Select your profession</p>
               <div class="prettyColumn">
-                <div class="radio">
+                <div id="radio1">
                   <label><input type="radio" name="profession" value="1"> Banker</label>
+                  <span class="tooltiptext">The Banker starts with $1000 and no initial food.</span>
                 </div>
-                <div class="radio">
+                <div id="radio2">
                   <label><input type="radio" name="profession" value="2"> Doctor</label>
+                  <span class="tooltiptext">The Doctor starts with $800 and no initial food.</span>
                 </div>
-                <div class="radio">
+                <div id="radio3">
                   <label><input type="radio" name="profession" value="3"> Farmer</label>
+                  <span class="tooltiptext">The Farmer starts with $500 and 500lbs of initial food.</span>
                 </div>
-                <div class="radio">
+                <div id="radio4">
                   <label><input type="radio" name="profession" value="4"> Rancher</label>
+                  <span class="tooltiptext">The Rancher starts with $750 and 250lbs of initial food.</span>
                 </div>
-                <div class="radio">
+                <div id="radio5">
                   <label><input type="radio" name="profession" value="5"> Merchant</label>
+                  <span class="tooltiptext">The Merchant starts with $900 and 100lbs of initial food.</span>
                 </div>
-                <div class="radio">
+                <div id="radio6">
                   <label><input type="radio" name="profession" value="6"> Teacher</label>
+                  <span class="tooltiptext">The Teacher starts with $550 and no initial food.</span>
                 </div>
               </div>
               <span id="characterBTN" class="btn btn-success">Next</span>
@@ -65,8 +71,25 @@
     <!-- inital store screen -->
     <div id="store">
       <div class="store-fields">
+        <div class="store-titles">
         <h2>Mercantile</h2>
-        <div class="row">
+        <h3 id="wagon-money-remaining"></h3>
+        </div>
+        <div class="row" id="upper-store-fields">
+          <div class="col-md-3">
+            <p>Amount</p>
+          </div>
+          <div class="col-md-3">
+            <p>Item</p>
+          </div>
+          <div class="col-md-3">
+            <p>Cost</p>
+          </div>
+          <div class="col-md-3">
+            <p>Total</p>
+          </div>
+        </div>
+        <div class="row" id="lower-store-fields">
           <div class="col-md-3">
             <input type="text" name="food" placeholder="0">
           </div>
@@ -80,6 +103,7 @@
             <p class="store-total"></p>
           </div>
         </div>
+        <span id="back-button" class="btn btn-danger">Back</span>
         <span id="subtotal" class="btn btn-warning">Sub-Total</span>
         <span id="storeBTN" class="btn btn-success">Buy</span>
       </div>
@@ -104,7 +128,7 @@
             </div>
           </div>
           <div id="ongoing-text-box">
-            <p class="ongoing-events"> ongoing prepended text for </p>
+            <p class="ongoing-events"></p>
           </div>
         </div>
         <div class="col-md-4">
