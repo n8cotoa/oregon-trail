@@ -5,12 +5,6 @@ function Character(name) {
   this.status = "good"
   this.illness = []
 }
-// date constructor
-// function Date() {
-//   this.month = month
-//   this.days
-//   this.year = 1811
-// }
 // wagon/inventory constructor
 function Wagon() {
   this.food = 0;
@@ -275,33 +269,20 @@ function storeBuy(food) {
   return total
 }
 
-function validateNames(playerOne, playerTwo, playerThree, playerFour, playerFive) {
-  if (playerOne === "" || playerTwo === "" || playerThree === "" || playerFour === "" || playerFive === "") {
-    for (var i = 0; i < 6; i++) {
-      $("#char" + i).effect("shake", {times:3}, 700);
-    }
+function validateNames(profession, playerOne, playerTwo, playerThree, playerFour, playerFive) {
+  if (profession === undefined || playerOne === "" || playerTwo === "" || playerThree === "" || playerFour === "" || playerFive === "") {
+    // for (var i = 0; i < 6; i++) {
+    //   $("#char" + i).effect("shake", {times:3}, 700);
+    // }
+    $("#charNameInput").effect("shake", {times:3}, 700);
+    $("#profession").effect("shake", {times:3}, 700)
   } else {
     $("#characterInput").fadeOut(500);
     $("#store").delay(500).fadeIn(500);
   }
 }
 
-// function disableCharBtn() {
-//   $("#characterBTN").css('pointer-events', 'none')
-//   $("#characterBTN").css('background-color', 'grey')
-// }
-//
-// function enableCharBtn() {
-//   $("#characterBTN").css('pointer-events', 'auto')
-//   $("#characterBTN").css('background-color', 'green')
-// }
-
 $(document).ready(function(){
-  // disableCharBtn()
-  // $("input:checkbox[name=profession], #char1, #char2, #char3, #char4, #char5").click(function(){
-  // validateNames() ? enableCharBtn() : disableCharBtn();
-  // });
-
   var x = 1;
   $('#wagon-images').addClass('sky1');
 
@@ -326,7 +307,8 @@ $(document).ready(function(){
     var playerThreeName = $("#char3").val()
     var playerFourName = $("#char4").val()
     var playerFiveName = $("#char5").val()
-    validateNames(playerOneName, playerTwoName, playerThreeName, playerFourName, playerFiveName)
+    var profession = $("input:radio[name=profession]:checked").val()
+    validateNames(profession, playerOneName, playerTwoName, playerThreeName, playerFourName, playerFiveName)
     char1 = new Character(playerOneName)
     char2 = new Character(playerTwoName)
     char3 = new Character(playerThreeName)
