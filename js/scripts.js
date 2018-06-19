@@ -7,7 +7,7 @@ function Character(name) {
 }
 // wagon/inventory constructor
 function Wagon() {
-  this.food = 2000;
+  this.food = 0;
   this.money = 500;
   this.days = 0;
   this.characters = []
@@ -45,6 +45,15 @@ Character.prototype.illnessChecker = function() {
   }
 }
 
+//food checker
+Wagon.prototype.foodChecker = function() {
+  if (this.food === 0) {
+    wagon.characters.forEach(function(char){
+      char.health -= 10
+    });
+  }
+}
+
 //death checker
 Wagon.prototype.deathChecker = function() {
   wagon.characters.forEach(function(char){
@@ -53,6 +62,9 @@ Wagon.prototype.deathChecker = function() {
       wagon.characters.splice(index, 1)
     }
   })
+  if (wagon.characters.length === 0) {
+    alert("Game Over! You killed everyone. Great job...")
+  }
 }
 //status adjuster
 Character.prototype.statusAdjuster = function() {
@@ -75,7 +87,11 @@ Wagon.prototype.turn = function() {
     char.illnessChecker() //reduces health if infected
     char.statusAdjuster() //updates status on screen based on health
   });
+  if (wagon.food > 0) {
   wagon.food -= (wagon.characters.length * 5 )
+} else if (wagon.food <= 0) {
+  wagon.food = 0
+}
   this.days += 1
 }
 // function for resting -- cure illness, gain some health
@@ -286,6 +302,7 @@ $("#storeBTN").click(function(){
 
   $("#continue-button").click(function(){
     wagon.turn()
+    wagon.foodChecker()
     wagon.deathChecker()
     $('#player-one-status').text(char1.status);
     $('#player-two-status').text(char2.status);
