@@ -183,6 +183,10 @@ function negativeEvent() {
   }
 }
 
+function storeModal() {
+  $('.modal-child').html('<div id="popup-text"><h2>Here is what is in your cart currently</h2><span id="wagon-food-remaining"></span></div>' + wagon.money + '</div>')
+}
+
 function buildModal(value) {
   $('.modal-child').html('<img src="img/' + value + '.jpg" alt="an image">' +
     '<div id="popup-text" class="ongoing-events">' +
@@ -238,20 +242,21 @@ Wagon.prototype.huntingTime = function() {
   });
 }
 //Profession checker
-Wagon.prototype.profession = function() {
-  if ("[name=profession][value=1]:checked") {
+Wagon.prototype.profession = function(input) {
+  if (input == 1) {
+    console.log("pop!");
     this.money += 500
-  } else if ("[name=profession][value=2]:checked") {
+  } else if (input == 2) {
     this.money += 300
-  } else if ("[name=profession][value=3]:checked") {
+  } else if (input == 3) {
     this.food += 500
-  } else if ("[name=profession][value=4]:checked") {
+  } else if (input == 4) {
     this.food += 250
     this.money += 250
-  } else if ("[name=profession][value=5]:checked") {
+  } else if (input == 5) {
     this.money += 400
     this.food += 100
-  } else if ("[name=profession][value=6]:checked") {
+  } else if (input == 6) {
     this.money += 50
   }
 }
@@ -294,6 +299,7 @@ $(document).ready(function(){
     var playerThreeName = $("#char3").val()
     var playerFourName = $("#char4").val()
     var playerFiveName = $("#char5").val()
+    var professionValue = $("input:radio[name=profession]:checked").val()
 
     char1 = new Character(playerOneName)
     char2 = new Character(playerTwoName)
@@ -301,9 +307,9 @@ $(document).ready(function(){
     char4 = new Character(playerFourName)
     char5 = new Character(playerFiveName)
     wagon = new Wagon()
-
+debugger;
     wagon.characters.push(char1, char2, char3, char4, char5)
-    wagon.profession()
+    wagon.profession(professionValue)
     $("#characterInput").fadeOut(500);
     $("#store").delay(500).fadeIn(500);
     $('#player-one-name').text(char1.name);
@@ -332,6 +338,12 @@ $("#storeBTN").click(function(){
   storeBuy(buyFood)
   $('#wagon-food-remaining').text(wagon.food);
 });
+
+$("#preCheckout").click(function(){
+  storeModal();
+  $('#myModal').toggle();
+});
+
 
   $("#continue-button").click(function(){
     wagon.turn()
