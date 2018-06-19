@@ -17,19 +17,19 @@ Character.prototype.illnessGenerator = function() {
   var num = Math.floor(Math.random() * Math.floor(80))
   if (num === 1 && this.illness.includes("Dysentery") == false ) {
     this.illness.push("Dysentery")
-    $("#ongoing-events").prepend(this.name + " got Dysentery <br>")
+    $(".ongoing-events").prepend(this.name + " got Dysentery <br>")
   } else if (num === 2 && this.illness.includes("Gonorrhea") == false) {
     this.illness.push("Gonorrhea")
-    $("#ongoing-events").prepend(this.name + " got Gonorrhea <br>")
+    $(".ongoing-events").prepend(this.name + " got Gonorrhea <br>")
   } else if (num === 3 && this.illness.includes("Yellow Fever") == false) {
     this.illness.push("Yellow Fever")
-    $("#ongoing-events").prepend(this.name + " got Yellow Fever <br>")
+    $(".ongoing-events").prepend(this.name + " got Yellow Fever <br>")
   } else if (num === 4 && this.illness.includes("Pertussis") == false) {
     this.illness.push("Pertussis")
-    $("#ongoing-events").prepend(this.name + " got Pertussis <br>")
+    $(".ongoing-events").prepend(this.name + " got Pertussis <br>")
   } else if (num === 5 && this.illness.includes("Broken Arm") == false){
     this.illness.push("Broken Arm")
-    $("#ongoing-events").prepend(this.name + " got a Broken Arm <br>")
+    $(".ongoing-events").prepend(this.name + " got a Broken Arm <br>")
   }
 }
 //illness checker
@@ -147,7 +147,7 @@ function positiveEvent() {
 function neutralEvent() {
   var num = Math.floor(Math.random() * Math.floor(5))
   if (num === 1) {
-    $(".ongoing-events").prepend("One of you ox was pregnant and gave birth. The baby died and she is sad, but continues on. <br>")
+    $(".ongoing-events").prepend("One of you oxen was pregnant and gave birth. The baby died and she is sad, but continues on. <br>")
   } else if (num === 2) {
     $(".ongoing-events").prepend("You get a letter from home. <br>")
   } else if (num === 3) {
@@ -164,13 +164,13 @@ function negativeEvent() {
   var ranSupplyDecrease = Math.floor(Math.random() * (200 - 100) + 100)
   var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
   if (num === 1) {
-    $(".ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. Unfortunately the lake was full of phirranas. <br>" + wagon.characters[index].name + " got hurt! <br>")
+    $(".ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. Unfortunately the lake was full of piranhas. <br>" + wagon.characters[index].name + " got hurt! <br>")
     wagon.characters[index].health -= 10
   } else if (num === 2 && wagon.characters[index].illness.includes("Gonorrhea") == false) {
-    $(".ongoing-events").prepend("You find a small bunny and decide to keep it. The bunny bites" + wagon.characters[index].name + "." + wagon.characters[index].name + "has gonorrhea.")
+    $(".ongoing-events").prepend("You find a small bunny and decide to keep it. The bunny bites " + wagon.characters[index].name + "." + wagon.characters[index].name + " has gonorrhea.<br>")
     wagon.characters[index].illness.push("Gonorrhea")
   } else if (num === 3) {
-    $(".ongoing-events").prepend("Your party is ambush, they hold you hostage and take some of your food. <br>")
+    $(".ongoing-events").prepend("Your party is ambushed, they hold you hostage and take some of your food. <br>")
     wagon.food -= ranSupplyDecrease
     wagon.days += index
   } else if (num === 4) {
@@ -195,13 +195,13 @@ function deathEvent() {
   var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
   if (num === 1 && wagon.characters[index].health < 65) {
     buildModal(num);
-    $(".ongoing-events").prepend(wagon.characters[index].name + " has been shot and killed by Dick Chenney while straying away from the party.")
+    $(".ongoing-events").prepend(wagon.characters[index].name + " has been shot and killed by Dick Cheney while straying away from the party.<br>")
      $("#myModal").toggle();
     wagon.characters[index].health = 0
     wagon.characters[index].status = "Dead"
   } else if (num === 2 && wagon.characters[index].illness.includes("Dysentery") == true && wagon.characters[index].health < 65) {
     buildModal(num);
-    $(".ongoing-events").prepend(wagon.characters[index].name + " wakes up screaming in the middle of their nap. They hunch over and fall to the ground. Their chest bursts open and the creature inside jumps out and attacks " + wagon.characters[0].name + " with acid and scurries off into the wilderness. " + wagon.characters[index].name + " is dead." )
+    $(".ongoing-events").prepend(wagon.characters[index].name + " wakes up screaming in the middle of their nap. They hunch over and fall to the ground. Their chest bursts open and the creature inside jumps out and attacks " + wagon.characters[0].name + " with acid and scurries off into the wilderness.<br>" + wagon.characters[index].name + " is dead." )
     $("#myModal").toggle();
     wagon.characters[index].health = 0
     wagon.characters[index].status = "Dead"
@@ -209,19 +209,19 @@ function deathEvent() {
     wagon.characters[0].illness.push("Acid Burns")
   } else if (num === 3 && wagon.characters[index].health < 65 ) {
     buildModal(num);
-    $(".ongoing-events").prepend(wagon.characters[index].name + " has developed Pica and has been secretly snackin' on the gold. They die of heavy metal toxicity. You lose 25% of your gold.")
+    $(".ongoing-events").prepend(wagon.characters[index].name + " has developed Pica and has been secretly snackin' on the gold. They die of heavy metal toxicity. You lose 25% of your gold.<br>")
     $("#myModal").toggle();
     wagon.money -= (wagon.money * 0.25)
     wagon.characters[index].health = 0
     wagon.characters[index].status = "Dead"
   } else if (num === 4) {
     buildModal(num);
-    $(".ongoing-events").prepend(wagon.characters[index].name + " got like stupid stoned the night before and ate a lot of food when their munchies kicked in.")
+    $(".ongoing-events").prepend(wagon.characters[index].name + " got like stupid stoned the night before and ate a lot of food when their munchies kicked in.<br>")
     $("#myModal").toggle();
     wagon.food -= (wagon.money * 0.5)
   } else if (num === 5 && wagon.characters[index].illness == "Gonorrhea") {
     buildModal(num);
-    $(".ongoing-events").prepend(wagon.characters[index].name  + " has also contracted chlymida and it has run rampant. They run off into the woods, never to be seen again.")
+    $(".ongoing-events").prepend(wagon.characters[index].name  + " has also contracted chlymida and it has run rampant. They run off into the woods, never to be seen again.<br>")
     $("#myModal").toggle();
     wagon.characters[index].health = 0
     wagon.characters[index].status = "Dead"
@@ -317,6 +317,7 @@ $(document).ready(function(){
     $('#player-four-status').text(char4.status);
     $('#player-five-status').text(char5.status);
     $('#wagon-food-remaining').text(wagon.food);
+    $('#wagon-money-remaining').text('you have: $' + wagon.money);
 
   });
 $("#subtotal").click(function(){

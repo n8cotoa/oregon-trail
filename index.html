@@ -64,8 +64,25 @@
     <!-- inital store screen -->
     <div id="store">
       <div class="store-fields">
+        <div class="store-titles">
         <h2>Mercantile</h2>
-        <div class="row">
+        <h3 id="wagon-money-remaining"></h3>
+        </div>
+        <div class="row" id="upper-store-fields">
+          <div class="col-md-3">
+            <p>Amount</p>
+          </div>
+          <div class="col-md-3">
+            <p>Item</p>
+          </div>
+          <div class="col-md-3">
+            <p>Cost</p>
+          </div>
+          <div class="col-md-3">
+            <p>Total</p>
+          </div>
+        </div>
+        <div class="row" id="lower-store-fields">
           <div class="col-md-3">
             <input type="text" name="food" placeholder="0">
           </div>
@@ -103,7 +120,7 @@
             </div>
           </div>
           <div id="ongoing-text-box">
-            <p class="ongoing-events"> ongoing prepended text for </p>
+            <p class="ongoing-events"></p>
           </div>
         </div>
         <div class="col-md-4">
