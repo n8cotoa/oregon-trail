@@ -200,6 +200,19 @@ Wagon.prototype.dayCounter = function() {
   this.days += 1
 }
 
+function storeSubTotal(food) {
+  var total = (food * 0.2)
+  return total
+}
+
+function storeBuy(food) {
+  wagon.food += food
+  wagon.money -= (food * 0.2)
+
+  var total = (food * 0.2)
+  return total
+}
+
 $(document).ready(function(){
   var x = 1;
   $('#wagon-images').addClass('sky1');
@@ -239,16 +252,29 @@ $(document).ready(function(){
     $('#wagon-food-remaining').text(wagon.food);
 
   });
+$("#subtotal").click(function(){
+  var buyFood = parseInt($("#store input").val())
+  $(".store-total").text("$ " + storeSubTotal(buyFood))
+});
+
 $("#storeBTN").click(function(){
   $("#store").fadeOut(500);
   $("#gameMainScreen").delay(500).fadeIn(500);
+  var buyFood = parseInt($("#store input").val())
+  storeBuy(buyFood)
+  $('#wagon-food-remaining').text(wagon.food);
   /* button will eventually add items to wagon's inventory count. presently hardcoded, so, no effect */
 });
 
   $("#continue-button").click(function(){
-
-    // turn()
-    console.log("working!")
+    wagon.turn()
+    $('#player-one-status').text(char1.status);
+    $('#player-two-status').text(char2.status);
+    $('#player-three-status').text(char3.status);
+    $('#player-four-status').text(char4.status);
+    $('#player-five-status').text(char5.status);
+    $('#wagon-food-remaining').text(wagon.food);
+    console.log(wagon)
     if (x < 4) {
       $('#wagon-' + x).toggle();
       $('#wagon-images').removeClass('sky' + x);
@@ -264,7 +290,13 @@ $("#storeBTN").click(function(){
     }
   });
 
-  $("#continue-btn").click(function(){
-    turn()
+  $("#rest-button").click(function(){
+    wagon.rest()
+    $('#player-one-status').text(char1.status);
+    $('#player-two-status').text(char2.status);
+    $('#player-three-status').text(char3.status);
+    $('#player-four-status').text(char4.status);
+    $('#player-five-status').text(char5.status);
+    $('#wagon-food-remaining').text(wagon.food);
   });
 });
