@@ -258,7 +258,7 @@ Wagon.prototype.profession = function() {
 
 function storeSubTotal(food) {
   var total = (food * 0.2)
-  return total
+  return total.toFixed(2)
 }
 
 function storeBuy(food) {
