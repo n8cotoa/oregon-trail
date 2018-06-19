@@ -48,7 +48,7 @@ Character.prototype.illnessChecker = function() {
 
 //food checker
 Wagon.prototype.foodChecker = function() {
-  if (this.food === 0) {
+  if (this.food <= 0) {
     wagon.characters.forEach(function(char){
       char.health -= 10
     });
@@ -100,12 +100,14 @@ Wagon.prototype.turn = function() {
   }
   // function for resting -- cure illness, gain some health
 Wagon.prototype.rest = function() {
+  wagon.foodChecker()
   wagon.characters.forEach(function(char){
     char.illness.splice(0, 1)
     if (char.health < 99) {
     char.health += 2
     }
     char.statusAdjuster()
+    char.illnessChecker()
   });
   wagon.food -= (wagon.characters.length * 5 )
   this.days += 1
@@ -201,7 +203,9 @@ function buildModal(value) {
     '</div>'
   )
 }
-
+//Push text to class .button-content
+//Option 1 button - id #option1-button
+//Option 2 button - id #option2-button
 function landmarkEvent() {
 var num = wagon.distance
 console.log(num);
@@ -447,6 +451,7 @@ $("#back-button").click(function(){
 
   $('#hunt-button').click(function(){
     wagon.huntingTime()
+    wagon.foodChecker()
     $('#player-one-status').text(char1.status);
     $('#player-two-status').text(char2.status);
     $('#player-three-status').text(char3.status);
