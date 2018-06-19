@@ -84,6 +84,7 @@ Character.prototype.statusAdjuster = function() {
 //calculates potential illnesses
 Wagon.prototype.turn = function() {
   wagon.eventGrabber()
+  landmarkEvent()
   wagon.characters.forEach(function(char){
     char.illnessGenerator()
     char.illnessChecker() //reduces health if infected
@@ -206,17 +207,21 @@ var num = wagon.distance
 console.log(num);
   if (num === 100) {
     buildModal(num)
-    $(".ongoing-events").prepend("You have reached a river. You can choose to go across the river. <br>")
+    $(".ongoing-events").prepend("You have reached a river. You can choose to risk supplies and your party to cross the river or take 7 days to go around. <br>")
     $("#myModal").toggle();
+    wagon.days += 7
   } else if (num === 200) {
-    $(".ongoing-events").prepend("You get a letter from home. <br>")
+    $(".ongoing-events").prepend("Your party has come across a camp, make a selection for what you would like to buy. <br>")
+    $("#store").fadeIn(500);
+    $("#gameMainScreen").delay(500).fadeOut(500);
   } else if (num === 300) {
     $(".ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. <br>")
   } else if (num === 400) {
     $(".ongoing-events").prepend("You find a small bunny and decide to keep it (not as food, what's wrong with you.) <br>")
   } else if (num === 500){
-    alert("You have won the game!")
+    buildModal(num)
     $(".ongoing-events").prepend("WINNER! <br>")
+    $("#myModal").toggle();
   }
 }
 
@@ -296,19 +301,19 @@ function storeSubTotal(food, bullets) {
 }
 
 function storeBuy(food, bullets) {
-    wagon.food += food
-    wagon.money -= (food * 0.2)
-    wagon.bullets += bullets
-    wagon.money -= (bullets * 0.2)
+    wagon.food + food
+    wagon.money - (food * 0.2)
+    wagon.bullets + bullets
+    wagon.money - (bullets * 0.2)
     var total = ((food * 0.2) + (bullets * 0.1))
 
-    if (total == NaN || isNaN(total)) {
+    if (total == NaN || isNaN(total) || wagon.money < total) {
       console.log(total);
       $("#store").effect("shake", {times:3}, 700);
     }
     else {
-      wagon.food += food
-      wagon.money -= (food * 0.2)
+      wagon.food + food
+      wagon.money - (food * 0.2)
       $("#store").fadeOut(500);
       $("#gameMainScreen").delay(500).fadeIn(500);
       return total
@@ -402,9 +407,9 @@ $("#back-button").click(function(){
 
   $("#continue-button").click(function(){
     wagon.turn()
+    landmarkEvent()
     wagon.foodChecker()
     wagon.deathChecker()
-    landmarkEvent()
     $('#player-one-status').text(char1.status);
     $('#player-two-status').text(char2.status);
     $('#player-three-status').text(char3.status);
