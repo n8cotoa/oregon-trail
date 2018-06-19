@@ -58,6 +58,7 @@ Wagon.prototype.deathChecker = function() {
     if (char.health <= 0) {
       var index = wagon.characters.indexOf(char)
       wagon.characters.splice(index, 1)
+      char.status = "Dead"
     }
   })
   if (wagon.characters.length === 0) {
