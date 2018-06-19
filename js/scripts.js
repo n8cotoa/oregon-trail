@@ -16,8 +16,6 @@ function Wagon() {
 Character.prototype.illnessGenerator = function() {
   var num = Math.floor(Math.random() * Math.floor(80))
   if (num === 1 && this.illness.includes("Dysentery") == false ) {
-    console.log(this.illness);
-    console.log(num);
     this.illness.push("Dysentery")
     $("#ongoing-events").prepend(this.name + " got Dysentery <br>")
   } else if (num === 2 && this.illness.includes("Gonorrhea") == false) {
@@ -82,7 +80,6 @@ Character.prototype.statusAdjuster = function() {
 Wagon.prototype.turn = function() {
   wagon.eventGrabber()
   wagon.characters.forEach(function(char){
-    console.log(char);
     char.illnessGenerator()
     char.illnessChecker() //reduces health if infected
     char.statusAdjuster() //updates status on screen based on health
@@ -215,6 +212,11 @@ function deathEvent() {
 //Hunting
 Wagon.prototype.huntingTime = function() {
   this.food += Math.floor(Math.random() * Math.floor(150))
+  this.days += 1
+  wagon.characters.forEach(function(char){
+    char.illnessChecker() //reduces health if infected
+    char.statusAdjuster() //updates status on screen based on health
+  });
 }
 //Profession checker
 Wagon.prototype.profession = function() {
@@ -329,6 +331,17 @@ $("#storeBTN").click(function(){
 
   $("#rest-button").click(function(){
     wagon.rest()
+    $('#player-one-status').text(char1.status);
+    $('#player-two-status').text(char2.status);
+    $('#player-three-status').text(char3.status);
+    $('#player-four-status').text(char4.status);
+    $('#player-five-status').text(char5.status);
+    $('#wagon-food-remaining').text(wagon.food);
+    $('.current-date').text(wagon.days);
+  });
+
+  $('#hunt-button').click(function(){
+    wagon.huntingTime()
     $('#player-one-status').text(char1.status);
     $('#player-two-status').text(char2.status);
     $('#player-three-status').text(char3.status);
