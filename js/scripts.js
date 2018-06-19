@@ -85,14 +85,14 @@ Wagon.prototype.turn = function() {
     char.illnessChecker() //reduces health if infected
     char.statusAdjuster() //updates status on screen based on health
   });
-  if (wagon.food > 0) {
-  wagon.food -= (wagon.characters.length * 5 )
-} else if (wagon.food <= 0) {
-  wagon.food = 0
-}
-  this.days += 1
-}
-// function for resting -- cure illness, gain some health
+    if (wagon.food > 0) {
+    wagon.food -= (wagon.characters.length * 5 )
+  } else if (wagon.food <= 0) {
+    wagon.food = 0
+  }
+    this.days += 1
+  }
+  // function for resting -- cure illness, gain some health
 Wagon.prototype.rest = function() {
   wagon.characters.forEach(function(char){
     char.illness.splice(0, 1)
@@ -104,7 +104,7 @@ Wagon.prototype.rest = function() {
   wagon.food -= (wagon.characters.length * 5 )
   this.days += 1
 }
-//event grabber
+  //event grabber
 Wagon.prototype.eventGrabber = function() {
   var num = Math.floor(Math.random() * Math.floor(100))
   if (num >= 80) {
@@ -121,7 +121,7 @@ Wagon.prototype.eventGrabber = function() {
     //call death event
   }
 }
-
+  //random positiveEvent
 function positiveEvent() {
   var num = Math.floor(Math.random() * Math.floor(5))
   var ranSupplyIncrease = Math.floor(Math.random() * (200 - 100) + 100)
@@ -143,7 +143,7 @@ function positiveEvent() {
     wagon.food += ranSupplyIncrease
   }
 }
-
+  //random neutralEvent
 function neutralEvent() {
   var num = Math.floor(Math.random() * Math.floor(5))
   if (num === 1) {
@@ -158,7 +158,7 @@ function neutralEvent() {
     $(".ongoing-events").prepend("A member of your party explores their sexuality with a neighbor boy. <br>")
   }
 }
-
+  //random negativeEvent
 function negativeEvent() {
   var num = Math.floor(Math.random() * Math.floor(5))
   var ranSupplyDecrease = Math.floor(Math.random() * (200 - 100) + 100)
@@ -262,17 +262,41 @@ Wagon.prototype.profession = function(input) {
 }
 
 function storeSubTotal(food) {
+  console.log(food);
   var total = (food * 0.2)
-  return total
+  return total.toFixed(2)
 }
 
 function storeBuy(food) {
-  wagon.food += food
-  wagon.money -= (food * 0.2)
-
-  var total = (food * 0.2)
-  return total
+    wagon.food += food
+    wagon.money -= (food * 0.2)
+    var total = (food * 0.2)
+    if (total == NaN || isNaN(total)) {
+      console.log(total);
+      $("#store").effect("shake", {times:3}, 700);
+    }
+    else {
+      $("#store").fadeOut(500);
+      $("#gameMainScreen").delay(500).fadeIn(500);
+      return total
+  }
 }
+
+function validateNames(profession, playerOne, playerTwo, playerThree, playerFour, playerFive) {
+  if (profession === undefined || playerOne === "" || playerTwo === "" || playerThree === "" || playerFour === "" || playerFive === "") {
+    $("#charNameInput").effect("shake", {times:3}, 700);
+    $("#profession").effect("shake", {times:3}, 700)
+  } else {
+    $("#characterInput").fadeOut(500);
+    $("#store").delay(500).fadeIn(500);
+  }
+}
+
+// function validateStore(money){
+//   if (money === NaN || isNaN(money)) {
+//     $("#store").effect("shake", {times:3}, 700);
+//   }
+// }
 
 $(document).ready(function(){
   var x = 1;
@@ -301,6 +325,7 @@ $(document).ready(function(){
     var playerFiveName = $("#char5").val()
     var professionValue = $("input:radio[name=profession]:checked").val()
 
+    validateNames(professionValue, playerOneName, playerTwoName, playerThreeName, playerFourName, playerFiveName)
     char1 = new Character(playerOneName)
     char2 = new Character(playerTwoName)
     char3 = new Character(playerThreeName)
@@ -308,9 +333,11 @@ $(document).ready(function(){
     char5 = new Character(playerFiveName)
     wagon = new Wagon()
     wagon.characters.push(char1, char2, char3, char4, char5)
+
     wagon.profession(professionValue)
     $("#characterInput").fadeOut(500);
     $("#store").delay(500).fadeIn(500);
+
     $('#player-one-name').text(char1.name);
     $('#player-two-name').text(char2.name);
     $('#player-three-name').text(char3.name);
@@ -325,18 +352,16 @@ $(document).ready(function(){
     $('#wagon-money-remaining').text('you have: $' + wagon.money);
 
   });
-$("#subtotal").click(function(){
-  var buyFood = parseInt($("#store input").val())
-  $(".store-total").text("$ " + storeSubTotal(buyFood))
-});
+  $("#subtotal").click(function(){
+    var buyFood = parseInt($("#store input").val())
+    $(".store-total").text("$ " + storeSubTotal(buyFood))
+  });
 
-$("#storeBTN").click(function(){
-  $("#store").fadeOut(500);
-  $("#gameMainScreen").delay(500).fadeIn(500);
-  var buyFood = parseInt($("#store input").val())
-  storeBuy(buyFood)
-  $('#wagon-food-remaining').text(wagon.food);
-});
+  $("#storeBTN").click(function(){
+    var buyFood = parseInt($("#store input").val())
+    storeBuy(buyFood)
+    $('#wagon-food-remaining').text(wagon.food);
+  });
 
 $("#preCheckout").click(function(){
   storeModal();
@@ -374,6 +399,7 @@ $("#back-button").click(function(){
       $('#wagon-images').addClass('sky' + x);
     }
   });
+
   $("#rest-button").click(function(){
     wagon.rest()
     $('#player-one-status').text(char1.status);
