@@ -211,14 +211,17 @@ console.log(num);
     $("#myModal").toggle();
     wagon.days += 7
   } else if (num === 200) {
-    $(".ongoing-events").prepend("You get a letter from home. <br>")
+    $(".ongoing-events").prepend("Your party has come across a camp, make a selection for what you would like to buy. <br>")
+    $("#store").fadeIn(500);
+    $("#gameMainScreen").delay(500).fadeOut(500);
   } else if (num === 300) {
     $(".ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. <br>")
   } else if (num === 400) {
     $(".ongoing-events").prepend("You find a small bunny and decide to keep it (not as food, what's wrong with you.) <br>")
   } else if (num === 500){
-    alert("You have won the game!")
+    buildModal(num)
     $(".ongoing-events").prepend("WINNER! <br>")
+    $("#myModal").toggle();
   }
 }
 
