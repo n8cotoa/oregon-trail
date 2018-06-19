@@ -409,7 +409,6 @@ $("#back-button").click(function(){
 
   $("#continue-button").click(function(){
     wagon.turn()
-    landmarkEvent()
     wagon.foodChecker()
     wagon.deathChecker()
     $('#player-one-status').text(char1.status);
