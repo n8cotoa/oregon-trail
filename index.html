@@ -89,9 +89,9 @@
             <p>Total</p>
           </div>
         </div>
-        <div class="row" id="lower-store-fields">
+        <div class="row" id="food-fields">
           <div class="col-md-3">
-            <input type="text" name="food" placeholder="0">
+            <input type="number" name="food" placeholder="0">
           </div>
           <div class="col-md-3">
             <p>Pounds of Food</p>
@@ -100,12 +100,27 @@
             <p>$0.20</p>
           </div>
           <div class="col-md-3">
-            <p class="store-total"></p>
+            <p class="food-total"></p>
+          </div>
+        </div>
+        <div class="row" id="bullet-fields">
+          <div class="col-md-3">
+            <input type="number" name="bullets" placeholder="0">
+          </div>
+          <div class="col-md-3">
+            <p>Bullets</p>
+          </div>
+          <div class="col-md-3">
+            <p>$0.10</p>
+          </div>
+          <div class="col-md-3">
+            <p class="bullet-total"></p>
           </div>
         </div>
         <span id="back-button" class="btn btn-danger">Back</span>
         <span id="subtotal" class="btn btn-warning">Sub-Total</span>
         <span id="storeBTN" class="btn btn-success">Buy</span>
+        <p class="store-total"></p>
       </div>
     </div>
     <!-- main gameplay screen -->
@@ -142,7 +157,9 @@
               <li><span id="player-four-name"></span>: <span id="player-four-status"></span></li>
               <li><span id="player-five-name"></span>: <span id="player-five-status"></span></li>
             </ul>
-            <p class="bold" >Food left: <span id="wagon-food-remaining"></span></p>
+            <p class="bold"> Food left: <span id="wagon-food-remaining"></span></p>
+            <p class="bold"> Bullets left: <span id="wagon-bullets-remaining"></span></p>
+            <p class="bold"> Money left: <span id="wagon-money-remaining"></span></p>
           </div>
           <span id="rest-button" class="btn btn-success">Rest</span>
           <span id="continue-button" class="btn btn-success">Continue</span>

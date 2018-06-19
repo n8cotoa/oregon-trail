@@ -10,8 +10,10 @@ function Wagon() {
   this.food = 0;
   this.money = 500;
   this.days = 0;
-  this.characters = []
-  this.distance = 0
+  this.characters = [];
+  this.bullets = 0;
+  this.distance = 0;
+
 }
 // illness generator
 Character.prototype.illnessGenerator = function() {
@@ -285,14 +287,21 @@ Wagon.prototype.profession = function(input) {
   }
 }
 
-function storeSubTotal(food) {
+function storeSubTotal(food, bullets) {
   console.log(food);
-  var total = (food * 0.2)
+  var total = (food * 0.2) + (bullets * 0.1);
+  $('.food-total').text((food * 0.2).toFixed(2));
+  $('.bullet-total').text((bullets * 0.1).toFixed(2));
   return total.toFixed(2)
 }
 
-function storeBuy(food) {
-    var total = (food * 0.2)
+function storeBuy(food, bullets) {
+    wagon.food += food
+    wagon.money -= (food * 0.2)
+    wagon.bullets += bullets
+    wagon.money -= (bullets * 0.2)
+    var total = ((food * 0.2) + (bullets * 0.1))
+
     if (total == NaN || isNaN(total)) {
       console.log(total);
       $("#store").effect("shake", {times:3}, 700);
@@ -369,13 +378,15 @@ $(document).ready(function(){
 
   });
   $("#subtotal").click(function(){
-    var buyFood = parseInt($("#store input").val())
-    $(".store-total").text("$ " + storeSubTotal(buyFood))
+    var buyFood = parseInt($("#food-fields input").val())
+    var buyBullets = parseInt($("#bullet-fields input").val())
+    $(".store-total").text("$ " + storeSubTotal(buyFood, buyBullets))
   });
 
   $("#storeBTN").click(function(){
-    var buyFood = parseInt($("#store input").val())
-    storeBuy(buyFood)
+    var buyFood = parseInt($("#food-fields input").val())
+    var buyBullets = parseInt($("#bullet-fields input").val())
+    storeBuy(buyFood, buyBullets)
     $('#wagon-food-remaining').text(wagon.food);
   });
 
