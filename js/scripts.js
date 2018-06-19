@@ -11,6 +11,7 @@ function Wagon() {
   this.money = 500;
   this.days = 0;
   this.characters = []
+  this.distance = 0
 }
 // illness generator
 Character.prototype.illnessGenerator = function() {
@@ -268,14 +269,14 @@ function storeSubTotal(food) {
 }
 
 function storeBuy(food) {
-    wagon.food += food
-    wagon.money -= (food * 0.2)
     var total = (food * 0.2)
     if (total == NaN || isNaN(total)) {
       console.log(total);
       $("#store").effect("shake", {times:3}, 700);
     }
     else {
+      wagon.food += food
+      wagon.money -= (food * 0.2)
       $("#store").fadeOut(500);
       $("#gameMainScreen").delay(500).fadeIn(500);
       return total
@@ -335,8 +336,6 @@ $(document).ready(function(){
     wagon.characters.push(char1, char2, char3, char4, char5)
 
     wagon.profession(professionValue)
-    $("#characterInput").fadeOut(500);
-    $("#store").delay(500).fadeIn(500);
 
     $('#player-one-name').text(char1.name);
     $('#player-two-name').text(char2.name);
