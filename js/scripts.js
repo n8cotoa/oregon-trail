@@ -5,6 +5,12 @@ function Character(name) {
   this.status = "good"
   this.illness = []
 }
+// date constructor
+// function Date() {
+//   this.month = month
+//   this.days
+//   this.year = 1811
+// }
 // wagon/inventory constructor
 function Wagon() {
   this.food = 0;
@@ -17,19 +23,19 @@ Character.prototype.illnessGenerator = function() {
   var num = Math.floor(Math.random() * Math.floor(80))
   if (num === 1 && this.illness.includes("Dysentery") == false ) {
     this.illness.push("Dysentery")
-    $("#ongoing-events").prepend(this.name + " got Dysentery <br>")
+    $(".ongoing-events").prepend(this.name + " got Dysentery <br>")
   } else if (num === 2 && this.illness.includes("Gonorrhea") == false) {
     this.illness.push("Gonorrhea")
-    $("#ongoing-events").prepend(this.name + " got Gonorrhea <br>")
+    $(".ongoing-events").prepend(this.name + " got Gonorrhea <br>")
   } else if (num === 3 && this.illness.includes("Yellow Fever") == false) {
     this.illness.push("Yellow Fever")
-    $("#ongoing-events").prepend(this.name + " got Yellow Fever <br>")
+    $(".ongoing-events").prepend(this.name + " got Yellow Fever <br>")
   } else if (num === 4 && this.illness.includes("Pertussis") == false) {
     this.illness.push("Pertussis")
-    $("#ongoing-events").prepend(this.name + " got Pertussis <br>")
+    $(".ongoing-events").prepend(this.name + " got Pertussis <br>")
   } else if (num === 5 && this.illness.includes("Broken Arm") == false){
     this.illness.push("Broken Arm")
-    $("#ongoing-events").prepend(this.name + " got a Broken Arm <br>")
+    $(".ongoing-events").prepend(this.name + " got a Broken Arm <br>")
   }
 }
 //illness checker
@@ -269,7 +275,33 @@ function storeBuy(food) {
   return total
 }
 
+function validateNames(playerOne, playerTwo, playerThree, playerFour, playerFive) {
+  if (playerOne === "" || playerTwo === "" || playerThree === "" || playerFour === "" || playerFive === "") {
+    for (var i = 0; i < 6; i++) {
+      $("#char" + i).effect("shake", {times:3}, 700);
+    }
+  } else {
+    $("#characterInput").fadeOut(500);
+    $("#store").delay(500).fadeIn(500);
+  }
+}
+
+// function disableCharBtn() {
+//   $("#characterBTN").css('pointer-events', 'none')
+//   $("#characterBTN").css('background-color', 'grey')
+// }
+//
+// function enableCharBtn() {
+//   $("#characterBTN").css('pointer-events', 'auto')
+//   $("#characterBTN").css('background-color', 'green')
+// }
+
 $(document).ready(function(){
+  // disableCharBtn()
+  // $("input:checkbox[name=profession], #char1, #char2, #char3, #char4, #char5").click(function(){
+  // validateNames() ? enableCharBtn() : disableCharBtn();
+  // });
+
   var x = 1;
   $('#wagon-images').addClass('sky1');
 
@@ -294,7 +326,7 @@ $(document).ready(function(){
     var playerThreeName = $("#char3").val()
     var playerFourName = $("#char4").val()
     var playerFiveName = $("#char5").val()
-
+    validateNames(playerOneName, playerTwoName, playerThreeName, playerFourName, playerFiveName)
     char1 = new Character(playerOneName)
     char2 = new Character(playerTwoName)
     char3 = new Character(playerThreeName)
@@ -304,8 +336,6 @@ $(document).ready(function(){
 
     wagon.characters.push(char1, char2, char3, char4, char5)
     wagon.profession()
-    $("#characterInput").fadeOut(500);
-    $("#store").delay(500).fadeIn(500);
     $('#player-one-name').text(char1.name);
     $('#player-two-name').text(char2.name);
     $('#player-three-name').text(char3.name);
@@ -317,20 +347,19 @@ $(document).ready(function(){
     $('#player-four-status').text(char4.status);
     $('#player-five-status').text(char5.status);
     $('#wagon-food-remaining').text(wagon.food);
-
   });
-$("#subtotal").click(function(){
-  var buyFood = parseInt($("#store input").val())
-  $(".store-total").text("$ " + storeSubTotal(buyFood))
-});
+  $("#subtotal").click(function(){
+    var buyFood = parseInt($("#store input").val())
+    $(".store-total").text("$ " + storeSubTotal(buyFood))
+  });
 
-$("#storeBTN").click(function(){
-  $("#store").fadeOut(500);
-  $("#gameMainScreen").delay(500).fadeIn(500);
-  var buyFood = parseInt($("#store input").val())
-  storeBuy(buyFood)
-  $('#wagon-food-remaining').text(wagon.food);
-});
+  $("#storeBTN").click(function(){
+    $("#store").fadeOut(500);
+    $("#gameMainScreen").delay(500).fadeIn(500);
+    var buyFood = parseInt($("#store input").val())
+    storeBuy(buyFood)
+    $('#wagon-food-remaining').text(wagon.food);
+  });
 
   $("#continue-button").click(function(){
     wagon.turn()
@@ -358,6 +387,7 @@ $("#storeBTN").click(function(){
       $('#wagon-images').addClass('sky' + x);
     }
   });
+
   $("#rest-button").click(function(){
     wagon.rest()
     $('#player-one-status').text(char1.status);
