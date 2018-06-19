@@ -66,6 +66,7 @@ Wagon.prototype.deathChecker = function() {
     alert("Game Over! You killed everyone. Great job...")
   }
 }
+
 //status adjuster
 Character.prototype.statusAdjuster = function() {
   if (this.health >= 80) {
@@ -105,24 +106,6 @@ Wagon.prototype.rest = function() {
   });
   wagon.food -= (wagon.characters.length * 5 )
   this.days += 1
-}
-
-Wagon.prototype.distanceChecker = function () {
-  //landmarkEvent for distance traveled
-  function landmarkEvent() {
-  var num = wagon.distance
-    if (num === 100) {
-      $(".ongoing-events").prepend("One of you oxen was pregnant and gave birth. The baby died and she is sad, but continues on. <br>")
-    } else if (num === 200) {
-      $(".ongoing-events").prepend("You get a letter from home. <br>")
-    } else if (num === 300) {
-      $(".ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. <br>")
-    } else if (num === 400) {
-      $(".ongoing-events").prepend("You find a small bunny and decide to keep it (not as food, what's wrong with you.) <br>")
-    } else if (num === 500){
-      $(".ongoing-events").prepend("A member of your party explores their sexuality with a neighbor boy. <br>")
-    }
-  }
 }
 
   //event grabber
@@ -203,6 +186,25 @@ function negativeEvent() {
     wagon.food -= ranSupplyDecrease
   }
 }
+//landmarkEvent for distance traveled
+
+  function landmarkEvent() {
+  var num = wagon.distance
+  console.log(num);
+    if (num === 100) {
+      console.log("event has been reached");
+      $(".ongoing-events").prepend("You have reached a river. You can choose to go across the river.  <br>")
+    } else if (num === 200) {
+      $(".ongoing-events").prepend("You get a letter from home. <br>")
+    } else if (num === 300) {
+      $(".ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. <br>")
+    } else if (num === 400) {
+      $(".ongoing-events").prepend("You find a small bunny and decide to keep it (not as food, what's wrong with you.) <br>")
+    } else if (num === 500){
+      alert("You have won the game!")
+      $(".ongoing-events").prepend("WINNER! <br>")
+    }
+  }
 
 function storeModal() {
   $('.modal-child').html('<div id="popup-text"><h2>Here is what is in your cart currently</h2><span id="wagon-food-remaining"></span></div>' + wagon.money + '<span id="back-button" class="btn btn-danger">Back</span></div>')
@@ -313,12 +315,6 @@ function validateNames(profession, playerOne, playerTwo, playerThree, playerFour
   }
 }
 
-// function validateStore(money){
-//   if (money === NaN || isNaN(money)) {
-//     $("#store").effect("shake", {times:3}, 700);
-//   }
-// }
-
 $(document).ready(function(){
   var x = 1;
   $('#wagon-images').addClass('sky1');
@@ -396,7 +392,7 @@ $("#back-button").click(function(){
     wagon.turn()
     wagon.foodChecker()
     wagon.deathChecker()
-    wagon.distanceChecker()
+    landmarkEvent()
     $('#player-one-status').text(char1.status);
     $('#player-two-status').text(char2.status);
     $('#player-three-status').text(char3.status);
