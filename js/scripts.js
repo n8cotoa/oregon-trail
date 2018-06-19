@@ -125,19 +125,19 @@ function positiveEvent() {
   var num = Math.floor(Math.random() * Math.floor(5))
   var ranSupplyIncrease = Math.floor(Math.random() * (200 - 100) + 100)
   if (num === 1) {
-    $("#ongoing-events").prepend("As you rest by the river, you find some gold. <br>")
+    $(".ongoing-events").prepend("As you rest by the river, you find some gold. <br>")
     wagon.money += ranSupplyIncrease
   } else if (num === 2) {
-    $("#ongoing-events").prepend("You come across an abandoned wagon, you find some unspoiled food <br>")
+    $(".ongoing-events").prepend("You come across an abandoned wagon, you find some unspoiled food <br>")
     wagon.food += ranSupplyIncrease
   } else if (num === 3) {
-    $("#ongoing-events").prepend("You found a wounded deer <br>")
+    $(".ongoing-events").prepend("You found a wounded deer <br>")
     wagon.food += ranSupplyIncrease
   } else if (num === 4) {
-    $("#ongoing-events").prepend("As you travel along, you come across a group of suckers. You got some free shit. <br>")
+    $(".ongoing-events").prepend("As you travel along, you come across a group of suckers. You got some free shit. <br>")
     wagon.money += ranSupplyIncrease
   } else if (num === 5){
-    $("#ongoing-events").prepend("You ambush and murder another party. We feast tonight. <br> You got " + ranSupplyIncrease + " pounds of food and " + (ranSupplyIncrease/2) + " dollars" )
+    $(".ongoing-events").prepend("You ambush and murder another party. We feast tonight. <br> You got " + ranSupplyIncrease + " pounds of food and " + (ranSupplyIncrease/2) + " dollars" )
     wagon.money += (ranSupplyIncrease/2)
     wagon.food += ranSupplyIncrease
   }
@@ -146,15 +146,15 @@ function positiveEvent() {
 function neutralEvent() {
   var num = Math.floor(Math.random() * Math.floor(5))
   if (num === 1) {
-    $("#ongoing-events").prepend("One of you ox was pregnant and gave birth. The baby died and she is sad, but continues on. <br>")
+    $(".ongoing-events").prepend("One of you ox was pregnant and gave birth. The baby died and she is sad, but continues on. <br>")
   } else if (num === 2) {
-    $("#ongoing-events").prepend("You get a letter from home. <br>")
+    $(".ongoing-events").prepend("You get a letter from home. <br>")
   } else if (num === 3) {
-    $("#ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. <br>")
+    $(".ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. <br>")
   } else if (num === 4) {
-    $("#ongoing-events").prepend("You find a small bunny and decide to keep it (not as food, what's wrong with you.) <br>")
+    $(".ongoing-events").prepend("You find a small bunny and decide to keep it (not as food, what's wrong with you.) <br>")
   } else if (num === 5){
-    $("#ongoing-events").prepend("A member of your party explores their sexuality with a neighbor boy. <br>")
+    $(".ongoing-events").prepend("A member of your party explores their sexuality with a neighbor boy. <br>")
   }
 }
 
@@ -163,52 +163,70 @@ function negativeEvent() {
   var ranSupplyDecrease = Math.floor(Math.random() * (200 - 100) + 100)
   var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
   if (num === 1) {
-    $("#ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. Unfortunately the lake was full of phirranas. <br>" + wagon.characters[index].name + " got hurt! <br>")
+    $(".ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. Unfortunately the lake was full of phirranas. <br>" + wagon.characters[index].name + " got hurt! <br>")
     wagon.characters[index].health -= 10
   } else if (num === 2 && wagon.characters[index].illness.includes("Gonorrhea") == false) {
-    $("#ongoing-events").prepend("You find a small bunny and decide to keep it. The bunny bites" + wagon.characters[index].name + "." + wagon.characters[index].name + "has gonorrhea.")
+    $(".ongoing-events").prepend("You find a small bunny and decide to keep it. The bunny bites" + wagon.characters[index].name + "." + wagon.characters[index].name + "has gonorrhea.")
     wagon.characters[index].illness.push("Gonorrhea")
   } else if (num === 3) {
-    $("#ongoing-events").prepend("Your party is ambush, they hold you hostage and take some of your food. <br>")
+    $(".ongoing-events").prepend("Your party is ambush, they hold you hostage and take some of your food. <br>")
     wagon.food -= ranSupplyDecrease
     wagon.days += index
   } else if (num === 4) {
-    $("#ongoing-events").prepend("Your wagon wheel broke, in the distance you hear Jesus Take The Wheel playing. <br>")
+    $(".ongoing-events").prepend("Your wagon wheel broke, in the distance you hear Jesus Take The Wheel playing. <br>")
     wagon.days += 5
     wagon.food -= ((wagon.characters.length * 5 ) * 5)
   } else if (num === 5){
-    $("#ongoing-events").prepend("Some of your food rots because " + wagon.characters[index].name + " wet themselves as they napped on it.")
+    $(".ongoing-events").prepend("Some of your food rots because " + wagon.characters[index].name + " wet themselves as they napped on it.")
     wagon.food -= ranSupplyDecrease
   }
+}
+
+function buildModal(value) {
+  $('.modal-child').html('<img src="img/' + value + '.jpg" alt="an image">' +
+    '<div id="popup-text" class="ongoing-events">' +
+    '</div>'
+  )
 }
 
 function deathEvent() {
   var num = Math.floor(Math.random() * Math.floor(5))
   var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
   if (num === 1 && wagon.characters[index].health < 65) {
-    $("#ongoing-events").prepend(wagon.characters[index].name + " has been shot and killed by Dick Chenney while straying away from the party.")
+    buildModal(num);
+    $(".ongoing-events").prepend(wagon.characters[index].name + " has been shot and killed by Dick Chenney while straying away from the party.")
+     $("#myModal").toggle();
     wagon.characters[index].health = 0
     wagon.characters[index].status = "Dead"
   } else if (num === 2 && wagon.characters[index].illness.includes("Dysentery") == true && wagon.characters[index].health < 65) {
-    $("#ongoing-events").prepend(wagon.characters[index].name + " wakes up screaming in the middle of their nap. They hunch over and fall to the ground. Their chest bursts open and the creature inside jumps out and attacks " + wagon.characters[0].name + " with acid and scurries off into the wilderness. " + wagon.characters[index].name + " is dead." )
+    buildModal(num);
+    $(".ongoing-events").prepend(wagon.characters[index].name + " wakes up screaming in the middle of their nap. They hunch over and fall to the ground. Their chest bursts open and the creature inside jumps out and attacks " + wagon.characters[0].name + " with acid and scurries off into the wilderness. " + wagon.characters[index].name + " is dead." )
+    $("#myModal").toggle();
     wagon.characters[index].health = 0
     wagon.characters[index].status = "Dead"
     wagon.characters[0].health -= 15
     wagon.characters[0].illness.push("Acid Burns")
   } else if (num === 3 && wagon.characters[index].health < 65 ) {
-    $("#ongoing-events").prepend(wagon.characters[index].name + " has developed Pica and has been secretly snackin' on the gold. They die of heavy metal toxicity. You lose 25% of your gold.")
+    buildModal(num);
+    $(".ongoing-events").prepend(wagon.characters[index].name + " has developed Pica and has been secretly snackin' on the gold. They die of heavy metal toxicity. You lose 25% of your gold.")
+    $("#myModal").toggle();
     wagon.money -= (wagon.money * 0.25)
     wagon.characters[index].health = 0
     wagon.characters[index].status = "Dead"
   } else if (num === 4) {
-    $("#ongoing-events").prepend(wagon.characters[index].name + " got like stupid stoned the night before and ate a lot of food when their munchies kicked in.")
+    buildModal(num);
+    $(".ongoing-events").prepend(wagon.characters[index].name + " got like stupid stoned the night before and ate a lot of food when their munchies kicked in.")
+    $("#myModal").toggle();
     wagon.food -= (wagon.money * 0.5)
   } else if (num === 5 && wagon.characters[index].illness == "Gonorrhea") {
-    $("#ongoing-events").prepend(wagon.characters[index].name  + " has also contracted chlymida and it has run rampant. They run off into the woods, never to be seen again.")
+    buildModal(num);
+    $(".ongoing-events").prepend(wagon.characters[index].name  + " has also contracted chlymida and it has run rampant. They run off into the woods, never to be seen again.")
+    $("#myModal").toggle();
     wagon.characters[index].health = 0
     wagon.characters[index].status = "Dead"
   }
 }
+
 //Hunting
 Wagon.prototype.huntingTime = function() {
   this.food += Math.floor(Math.random() * Math.floor(150))
@@ -253,6 +271,17 @@ function storeBuy(food) {
 $(document).ready(function(){
   var x = 1;
   $('#wagon-images').addClass('sky1');
+
+  // Get the modal
+  var modal = document.getElementById('myModal');
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementById('myModal');
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
 
   $("#startBTN").click(function(){
     $("#start").fadeOut(500);
@@ -328,7 +357,6 @@ $("#storeBTN").click(function(){
       $('#wagon-images').addClass('sky' + x);
     }
   });
-
   $("#rest-button").click(function(){
     wagon.rest()
     $('#player-one-status').text(char1.status);
