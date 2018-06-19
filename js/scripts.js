@@ -92,6 +92,7 @@ Wagon.prototype.turn = function() {
     wagon.food = 0
   }
     this.days += 1
+    this.distance += 10
   }
   // function for resting -- cure illness, gain some health
 Wagon.prototype.rest = function() {
@@ -105,6 +106,25 @@ Wagon.prototype.rest = function() {
   wagon.food -= (wagon.characters.length * 5 )
   this.days += 1
 }
+
+Wagon.prototype.distanceChecker = function () {
+  //landmarkEvent for distance traveled
+  function landmarkEvent() {
+  var num = wagon.distance
+    if (num === 100) {
+      $(".ongoing-events").prepend("One of you oxen was pregnant and gave birth. The baby died and she is sad, but continues on. <br>")
+    } else if (num === 200) {
+      $(".ongoing-events").prepend("You get a letter from home. <br>")
+    } else if (num === 300) {
+      $(".ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. <br>")
+    } else if (num === 400) {
+      $(".ongoing-events").prepend("You find a small bunny and decide to keep it (not as food, what's wrong with you.) <br>")
+    } else if (num === 500){
+      $(".ongoing-events").prepend("A member of your party explores their sexuality with a neighbor boy. <br>")
+    }
+  }
+}
+
   //event grabber
 Wagon.prototype.eventGrabber = function() {
   var num = Math.floor(Math.random() * Math.floor(100))
@@ -376,6 +396,7 @@ $("#back-button").click(function(){
     wagon.turn()
     wagon.foodChecker()
     wagon.deathChecker()
+    wagon.distanceChecker()
     $('#player-one-status').text(char1.status);
     $('#player-two-status').text(char2.status);
     $('#player-three-status').text(char3.status);
