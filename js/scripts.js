@@ -188,24 +188,6 @@ function negativeEvent() {
 }
 //landmarkEvent for distance traveled
 
-  function landmarkEvent() {
-  var num = wagon.distance
-  console.log(num);
-    if (num === 100) {
-      console.log("event has been reached");
-      $(".ongoing-events").prepend("You have reached a river. You can choose to go across the river.  <br>")
-    } else if (num === 200) {
-      $(".ongoing-events").prepend("You get a letter from home. <br>")
-    } else if (num === 300) {
-      $(".ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. <br>")
-    } else if (num === 400) {
-      $(".ongoing-events").prepend("You find a small bunny and decide to keep it (not as food, what's wrong with you.) <br>")
-    } else if (num === 500){
-      alert("You have won the game!")
-      $(".ongoing-events").prepend("WINNER! <br>")
-    }
-  }
-
 function storeModal() {
   $('.modal-child').html('<div id="popup-text"><h2>Here is what is in your cart currently</h2><span id="wagon-food-remaining"></span></div>' + wagon.money + '<span id="back-button" class="btn btn-danger">Back</span></div>')
 }
@@ -215,6 +197,25 @@ function buildModal(value) {
     '<div id="popup-text" class="ongoing-events">' +
     '</div>'
   )
+}
+
+function landmarkEvent() {
+var num = wagon.distance
+console.log(num);
+  if (num === 100) {
+    buildModal(num)
+    $(".ongoing-events").prepend("You have reached a river. You can choose to go across the river. <br>")
+    $("#myModal").toggle();
+  } else if (num === 200) {
+    $(".ongoing-events").prepend("You get a letter from home. <br>")
+  } else if (num === 300) {
+    $(".ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. <br>")
+  } else if (num === 400) {
+    $(".ongoing-events").prepend("You find a small bunny and decide to keep it (not as food, what's wrong with you.) <br>")
+  } else if (num === 500){
+    alert("You have won the game!")
+    $(".ongoing-events").prepend("WINNER! <br>")
+  }
 }
 
 function deathEvent() {
