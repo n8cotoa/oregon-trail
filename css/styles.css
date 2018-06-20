@@ -44,7 +44,7 @@ span {
   background: white;
   border: 4px double black;
   padding: 30px;
-  min-height: 599px;
+  min-height: 665px;
 }
 
 .store-titles {
@@ -311,8 +311,7 @@ img {
   position: relative;
 }
 
-#profession .tooltiptext,
-#faq .tooltiptext {
+#profession .tooltiptext {
   visibility: hidden;
   width: 190px;
   background-color: black;
@@ -324,6 +323,22 @@ img {
   margin-top: 15px;
   position: absolute;
   z-index: 1;
+}
+
+#faq .tooltiptext {
+  visibility: hidden;
+  width: 331px;
+  background-color: black;
+  color: #fff;
+  text-align: left;
+  border-radius: 0px 17px 17px 17px;
+  padding: 16px;
+  margin-left: 35px;
+  margin-top: 2px;
+  position: absolute;
+  z-index: 1;
+  font-weight: 300;
+  letter-spacing: 1px;
 }
 
 #radio1:hover .tooltiptext {
@@ -383,6 +398,30 @@ img {
 #faq img {
   width: 38px;
 }
+
+/*map*/
+
+#map {
+  background-image: url('../img/map.png');
+  background-size: cover;
+  min-height: 750px;
+  position: relative;
+}
+
+#map-background {
+  content:'\A';
+  position:absolute;
+  background:black;
+  top:0; bottom:0;
+  left:0;
+  width:50%;
+  z-index: -1;
+  min-height: 750px;
+}
+
+/*.ui-progressbar .ui-progressbar-value {
+    width: 0.1px;
+}*/
 
 /*confetti*/
 
