@@ -47,12 +47,15 @@ Character.prototype.illnessChecker = function() {
 }
 
 //food checker
-Wagon.prototype.foodChecker = function() {
+Wagon.prototype.resourceChecker = function() {
   if (this.food <= 0) {
     this.food = 0
     wagon.characters.forEach(function(char){
       char.health -= 10
     });
+  }
+  if (this.bullet <= 0) {
+    this.bullet = 0
   }
 }
 
@@ -66,9 +69,9 @@ Wagon.prototype.deathChecker = function() {
     }
   })
   if (wagon.characters.length === 0) {
-    buildModal("dead")
-    $(".endGame-content").prepend("Game Over! You killed everyone. Great job...")
-    $("#endGameModal").toggle();
+    buildEndModal("dead", "death", "Try Again")
+    $(".ongoing-events").prepend("Game Over! You killed everyone. Great job...")
+    $("#myModal").toggle();
   }
 }
 
@@ -106,7 +109,7 @@ Wagon.prototype.turn = function() {
   }
   // function for resting -- cure illness, gain some health
 Wagon.prototype.rest = function() {
-  wagon.foodChecker()
+  wagon.resourceChecker()
   wagon.characters.forEach(function(char){
     char.illness.splice(0, 1)
     if (char.health < 99) {
@@ -220,6 +223,16 @@ function buildModal(value) {
   )
 }
 
+function buildEndModal(value, btnID1, btn1Name) {
+  $('.modal-child').html('<img src="img/' + value + '.jpg" alt="an image">' +
+    '<div id="popup-text" class="button-content">' +
+    '<div class="buttons">' +
+    '<span id="'+ btnID1 + 'Button" class="btn btn-success">' + btn1Name +'</span>' +
+    '</div>' +
+    '</div>'
+  )
+}
+
 
 function buildLandmarkModal(value, btnID1, btnID2, btn1Name, btn2Name) {
   $('.modal-child').html('<img src="img/' + value + '.jpg" alt="an image">' +
@@ -240,12 +253,7 @@ Wagon.prototype.buildScore = function() {
 //Option 1 button - id #option1-button
 //Option 2 button - id #option2-button
 function landmarkEvent() {
-var num = wagon.distance
-// var hasBeenClicked = false;
-// $('#option1-button').click(function(){
-//   hasBeenClicked = true;
-// })
-console.log(num);
+  var num = wagon.distance
   if (num === 100) {
     buildLandmarkModal(num, "crossRiver", "detourRiver", "Cross River", "Detour")
     $(".button-content").prepend("You have reached a river. You can choose to risk supplies and your party to cross the river or take 7 days to go around. <br>")
@@ -256,35 +264,39 @@ console.log(num);
     $("#store").delay(500).fadeIn(500);
     $("#back-button").hide();
   } else if (num === 300) {
-    $(".button-content").prepend("Your party finds a small lake and decides to go for a swim. <br>")
+    buildLandmarkModal(num, "sacrifice", "flee", "Sacrifice", "Flee")
+    $(".button-content").prepend("As you travel along the trail you hear screams in the distance. You have no choice but to keep moving forward. When out of nowhere your wagon is surrounded by crazed cannibals. One of them steps forward and proclaims: 'I am George Donner, my family is hungry. Sacrifice one of your own and the rest are free to go on!' <br>")
+    $("#buttonModal").toggle();
   } else if (num === 400) {
     $(".button-content").prepend("You find a small bunny and decide to keep it (not as food, what's wrong with you.) <br>")
   } else if (num === 500){
-    buildModal(num)
+    buildEndModal(num, "win", "Play Again!")
     var endScore = wagon.buildScore()
-    $(".ongoing-events").html("<h4>WINNER!</h4> <br> Your score is: " + endScore);
-    $("#myModal").addClass('confetti');
-    $("#myModal").toggle();
+    $(".button-content").prepend("<h4>WINNER!</h4> <br> Your score is: " + endScore);
+    $("#buttonModal").addClass('confetti');
+    $("#buttonModal").toggle();
   }
 }
-
+//landmark 1 button events
 function detourRiver() {
   for(i=0; i < 8; i++) {
     wagon.characters.forEach(function(char){
       char.statusAdjuster()
       char.illnessChecker()
+      wagon.deathChecker()
     });
     wagon.days += 1
     wagon.food -= (wagon.characters.length * 5 )
+    wagon.resourceChecker()
   }
-  console.log("Detour");
-}
+  $(".ongoing-events").prepend("You spent seven days and went around the river. <br>")
+  // wagon.deathChecker()
 
+}
 function crossRiver() {
   var num = Math.floor(Math.random() * Math.floor(100))
   var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
   if (num > 50) {
-    console.log("Cross fail");
     wagon.characters[index].health -= 30
     wagon.food -= (wagon.food * 0.4)
     wagon.money -= (wagon.money * 0.2)
@@ -297,11 +309,37 @@ function crossRiver() {
       wagon.food -= (wagon.characters.length * 5 )
     }
   } else {
-    console.log("Cross success");
     wagon.days += 1
+    wagon.food -= (wagon.characters.length * 5 )
   }
 }
-
+// landmark 3 button events
+function sacrifice() {
+  var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
+  wagon.characters[index].health = 0
+  $(".ongoing-events").prepend(wagon.characters[index].name + " has been sacrificed, the rest of your party is free to go. <br>")
+  wagon.deathChecker()
+}
+function flee() {
+  var num = Math.floor(Math.random() * Math.floor(100))
+  var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
+  if (num > 50) {
+    wagon.characters[index].health = 0
+    $(".ongoing-events").prepend("George caught " + wagon.characters[index].name + " while trying to flee. We can only assume he was tasty af. <br>")
+    wagon.characters.forEach(function(char){
+      char.statusAdjuster()
+      char.illnessChecker()
+    });
+      wagon.days += 1
+      wagon.food -= (wagon.characters.length * 5 )
+  } else {
+    $(".ongoing-events").prepend("Everyone was lucky enough to escape unscathed. <br>")
+    wagon.days += 1
+    wagon.food -= (wagon.characters.length * 5 )
+  }
+  wagon.deathChecker()
+  wagon.resourceChecker()
+}
 function deathEvent() {
   var num = Math.floor(Math.random() * Math.floor(5))
   var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
@@ -341,7 +379,6 @@ function deathEvent() {
     wagon.characters[index].status = "Dead"
   }
 }
-
 //Hunting
 Wagon.prototype.huntingTime = function() {
   if (this.hunted == 1) {
@@ -349,7 +386,7 @@ Wagon.prototype.huntingTime = function() {
     buildModal(num);
     $(".ongoing-events").prepend("You have already hunted- you must continue to a new area to hunt further.<br>");
     $("#myModal").toggle();
-  } else if (this.hunted == 0){
+  } else if (this.hunted == 0 && wagon.bullets > 0){
     this.food += Math.floor(Math.random() * Math.floor(150))
     this.days += 1
     this.bullets -= 1
@@ -359,12 +396,15 @@ Wagon.prototype.huntingTime = function() {
     });
     this.hunted += 1;
   }
+
+  if (wagon.bullets <= 0) {
+    wagon.bullets = 0
+  }
   $('#wagon-bullets-remaining').text(wagon.bullets);
 }
 //Profession checker
 Wagon.prototype.profession = function(input) {
   if (input == 1) {
-    console.log("pop!");
     this.money += 500
   } else if (input == 2) {
     this.money += 300
@@ -382,7 +422,6 @@ Wagon.prototype.profession = function(input) {
 }
 
 function storeSubTotal(food, bullets) {
-  console.log(food);
   var total = (food * 0.2) + (bullets * 0.1);
   $('.food-total').text((food * 0.2).toFixed(2));
   $('.bullet-total').text((bullets * 0.1).toFixed(2));
@@ -393,7 +432,6 @@ function storeBuy(food, bullets) {
     var total = ((food * 0.2) + (bullets * 0.1)).toFixed(2);
 
     if (total == NaN || isNaN(total) || wagon.money < total || food < 0 || bullets < 0) {
-      console.log(total);
       $("#store").effect("shake", {times:3}, 700);
     }
     else {
@@ -407,6 +445,24 @@ function storeBuy(food, bullets) {
       $(".store-total, .bullet-total, .food-total").text("$0");
       return total;
   }
+}
+
+function textUpdateUI() {
+  $('#player-one-name').text(char1.name);
+  $('#player-two-name').text(char2.name);
+  $('#player-three-name').text(char3.name);
+  $('#player-four-name').text(char4.name);
+  $('#player-five-name').text(char5.name);
+  $('#player-one-status').text(char1.status);
+  $('#player-two-status').text(char2.status);
+  $('#player-three-status').text(char3.status);
+  $('#player-four-status').text(char4.status);
+  $('#player-five-status').text(char5.status);
+  $('#wagon-food-remaining').text(wagon.food);
+  $('.wagon-money-remaining').text(wagon.money);
+  $('#wagon-bullets-remaining').text(wagon.bullets);
+  $('.current-date').text(wagon.days);
+  $('.distance-traveled').text(wagon.distance);
 }
 
 function validateNames(profession, playerOne, playerTwo, playerThree, playerFour, playerFive) {
@@ -429,12 +485,6 @@ $(document).ready(function(){
   span.onclick = function() {
     modal.style.display = "none";
   }
-  // modal that closes with click on button
-var popup = document.getElementById('buttonModal');
-var close = document.getElementsByClassName("close")[0];
-  close.onclick = function() {
-    popup.style.display = "none";
-  }
 
   $("#startBTN").click(function(){
     $("#start").fadeOut(500);
@@ -456,23 +506,10 @@ var close = document.getElementsByClassName("close")[0];
     char5 = new Character(playerFiveName)
     wagon = new Wagon()
     wagon.characters.push(char1, char2, char3, char4, char5)
-
     wagon.profession(professionValue)
-
-    $('#player-one-name').text(char1.name);
-    $('#player-two-name').text(char2.name);
-    $('#player-three-name').text(char3.name);
-    $('#player-four-name').text(char4.name);
-    $('#player-five-name').text(char5.name);
-    $('#player-one-status').text(char1.status);
-    $('#player-two-status').text(char2.status);
-    $('#player-three-status').text(char3.status);
-    $('#player-four-status').text(char4.status);
-    $('#player-five-status').text(char5.status);
-    $('#wagon-food-remaining').text(wagon.food);
-    $('.wagon-money-remaining').text(wagon.money);
-
+    textUpdateUI()
   });
+
   $("#subtotal").click(function(){
     var buyFood = parseInt($("#food-fields input").val())
     var buyBullets = parseInt($("#bullet-fields input").val())
@@ -500,16 +537,9 @@ $("#back-button").click(function(){
 
   $("#continue-button").click(function(){
     wagon.turn()
-    wagon.foodChecker()
+    wagon.resourceChecker()
     wagon.deathChecker()
-    $('#player-one-status').text(char1.status);
-    $('#player-two-status').text(char2.status);
-    $('#player-three-status').text(char3.status);
-    $('#player-four-status').text(char4.status);
-    $('#player-five-status').text(char5.status);
-    $('#wagon-food-remaining').text(wagon.food);
-    $('.current-date').text(wagon.days);
-    $('.distance-traveled').text(wagon.distance);
+    textUpdateUI()
 
     if (x < 4) {
       $('#wagon-' + x).toggle();
@@ -528,49 +558,42 @@ $("#back-button").click(function(){
 
   $("#rest-button").click(function(){
     wagon.rest()
-    $('#player-one-status').text(char1.status);
-    $('#player-two-status').text(char2.status);
-    $('#player-three-status').text(char3.status);
-    $('#player-four-status').text(char4.status);
-    $('#player-five-status').text(char5.status);
-    $('#wagon-food-remaining').text(wagon.food);
-    $('.current-date').text(wagon.days);
+    textUpdateUI()
   });
 
   $('#hunt-button').click(function(){
     wagon.huntingTime()
-    wagon.foodChecker()
-    $('#player-one-status').text(char1.status);
-    $('#player-two-status').text(char2.status);
-    $('#player-three-status').text(char3.status);
-    $('#player-four-status').text(char4.status);
-    $('#player-five-status').text(char5.status);
-    $('#wagon-food-remaining').text(wagon.food);
-    $('.current-date').text(wagon.days);
+    wagon.resourceChecker()
+    textUpdateUI()
+  });
+
+  $(document).on('click', '#deathButton', function(){
+    history.go(0)
+  });
+
+  $(document).on('click', '#winButton', function(){
+    history.go(0)
   });
 
   $(document).on('click', '#crossRiverButton', function(){
     crossRiver()
-    $('#player-one-status').text(char1.status);
-    $('#player-two-status').text(char2.status);
-    $('#player-three-status').text(char3.status);
-    $('#player-four-status').text(char4.status);
-    $('#player-five-status').text(char5.status);
-    $('#wagon-food-remaining').text(wagon.food);
-    $('.wagon-money-remaining').text(wagon.money);
-    $('.current-date').text(wagon.days);
+    textUpdateUI()
     $('#buttonModal').hide();
   });
   $(document).on('click', '#detourRiverButton', function(){
     detourRiver()
-    $('#player-one-status').text(char1.status);
-    $('#player-two-status').text(char2.status);
-    $('#player-three-status').text(char3.status);
-    $('#player-four-status').text(char4.status);
-    $('#player-five-status').text(char5.status);
-    $('#wagon-food-remaining').text(wagon.food);
-    $('.wagon-money-remaining').text(wagon.money);
-    $('.current-date').text(wagon.days);
+    textUpdateUI()
+    $('#buttonModal').hide();
+
+  });
+  $(document).on('click', '#sacrificeButton', function(){
+    sacrifice()
+    textUpdateUI()
+    $('#buttonModal').hide();
+  });
+  $(document).on('click', '#fleeButton', function(){
+    flee()
+    textUpdateUI()
     $('#buttonModal').hide();
   });
 });
