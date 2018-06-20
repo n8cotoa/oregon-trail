@@ -127,7 +127,7 @@ img {
 
 #ongoing-text-box {
   background: #f2f2f2;
-  height: 300px;
+  height: 332px;
   overflow: scroll;
   margin-top: 2rem;
   padding: 10px;
@@ -399,29 +399,24 @@ img {
   width: 38px;
 }
 
-/*map*/
-
-#map {
-  background-image: url('../img/map.png');
-  background-size: cover;
-  min-height: 750px;
-  position: relative;
+.ui-widget-header {
+    border: 1px solid #28a745;
+    background: #28a745;
 }
 
-#map-background {
-  content:'\A';
-  position:absolute;
-  background:black;
-  top:0; bottom:0;
-  left:0;
-  width:50%;
-  z-index: -1;
-  min-height: 750px;
+#progress-title {
+  margin-bottom: 0px;
+  margin-top: 15px;
 }
 
-/*.ui-progressbar .ui-progressbar-value {
-    width: 0.1px;
-}*/
+.ui-progressbar {
+  height: 3em;
+}
+
+.health-bar {
+  height: 9px;
+  margin-bottom: 6px;
+}
 
 /*confetti*/
 
