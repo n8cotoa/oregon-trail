@@ -2,7 +2,7 @@
 function Character(name) {
   this.name = name;
   this.health = 100;
-  this.status = "good"
+  this.status = "Good"
   this.illness = []
 }
 // wagon/inventory constructor
@@ -49,6 +49,7 @@ Character.prototype.illnessChecker = function() {
 //food checker
 Wagon.prototype.foodChecker = function() {
   if (this.food <= 0) {
+    this.food = 0
     wagon.characters.forEach(function(char){
       char.health -= 10
     });
@@ -65,20 +66,22 @@ Wagon.prototype.deathChecker = function() {
     }
   })
   if (wagon.characters.length === 0) {
-    alert("Game Over! You killed everyone. Great job...")
+    buildModal("dead")
+    $(".endGame-content").prepend("Game Over! You killed everyone. Great job...")
+    $("#endGameModal").toggle();
   }
 }
 
 //status adjuster
 Character.prototype.statusAdjuster = function() {
   if (this.health >= 80) {
-    this.status = "good"
+    this.status = "Good"
   } else if (this.health < 80 && this.health >= 20) {
-    this.status = "fair"
+    this.status = "Fair"
   } else if (this.health < 20 && this.health > 0) {
-    this.status = "poor"
+    this.status = "Poor"
   } else {
-    this.status = "dead"
+    this.status = "Dead"
   }
 }
 //calculates potential illnesses
@@ -119,7 +122,9 @@ Wagon.prototype.rest = function() {
   //event grabber
 Wagon.prototype.eventGrabber = function() {
   var num = Math.floor(Math.random() * Math.floor(100))
-  if (num >= 80) {
+  if (this.distance === 100 || this.distance === 200 || this.distance === 300 || this.distance === 400 || this.distance === 500) {
+
+  } else if (num >= 80) {
     positiveEvent()
     //call positive event
   } else if (num < 80 && num >= 60) {
@@ -188,12 +193,12 @@ function negativeEvent() {
     $(".ongoing-events").prepend("You find a small bunny and decide to keep it. The bunny bites " + wagon.characters[index].name + ". Now " + wagon.characters[index].name + " has gonorrhea.<br>")
     wagon.characters[index].illness.push("Gonorrhea")
   } else if (num === 3) {
-    $(".ongoing-events").prepend("Your party is ambushed, they hold you hostage and take " + ranSupplyDecrease + " of your food. <br>")
+    $(".ongoing-events").prepend("Your party is ambushed, they hold you hostage and take " + ranSupplyDecrease + " pounds of your food. <br>")
     wagon.food -= ranSupplyDecrease
     wagon.days += index
     $('.wagon-food-remaining').text(wagon.food.toFixed(2));
   } else if (num === 4) {
-    $(".ongoing-events").prepend("Your wagon wheel broke, in the distance you hear Jesus Take The Wheel playing. <br>")
+    $(".ongoing-events").prepend("Your wagon wheel broke, in the distance you hear Jesus Take The Wheel playing. Your party loses 5 days. <br>")
     wagon.days += 5
     wagon.food -= ((wagon.characters.length * 5 ) * 5)
   } else if (num === 5){
@@ -215,37 +220,85 @@ function buildModal(value) {
   )
 }
 
+
+function buildLandmarkModal(value, btnID1, btnID2, btn1Name, btn2Name) {
+  $('.modal-child').html('<img src="img/' + value + '.jpg" alt="an image">' +
+    '<div id="popup-text" class="button-content">' +
+    '<div class="buttons">' +
+    '<span id="'+ btnID1 + 'Button" class="btn btn-success">' + btn1Name +'</span> <span id="'+ btnID2 + 'Button" class="btn btn-success">' + btn2Name +'</span>' +
+    '</div>' +
+    '</div>'
+  )
+  
 Wagon.prototype.buildScore = function() {
   var finalScore = 10000;
   finalScore -= ((this.days - 50) * 20) + ((5 - this.characters.length) * 2000) - (this.food * .2) - (this.money * .3) - (this.bullets* .1)
   return finalScore.toFixed();
+
 }
 //Push text to class .button-content
 //Option 1 button - id #option1-button
 //Option 2 button - id #option2-button
 function landmarkEvent() {
 var num = wagon.distance
+// var hasBeenClicked = false;
+// $('#option1-button').click(function(){
+//   hasBeenClicked = true;
+// })
 console.log(num);
   if (num === 100) {
-    buildModal(num)
-    $(".ongoing-events").prepend("You have reached a river. You can choose to risk supplies and your party to cross the river or take 7 days to go around. <br>")
-    $("#myModal").toggle();
-    wagon.days += 7
+    buildLandmarkModal(num, "crossRiver", "detourRiver", "Cross River", "Detour")
+    $(".button-content").prepend("You have reached a river. You can choose to risk supplies and your party to cross the river or take 7 days to go around. <br>")
+    $("#buttonModal").toggle();
   } else if (num === 200) {
-    $(".ongoing-events").prepend("Your party has come across a camp, make a selection for what you would like to buy. <br>")
-    $("#store").fadeIn(500);
-    $("#gameMainScreen").delay(500).fadeOut(500);
+    $(".button-content").prepend("Your party has come across a camp, make a selection for what you would like to buy. <br>")
+    $("#gameMainScreen").fadeOut(500);
+    $("#store").delay(500).fadeIn(500);
+    $("#back-button").hide();
   } else if (num === 300) {
-    $(".ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. <br>")
+    $(".button-content").prepend("Your party finds a small lake and decides to go for a swim. <br>")
   } else if (num === 400) {
-    $(".ongoing-events").prepend("You find a small bunny and decide to keep it (not as food, what's wrong with you.) <br>")
+    $(".button-content").prepend("You find a small bunny and decide to keep it (not as food, what's wrong with you.) <br>")
   } else if (num === 500){
     buildModal(num)
     var endScore = wagon.buildScore()
     $(".ongoing-events").html("<h4>WINNER!</h4> <br> Your score is: " + endScore);
     $("#myModal").addClass('confetti');
     $("#myModal").toggle();
+  }
+}
 
+function detourRiver() {
+  for(i=0; i < 8; i++) {
+    wagon.characters.forEach(function(char){
+      char.statusAdjuster()
+      char.illnessChecker()
+    });
+    wagon.days += 1
+    wagon.food -= (wagon.characters.length * 5 )
+  }
+  console.log("Detour");
+}
+
+function crossRiver() {
+  var num = Math.floor(Math.random() * Math.floor(100))
+  var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
+  if (num > 50) {
+    console.log("Cross fail");
+    wagon.characters[index].health -= 30
+    wagon.food -= (wagon.food * 0.4)
+    wagon.money -= (wagon.money * 0.2)
+    for(i=0; i < 4; i++) {
+      wagon.characters.forEach(function(char){
+        char.statusAdjuster()
+        char.illnessChecker()
+      });
+      wagon.days += 1
+      wagon.food -= (wagon.characters.length * 5 )
+    }
+  } else {
+    console.log("Cross success");
+    wagon.days += 1
   }
 }
 
@@ -339,7 +392,7 @@ function storeSubTotal(food, bullets) {
 function storeBuy(food, bullets) {
     var total = ((food * 0.2) + (bullets * 0.1)).toFixed(2);
 
-    if (total == NaN || isNaN(total) || wagon.money < total) {
+    if (total == NaN || isNaN(total) || wagon.money < total || food < 0 || bullets < 0) {
       console.log(total);
       $("#store").effect("shake", {times:3}, 700);
     }
@@ -494,5 +547,30 @@ $("#back-button").click(function(){
     $('#player-five-status').text(char5.status);
     $('#wagon-food-remaining').text(wagon.food);
     $('.current-date').text(wagon.days);
+  });
+
+  $(document).on('click', '#crossRiverButton', function(){
+    crossRiver()
+    $('#player-one-status').text(char1.status);
+    $('#player-two-status').text(char2.status);
+    $('#player-three-status').text(char3.status);
+    $('#player-four-status').text(char4.status);
+    $('#player-five-status').text(char5.status);
+    $('#wagon-food-remaining').text(wagon.food);
+    $('.wagon-money-remaining').text(wagon.money);
+    $('.current-date').text(wagon.days);
+    $('#buttonModal').hide();
+  });
+  $(document).on('click', '#detourRiverButton', function(){
+    detourRiver()
+    $('#player-one-status').text(char1.status);
+    $('#player-two-status').text(char2.status);
+    $('#player-three-status').text(char3.status);
+    $('#player-four-status').text(char4.status);
+    $('#player-five-status').text(char5.status);
+    $('#wagon-food-remaining').text(wagon.food);
+    $('.wagon-money-remaining').text(wagon.money);
+    $('.current-date').text(wagon.days);
+    $('#buttonModal').hide();
   });
 });

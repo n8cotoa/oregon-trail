@@ -26,7 +26,7 @@
               <p>Select your profession</p>
               <div class="prettyColumn">
                 <div id="radio1">
-                  <label><input type="radio" name="profession" value="1"> Banker</label>
+                  <label><input type="radio" name="profession" value="1" checked> Banker</label>
                   <span class="tooltiptext">The Banker starts with $1000 and no initial food.</span>
                 </div>
                 <div id="radio2">
@@ -55,11 +55,11 @@
             <div id="charNameInput" class="col-md-3">
               <p>Type in the names of your party:</p>
               <div class="prettyColumn">
-                <input id="char1" type="text" placeholder="name player 1">
-                <input id="char2" type="text" placeholder="name player 2">
-                <input id="char3" type="text" placeholder="name player 3">
-                <input id="char4" type="text" placeholder="name player 4">
-                <input id="char5" type="text" placeholder="name player 5">
+                <input id="char1" type="text" placeholder="name player 1" value="Bobbie">
+                <input id="char2" type="text" placeholder="name player 2" value="Wolverine">
+                <input id="char3" type="text" placeholder="name player 3" value="Rabid Squirrel Lover">
+                <input id="char4" type="text" placeholder="name player 4" value="Your Mom">
+                <input id="char5" type="text" placeholder="name player 5" value="Herbert">
               </div>
             </div>
             <div class="col-md-6">
@@ -91,7 +91,7 @@
         </div>
         <div class="row" id="food-fields">
           <div class="col-md-3">
-            <input type="number" name="food" placeholder="0">
+            <input type="number" name="food" placeholder="0" value="0">
           </div>
           <div class="col-md-3">
             <p>Pounds of Food</p>
@@ -105,7 +105,7 @@
         </div>
         <div class="row" id="bullet-fields">
           <div class="col-md-3">
-            <input type="number" name="bullets" placeholder="0">
+            <input type="number" name="bullets" placeholder="0" value="0">
           </div>
           <div class="col-md-3">
             <p>Bullets</p>
@@ -192,11 +192,13 @@
   </div>
   <div id="buttonModal" class="modal2">
     <span class="close">&times;</span>
-    <div class="button-child">
+    <div class="modal-child">
       <div class="button-content">
 
       </div>
-      <span id="option1-button" class="btn btn-success">Option 1</span> <span id="option2-button" class="btn btn-success">Option 2</span>
+      <div class="buttons">
+        <span id="option1-button" class="btn btn-success">Option 1</span> <span id="option2-button" class="btn btn-success">Option 2</span>
+      </div>
     </div>
   </div>
 </body>
