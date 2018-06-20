@@ -195,7 +195,7 @@ function negativeEvent() {
     wagon.days += index
     $('.wagon-food-remaining').text(wagon.food.toFixed(2));
   } else if (num === 4) {
-    $(".ongoing-events").prepend("Your wagon wheel broke, in the distance you hear Jesus Take The Wheel playing. <br>")
+    $(".ongoing-events").prepend("Your wagon wheel broke, in the distance you hear Jesus Take The Wheel playing. Your party loses 5 days. <br>")
     wagon.days += 5
     wagon.food -= ((wagon.characters.length * 5 ) * 5)
   } else if (num === 5){
@@ -217,11 +217,11 @@ function buildModal(value) {
   )
 }
 
-function buildLandmarkModal(value) {
+function buildLandmarkModal(value, btnID1, btnID2, btn1Name, btn2Name) {
   $('.modal-child').html('<img src="img/' + value + '.jpg" alt="an image">' +
     '<div id="popup-text" class="button-content">' +
     '<div class="buttons">' +
-    '<span id="option1-button" class="btn btn-success">Option 1</span> <span id="option2-button" class="btn btn-success">Option 2</span>' +
+    '<span id="'+ btnID1 + 'Button" class="btn btn-success">' + btn1Name +'</span> <span id="'+ btnID2 + 'Button" class="btn btn-success">' + btn2Name +'</span>' +
     '</div>' +
     '</div>'
   )
@@ -231,16 +231,15 @@ function buildLandmarkModal(value) {
 //Option 2 button - id #option2-button
 function landmarkEvent() {
 var num = wagon.distance
-var hasBeenClicked = false;
-$('#option1-button').click(function(){
-  hasBeenClicked = true;
-})
+// var hasBeenClicked = false;
+// $('#option1-button').click(function(){
+//   hasBeenClicked = true;
+// })
 console.log(num);
   if (num === 100) {
-    buildLandmarkModal(num)
+    buildLandmarkModal(num, "crossRiver", "detourRiver", "Cross River", "Detour")
     $(".button-content").prepend("You have reached a river. You can choose to risk supplies and your party to cross the river or take 7 days to go around. <br>")
     $("#buttonModal").toggle();
-    wagon.days += 7
   } else if (num === 200) {
     $(".button-content").prepend("Your party has come across a camp, make a selection for what you would like to buy. <br>")
     $("#gameMainScreen").fadeOut(500);
@@ -254,6 +253,40 @@ console.log(num);
     buildModal(num)
     $(".button-content").prepend("WINNER! <br>")
     $("#buttonModal").toggle();
+  }
+}
+
+function detourRiver() {
+  for(i=0; i < 8; i++) {
+    wagon.characters.forEach(function(char){
+      char.statusAdjuster()
+      char.illnessChecker()
+    });
+    wagon.days += 1
+    wagon.food -= (wagon.characters.length * 5 )
+  }
+  console.log("Detour");
+}
+
+function crossRiver() {
+  var num = Math.floor(Math.random() * Math.floor(100))
+  var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
+  if (num > 50) {
+    console.log("Cross fail");
+    wagon.characters[index].health -= 30
+    wagon.food -= (wagon.food * 0.4)
+    wagon.money -= (wagon.money * 0.2)
+    for(i=0; i < 4; i++) {
+      wagon.characters.forEach(function(char){
+        char.statusAdjuster()
+        char.illnessChecker()
+      });
+      wagon.days += 1
+      wagon.food -= (wagon.characters.length * 5 )
+    }
+  } else {
+    console.log("Cross success");
+    wagon.days += 1
   }
 }
 
@@ -489,6 +522,29 @@ $("#back-button").click(function(){
     $('#player-four-status').text(char4.status);
     $('#player-five-status').text(char5.status);
     $('#wagon-food-remaining').text(wagon.food);
+    $('.current-date').text(wagon.days);
+  });
+
+  $(document).on('click', '#crossRiverButton', function(){
+    crossRiver()
+    $('#player-one-status').text(char1.status);
+    $('#player-two-status').text(char2.status);
+    $('#player-three-status').text(char3.status);
+    $('#player-four-status').text(char4.status);
+    $('#player-five-status').text(char5.status);
+    $('#wagon-food-remaining').text(wagon.food);
+    $('.wagon-money-remaining').text(wagon.money);
+    $('.current-date').text(wagon.days);
+  });
+  $(document).on('click', '#detourRiverButton', function(){
+    detourRiver()
+    $('#player-one-status').text(char1.status);
+    $('#player-two-status').text(char2.status);
+    $('#player-three-status').text(char3.status);
+    $('#player-four-status').text(char4.status);
+    $('#player-five-status').text(char5.status);
+    $('#wagon-food-remaining').text(wagon.food);
+    $('.wagon-money-remaining').text(wagon.money);
     $('.current-date').text(wagon.days);
   });
 });
