@@ -92,8 +92,6 @@ Character.prototype.statusAdjuster = function() {
 Wagon.prototype.turn = function() {
   this.hunted = 0;
   wagon.eventGrabber();
-  landmarkEvent();
-
   wagon.characters.forEach(function(char){
     char.illnessGenerator()
     char.illnessChecker() //reduces health if infected
@@ -106,6 +104,7 @@ Wagon.prototype.turn = function() {
   }
     this.days += 1
     this.distance += 10
+    landmarkEvent();
     this.completed = (this.completed + 2);
     journey(this.completed);
 }
@@ -277,7 +276,10 @@ function landmarkEvent() {
     $(".button-content").prepend("As you travel along the trail you hear screams in the distance. You have no choice but to keep moving forward. When out of nowhere your wagon is surrounded by crazed cannibals. One of them steps forward and proclaims: 'I am George Donner, my family is hungry. Sacrifice one of your own and the rest are free to go on!' <br>")
     $("#buttonModal").toggle();
   } else if (num === 400) {
-    $(".button-content").prepend("You find a small bunny and decide to keep it (not as food, what's wrong with you.) <br>")
+    $(".button-content").prepend("Your party has come across a camp, make a selection for what you would like to buy. <br>")
+    $("#gameMainScreen").fadeOut(500);
+    $("#store").delay(500).fadeIn(500);
+    $("#back-button").hide();
   } else if (num === 500){
     buildEndModal(num, "win", "Play Again!")
     var endScore = wagon.buildScore()
@@ -299,8 +301,7 @@ function detourRiver() {
     wagon.resourceChecker()
   }
   $(".ongoing-events").prepend("You spent seven days and went around the river. <br>")
-  // wagon.deathChecker()
-
+  wagon.deathChecker()
 }
 function crossRiver() {
   var num = Math.floor(Math.random() * Math.floor(100))
@@ -321,6 +322,8 @@ function crossRiver() {
     wagon.days += 1
     wagon.food -= (wagon.characters.length * 5 )
   }
+  wagon.resourceChecker()
+  wagon.deathChecker()
 }
 // landmark 3 button events
 function sacrifice() {
