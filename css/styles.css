@@ -347,6 +347,30 @@ img {
   visibility: visible;
 }
 
+#supplies {
+  text-align: center;
+  margin-top: 15px;
+}
+
+#supplies img{
+  width: 50px;
+}
+
+#supplies span {
+  font-size: 18px;
+}
+
+#status-panel li {
+  margin-bottom: 3px;
+}
+
+/*confetti*/
+
+.confetti {
+  background-image: url('../img/fireworks.gif');
+  background-size: cover;
+}
+
 
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px){

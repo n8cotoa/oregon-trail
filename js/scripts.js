@@ -83,8 +83,9 @@ Character.prototype.statusAdjuster = function() {
 }
 //calculates potential illnesses
 Wagon.prototype.turn = function() {
-  wagon.eventGrabber()
-  landmarkEvent()
+  wagon.eventGrabber();
+  landmarkEvent();
+
   wagon.characters.forEach(function(char){
     char.illnessGenerator()
     char.illnessChecker() //reduces health if infected
@@ -97,6 +98,7 @@ Wagon.prototype.turn = function() {
   }
     this.days += 1
     this.distance += 10
+
   }
   // function for resting -- cure illness, gain some health
 Wagon.prototype.rest = function() {
@@ -147,7 +149,7 @@ function positiveEvent() {
     wagon.food += ranSupplyIncrease
     $('.wagon-food-remaining').text(wagon.food.toFixed(2));
   } else if (num === 4) {
-    $('.ongoing-events').prepend('As you travel along, you come across a group of suckers. You got some free shit- money incread by ' + ranSupplyIncrease + '. <br>')
+    $('.ongoing-events').prepend('As you travel along, you come across a group of suckers. You got some free shit- money increased by ' + ranSupplyIncrease + '. <br>')
     wagon.money += ranSupplyIncrease
     $('.wagon-money-remaining').text(wagon.money.toFixed(2));
   } else if (num === 5){
@@ -182,7 +184,7 @@ function negativeEvent() {
     $(".ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. Unfortunately the lake was full of piranhas. <br>" + wagon.characters[index].name + " got hurt! <br>")
     wagon.characters[index].health -= 10
   } else if (num === 2 && wagon.characters[index].illness.includes("Gonorrhea") == false) {
-    $(".ongoing-events").prepend("You find a small bunny and decide to keep it. The bunny bites " + wagon.characters[index].name + "." + wagon.characters[index].name + " has gonorrhea.<br>")
+    $(".ongoing-events").prepend("You find a small bunny and decide to keep it. The bunny bites " + wagon.characters[index].name + ". Now " + wagon.characters[index].name + " has gonorrhea.<br>")
     wagon.characters[index].illness.push("Gonorrhea")
   } else if (num === 3) {
     $(".ongoing-events").prepend("Your party is ambushed, they hold you hostage and take " + ranSupplyDecrease + " of your food. <br>")
@@ -211,6 +213,14 @@ function buildModal(value) {
     '</div>'
   )
 }
+
+Wagon.prototype.buildScore = function() {
+  var finalScore = 10000;
+
+  finalScore -= ((this.days - 50) * 20) + ((5 - this.characters.length) * 2000) - (this.food * .2) - (this.money * .3) - (this.bullets* .1)
+
+  return finalScore.toFixed();
+}
 //Push text to class .button-content
 //Option 1 button - id #option1-button
 //Option 2 button - id #option2-button
@@ -232,8 +242,11 @@ console.log(num);
     $(".ongoing-events").prepend("You find a small bunny and decide to keep it (not as food, what's wrong with you.) <br>")
   } else if (num === 500){
     buildModal(num)
-    $(".ongoing-events").prepend("WINNER! <br>")
+    var endScore = wagon.buildScore()
+    $(".ongoing-events").html("<h4>WINNER!</h4> <br> Your score is: " + endScore);
+    $("#myModal").addClass('confetti');
     $("#myModal").toggle();
+
   }
 }
 
@@ -264,7 +277,7 @@ function deathEvent() {
     wagon.characters[index].status = "Dead"
   } else if (num === 4) {
     buildModal(num);
-    $(".ongoing-events").prepend(wagon.characters[index].name + " got like stupid stoned the night before and ate a lot of food when their munchies kicked in. You lose " + (wagon.food * 0.5) + "<br>")
+    $(".ongoing-events").prepend(wagon.characters[index].name + " got like stupid stoned the night before and ate a lot of food when their munchies kicked in. You lose " + (wagon.food * 0.5) + "lbs of food.<br>")
     $("#myModal").toggle();
     wagon.food -= (wagon.food * 0.5)
     $('.wagon-food-remaining').text(wagon.food.toFixed(2));
@@ -281,10 +294,12 @@ function deathEvent() {
 Wagon.prototype.huntingTime = function() {
   this.food += Math.floor(Math.random() * Math.floor(150))
   this.days += 1
+  this.bullets -= 1
   wagon.characters.forEach(function(char){
     char.illnessChecker() //reduces health if infected
     char.statusAdjuster() //updates status on screen based on health
   });
+  $('#wagon-bullets-remaining').text(wagon.bullets);
 }
 //Profession checker
 Wagon.prototype.profession = function(input) {
@@ -311,24 +326,26 @@ function storeSubTotal(food, bullets) {
   var total = (food * 0.2) + (bullets * 0.1);
   $('.food-total').text((food * 0.2).toFixed(2));
   $('.bullet-total').text((bullets * 0.1).toFixed(2));
-  return total.toFixed(2)
+  return total.toFixed(2);
 }
 
 function storeBuy(food, bullets) {
-    var total = ((food * 0.2) + (bullets * 0.1))
+    var total = ((food * 0.2) + (bullets * 0.1)).toFixed(2);
 
     if (total == NaN || isNaN(total) || wagon.money < total) {
       console.log(total);
       $("#store").effect("shake", {times:3}, 700);
     }
     else {
-
-      wagon.food += food
-      wagon.bullets += bullets
-      wagon.money -= ((food * 0.2) + (bullets * 0.2))
+      wagon.money -= total;
+      wagon.food += food;
+      wagon.bullets += bullets;
       $("#store").fadeOut(500);
       $("#gameMainScreen").delay(500).fadeIn(500);
-      return total
+      $('.wagon-money-remaining').text(wagon.money);
+      $("#food-fields input, #bullet-fields input").val(0);
+      $(".store-total, .bullet-total, .food-total").text("$0");
+      return total;
   }
 }
 
