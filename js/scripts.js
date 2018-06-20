@@ -49,6 +49,7 @@ Character.prototype.illnessChecker = function() {
 //food checker
 Wagon.prototype.foodChecker = function() {
   if (this.food <= 0) {
+    this.food = 0
     wagon.characters.forEach(function(char){
       char.health -= 10
     });
@@ -242,8 +243,9 @@ console.log(num);
     wagon.days += 7
   } else if (num === 200) {
     $(".button-content").prepend("Your party has come across a camp, make a selection for what you would like to buy. <br>")
-    $("#store").fadeIn(500);
-    $("#gameMainScreen").delay(500).fadeOut(500);
+    $("#gameMainScreen").fadeOut(500);
+    $("#store").delay(500).fadeIn(500);
+    $("#back-button").hide();
   } else if (num === 300) {
     $(".button-content").prepend("Your party finds a small lake and decides to go for a swim. <br>")
   } else if (num === 400) {
