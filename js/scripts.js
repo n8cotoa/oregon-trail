@@ -229,7 +229,7 @@ function buildLandmarkModal(value, btnID1, btnID2, btn1Name, btn2Name) {
     '</div>' +
     '</div>'
   )
-  
+}
 Wagon.prototype.buildScore = function() {
   var finalScore = 10000;
   finalScore -= ((this.days - 50) * 20) + ((5 - this.characters.length) * 2000) - (this.food * .2) - (this.money * .3) - (this.bullets* .1)
