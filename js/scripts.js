@@ -335,7 +335,7 @@ function storeSubTotal(food, bullets) {
 function storeBuy(food, bullets) {
     var total = ((food * 0.2) + (bullets * 0.1))
 
-    if (total == NaN || isNaN(total) || wagon.money < total) {
+    if (total == NaN || isNaN(total) || wagon.money < total || food < 0 || bullets < 0) {
       console.log(total);
       $("#store").effect("shake", {times:3}, 700);
     }
