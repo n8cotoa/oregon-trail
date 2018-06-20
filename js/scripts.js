@@ -535,6 +535,7 @@ $("#back-button").click(function(){
     $('#wagon-food-remaining').text(wagon.food);
     $('.wagon-money-remaining').text(wagon.money);
     $('.current-date').text(wagon.days);
+    $('#buttonModal').hide();
   });
   $(document).on('click', '#detourRiverButton', function(){
     detourRiver()
@@ -546,5 +547,6 @@ $("#back-button").click(function(){
     $('#wagon-food-remaining').text(wagon.food);
     $('.wagon-money-remaining').text(wagon.money);
     $('.current-date').text(wagon.days);
+    $('#buttonModal').hide();
   });
 });
