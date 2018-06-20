@@ -12,7 +12,7 @@ function Wagon() {
   this.days = 0;
   this.characters = [];
   this.bullets = 0;
-  this.distance = 0;
+  this.distance = 480;
   this.hunted = 0;
 }
 // illness generator
@@ -66,9 +66,10 @@ Wagon.prototype.deathChecker = function() {
     }
   })
   if (wagon.characters.length === 0) {
-    buildModal("dead")
-    $(".endGame-content").prepend("Game Over! You killed everyone. Great job...")
-    $("#endGameModal").toggle();
+    console.log("All Dead");
+    buildEndModal("dead", "death", "Try Again")
+    $(".ongoing-events").prepend("Game Over! You killed everyone. Great job...")
+    $("#myModal").toggle();
   }
 }
 
@@ -220,6 +221,16 @@ function buildModal(value) {
   )
 }
 
+function buildEndModal(value, btnID1, btn1Name) {
+  $('.modal-child').html('<img src="img/' + value + '.jpg" alt="an image">' +
+    '<div id="popup-text" class="button-content">' +
+    '<div class="buttons">' +
+    '<span id="'+ btnID1 + 'Button" class="btn btn-success">' + btn1Name +'</span>' +
+    '</div>' +
+    '</div>'
+  )
+}
+
 
 function buildLandmarkModal(value, btnID1, btnID2, btn1Name, btn2Name) {
   $('.modal-child').html('<img src="img/' + value + '.jpg" alt="an image">' +
@@ -260,11 +271,11 @@ console.log(num);
   } else if (num === 400) {
     $(".button-content").prepend("You find a small bunny and decide to keep it (not as food, what's wrong with you.) <br>")
   } else if (num === 500){
-    buildModal(num)
+    buildEndModal(num, "win", "Play Again!")
     var endScore = wagon.buildScore()
-    $(".ongoing-events").html("<h4>WINNER!</h4> <br> Your score is: " + endScore);
-    $("#myModal").addClass('confetti');
-    $("#myModal").toggle();
+    $(".button-content").prepend("<h4>WINNER!</h4> <br> Your score is: " + endScore);
+    $("#buttonModal").addClass('confetti');
+    $("#buttonModal").toggle();
   }
 }
 
@@ -273,11 +284,15 @@ function detourRiver() {
     wagon.characters.forEach(function(char){
       char.statusAdjuster()
       char.illnessChecker()
+      wagon.deathChecker()
     });
     wagon.days += 1
     wagon.food -= (wagon.characters.length * 5 )
+    wagon.foodChecker()
   }
-  console.log("Detour");
+  $(".ongoing-events").prepend("You spent seven days and went around the river. <br>")
+  // wagon.deathChecker()
+
 }
 
 function crossRiver() {
@@ -429,12 +444,6 @@ $(document).ready(function(){
   span.onclick = function() {
     modal.style.display = "none";
   }
-  // modal that closes with click on button
-var popup = document.getElementById('buttonModal');
-var close = document.getElementsByClassName("close")[0];
-  close.onclick = function() {
-    popup.style.display = "none";
-  }
 
   $("#startBTN").click(function(){
     $("#start").fadeOut(500);
@@ -549,6 +558,14 @@ $("#back-button").click(function(){
     $('.current-date').text(wagon.days);
   });
 
+  $(document).on('click', '#deathButton', function(){
+    history.go(0)
+  });
+
+  $(document).on('click', '#winButton', function(){
+    history.go(0)
+  });
+
   $(document).on('click', '#crossRiverButton', function(){
     crossRiver()
     $('#player-one-status').text(char1.status);
@@ -572,5 +589,7 @@ $("#back-button").click(function(){
     $('.wagon-money-remaining').text(wagon.money);
     $('.current-date').text(wagon.days);
     $('#buttonModal').hide();
+
   });
+
 });
