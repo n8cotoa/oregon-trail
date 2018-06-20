@@ -282,7 +282,7 @@ function deathEvent() {
     $('.wagon-food-remaining').text(wagon.food.toFixed(2));
   } else if (num === 5 && wagon.characters[index].illness == "Gonorrhea") {
     buildModal(num);
-    $(".ongoing-events").prepend(wagon.characters[index].name  + " has also contracted chlymida and it has run rampant. They run off into the woods, never to be seen again.<br>")
+    $(".ongoing-events").prepend(wagon.characters[index].name  + " has also contracted chlamyida and it has run rampant. They run off into the woods, never to be seen again.<br>")
     $("#myModal").toggle();
     wagon.characters[index].health = 0
     wagon.characters[index].status = "Dead"
