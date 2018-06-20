@@ -12,7 +12,7 @@ function Wagon() {
   this.days = 0;
   this.characters = [];
   this.bullets = 0;
-  this.distance = 0;
+  this.distance = 290;
   this.hunted = 0;
   this.completed = 0.01;
 }
@@ -341,7 +341,9 @@ function flee() {
   var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
   if (num > 50) {
     wagon.characters[index].health = 0
+    buildModal("fleeFail");
     $(".ongoing-events").prepend("George caught " + wagon.characters[index].name + " while trying to flee. We can only assume he was tasty af. <br>")
+     $("#myModal").toggle();
     wagon.characters.forEach(function(char){
       char.statusAdjuster()
       char.illnessChecker()
