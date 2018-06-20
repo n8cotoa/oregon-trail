@@ -16,6 +16,21 @@ function Wagon() {
   this.hunted = 0;
   this.completed = 0.01;
 }
+
+Character.prototype.healthBar = function() {
+  var pairs = {Good: "green", Fair: "yellow", Poor: "red", Dead: "black"};
+    $( "#char1-health-bar").progressbar({value: char1.health});
+    $( "#char1-health-bar .ui-widget-header").css("background", pairs[char1.status]).css("border-color", pairs[char1.status]);
+    $( "#char2-health-bar").progressbar({value: char2.health});
+    $( "#char2-health-bar .ui-widget-header").css("background", pairs[char2.status]).css("border-color", pairs[char2.status]);
+    $( "#char3-health-bar").progressbar({value: char3.health});
+    $( "#char3-health-bar .ui-widget-header").css("background", pairs[char3.status]).css("border-color", pairs[char3.status]);
+    $( "#char4-health-bar").progressbar({value: char4.health});
+    $( "#char4-health-bar .ui-widget-header").css("background", pairs[char4.status]).css("border-color", pairs[char4.status]);
+    $( "#char5-health-bar").progressbar({value: char5.health});
+    $( "#char5-health-bar .ui-widget-header").css("background", pairs[char5.status]).css("border-color", pairs[char5.status]);
+}
+
 // illness generator
 Character.prototype.illnessGenerator = function() {
   var num = Math.floor(Math.random() * Math.floor(80))
@@ -87,6 +102,7 @@ Character.prototype.statusAdjuster = function() {
   } else {
     this.status = "Dead"
   }
+  char1.healthBar();
 }
 //calculates potential illnesses
 Wagon.prototype.turn = function() {
@@ -115,6 +131,8 @@ function journey(dist) {
       value: dist
     });
   }
+
+
 
   // function for resting -- cure illness, gain some health
 Wagon.prototype.rest = function() {
@@ -517,6 +535,7 @@ $(document).ready(function(){
     char5 = new Character(playerFiveName)
     wagon = new Wagon()
     journey(0)
+    char1.healthBar()
     wagon.characters.push(char1, char2, char3, char4, char5)
     wagon.profession(professionValue)
     textUpdateUI()
