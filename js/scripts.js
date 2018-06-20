@@ -12,7 +12,7 @@ function Wagon() {
   this.days = 0;
   this.characters = [];
   this.bullets = 0;
-  this.distance = 290;
+  this.distance = 0;
   this.hunted = 0;
   this.completed = 0.01;
 }
@@ -102,7 +102,7 @@ Character.prototype.statusAdjuster = function() {
   } else {
     this.status = "Dead"
   }
-  char1.healthBar();
+  this.healthBar();
 }
 //calculates potential illnesses
 Wagon.prototype.turn = function() {
@@ -329,7 +329,7 @@ function crossRiver() {
     wagon.food -= (wagon.food * 0.4)
     wagon.money -= (wagon.money * 0.2)
     buildModal("riverFail");
-    $(".ongoing-events").prepend("Your wagon tipped over and " + wagon.characters[index].name + " was swallowed by a giant catfish. Luckily they narrowly escaped, but were still injured. The catfish also feasted on " + (wagon.food * 0.4) + " pounds of food and stole " + (wagon.money * 0.2) + " gold. <br>")
+    $(".ongoing-events").prepend("Your wagon tipped over and " + wagon.characters[index].name + " was swallowed by a giant catfish. Luckily they narrowly escaped, but were still injured. The catfish also feasted on " + (wagon.food * 0.4).toFixed(0) + " pounds of food and stole " + (wagon.money * 0.2).toFixed(0) + " gold. <br>")
      $("#myModal").toggle();
     for(i=0; i < 4; i++) {
       wagon.characters.forEach(function(char){
