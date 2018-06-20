@@ -399,6 +399,11 @@ img {
   width: 38px;
 }
 
+#char1DeathSkull, #char2DeathSkull, #char3DeathSkull, #char4DeathSkull, #char5DeathSkull  {
+  height: 20px;
+  display: none;
+}
+
 /*map*/
 
 #map {

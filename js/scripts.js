@@ -310,6 +310,9 @@ function crossRiver() {
     wagon.characters[index].health -= 30
     wagon.food -= (wagon.food * 0.4)
     wagon.money -= (wagon.money * 0.2)
+    buildModal("riverFail");
+    $(".ongoing-events").prepend("Your wagon tipped over and " + wagon.characters[index].name + " was swallowed by a giant catfish. Luckily they narrowly escaped, but were still injured. The catfish also feasted on " + (wagon.food * 0.4) + " pounds of food and stole " + (wagon.money * 0.2) + " gold. <br>")
+     $("#myModal").toggle();
     for(i=0; i < 4; i++) {
       wagon.characters.forEach(function(char){
         char.statusAdjuster()
@@ -322,6 +325,7 @@ function crossRiver() {
     wagon.days += 1
     wagon.food -= (wagon.characters.length * 5 )
   }
+
   wagon.resourceChecker()
   wagon.deathChecker()
 }
