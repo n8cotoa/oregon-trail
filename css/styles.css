@@ -311,14 +311,17 @@ img {
   position: relative;
 }
 
-#profession .tooltiptext {
+#profession .tooltiptext,
+#faq .tooltiptext {
   visibility: hidden;
-  width: 300px;
+  width: 190px;
   background-color: black;
   color: #fff;
   text-align: center;
-  border-radius: 6px;
+  border-radius: 0px 17px 17px 17px;
   padding: 16px;
+  margin-left: 7px;
+  margin-top: 15px;
   position: absolute;
   z-index: 1;
 }
@@ -345,6 +348,47 @@ img {
 
 #radio6:hover .tooltiptext {
   visibility: visible;
+}
+
+#faq:hover .tooltiptext {
+  visibility: visible;
+}
+
+#supplies {
+  text-align: center;
+  margin-top: 15px;
+}
+
+#supplies img{
+  width: 50px;
+}
+
+#supplies span {
+  font-size: 18px;
+}
+
+#supplies p {
+  margin-bottom: 5px;
+}
+
+#status-panel li {
+  margin-bottom: 3px;
+}
+
+#faq {
+  position: absolute;
+  right: 0;
+}
+
+#faq img {
+  width: 38px;
+}
+
+/*confetti*/
+
+.confetti {
+  background-image: url('../img/fireworks.gif');
+  background-size: cover;
 }
 
 
