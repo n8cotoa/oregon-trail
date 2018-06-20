@@ -2,7 +2,7 @@
 function Character(name) {
   this.name = name;
   this.health = 100;
-  this.status = "good"
+  this.status = "Good"
   this.illness = []
 }
 // wagon/inventory constructor
@@ -65,20 +65,22 @@ Wagon.prototype.deathChecker = function() {
     }
   })
   if (wagon.characters.length === 0) {
-    alert("Game Over! You killed everyone. Great job...")
+    buildModal("dead")
+    $(".endGame-content").prepend("Game Over! You killed everyone. Great job...")
+    $("#endGameModal").toggle();
   }
 }
 
 //status adjuster
 Character.prototype.statusAdjuster = function() {
   if (this.health >= 80) {
-    this.status = "good"
+    this.status = "Good"
   } else if (this.health < 80 && this.health >= 20) {
-    this.status = "fair"
+    this.status = "Fair"
   } else if (this.health < 20 && this.health > 0) {
-    this.status = "poor"
+    this.status = "Poor"
   } else {
-    this.status = "dead"
+    this.status = "Dead"
   }
 }
 //calculates potential illnesses
@@ -116,7 +118,9 @@ Wagon.prototype.rest = function() {
   //event grabber
 Wagon.prototype.eventGrabber = function() {
   var num = Math.floor(Math.random() * Math.floor(100))
-  if (num >= 80) {
+  if (this.distance === 100 || this.distance === 200 || this.distance === 300 || this.distance === 400 || this.distance === 500) {
+
+  } else if (num >= 80) {
     positiveEvent()
     //call positive event
   } else if (num < 80 && num >= 60) {
@@ -147,7 +151,7 @@ function positiveEvent() {
     wagon.food += ranSupplyIncrease
     $('.wagon-food-remaining').text(wagon.food.toFixed(2));
   } else if (num === 4) {
-    $('.ongoing-events').prepend('As you travel along, you come across a group of suckers. You got some free shit- money incread by ' + ranSupplyIncrease + '. <br>')
+    $('.ongoing-events').prepend('As you travel along, you come across a group of suckers. You got some free shit- money increased by ' + ranSupplyIncrease + '. <br>')
     wagon.money += ranSupplyIncrease
     $('.wagon-money-remaining').text(wagon.money.toFixed(2));
   } else if (num === 5){
@@ -185,7 +189,7 @@ function negativeEvent() {
     $(".ongoing-events").prepend("You find a small bunny and decide to keep it. The bunny bites " + wagon.characters[index].name + "." + wagon.characters[index].name + " has gonorrhea.<br>")
     wagon.characters[index].illness.push("Gonorrhea")
   } else if (num === 3) {
-    $(".ongoing-events").prepend("Your party is ambushed, they hold you hostage and take " + ranSupplyDecrease + " of your food. <br>")
+    $(".ongoing-events").prepend("Your party is ambushed, they hold you hostage and take " + ranSupplyDecrease + " pounds of your food. <br>")
     wagon.food -= ranSupplyDecrease
     wagon.days += index
     $('.wagon-food-remaining').text(wagon.food.toFixed(2));
@@ -211,29 +215,43 @@ function buildModal(value) {
     '</div>'
   )
 }
+
+function buildLandmarkModal(value) {
+  $('.modal-child').html('<img src="img/' + value + '.jpg" alt="an image">' +
+    '<div id="popup-text" class="button-content">' +
+    '<div class="buttons">' +
+    '<span id="option1-button" class="btn btn-success">Option 1</span> <span id="option2-button" class="btn btn-success">Option 2</span>' +
+    '</div>' +
+    '</div>'
+  )
+}
 //Push text to class .button-content
 //Option 1 button - id #option1-button
 //Option 2 button - id #option2-button
 function landmarkEvent() {
 var num = wagon.distance
+var hasBeenClicked = false;
+$('#option1-button').click(function(){
+  hasBeenClicked = true;
+})
 console.log(num);
   if (num === 100) {
-    buildModal(num)
-    $(".ongoing-events").prepend("You have reached a river. You can choose to risk supplies and your party to cross the river or take 7 days to go around. <br>")
-    $("#myModal").toggle();
+    buildLandmarkModal(num)
+    $(".button-content").prepend("You have reached a river. You can choose to risk supplies and your party to cross the river or take 7 days to go around. <br>")
+    $("#buttonModal").toggle();
     wagon.days += 7
   } else if (num === 200) {
-    $(".ongoing-events").prepend("Your party has come across a camp, make a selection for what you would like to buy. <br>")
+    $(".button-content").prepend("Your party has come across a camp, make a selection for what you would like to buy. <br>")
     $("#store").fadeIn(500);
     $("#gameMainScreen").delay(500).fadeOut(500);
   } else if (num === 300) {
-    $(".ongoing-events").prepend("Your party finds a small lake and decides to go for a swim. <br>")
+    $(".button-content").prepend("Your party finds a small lake and decides to go for a swim. <br>")
   } else if (num === 400) {
-    $(".ongoing-events").prepend("You find a small bunny and decide to keep it (not as food, what's wrong with you.) <br>")
+    $(".button-content").prepend("You find a small bunny and decide to keep it (not as food, what's wrong with you.) <br>")
   } else if (num === 500){
     buildModal(num)
-    $(".ongoing-events").prepend("WINNER! <br>")
-    $("#myModal").toggle();
+    $(".button-content").prepend("WINNER! <br>")
+    $("#buttonModal").toggle();
   }
 }
 
