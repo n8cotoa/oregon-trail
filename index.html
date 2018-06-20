@@ -120,13 +120,17 @@
         <span id="back-button" class="btn btn-danger">Back</span>
         <span id="subtotal" class="btn btn-warning">Sub-Total</span>
         <span id="storeBTN" class="btn btn-success">Buy</span>
-        <p class="store-total"></p>
+        <p class="store-total">$0</p>
       </div>
     </div>
     <!-- main gameplay screen -->
     <div id="gameMainScreen">
       <div class="row">
         <div class="col-md-8">
+          <div id="faq">
+            <img src="img/faq.png" alt="Help button">
+            <p class="tooltiptext">You Must travel 500 miles reach the goal.<br>Click 'continue' to travel 10 miles per day.<br>Click 'rest' to heal your team members.<br>Click 'hunt' to gather more food.<br>All actions spend one day, and each team member eats 5 food per day.</p>
+          </div>
           <h1>The Oregon Trail</h1>
           <div class="row" id="wagon-images">
             <div class="col-md-3">
@@ -143,14 +147,14 @@
             </div>
           </div>
           <div id="ongoing-text-box">
-            <p class="ongoing-events"></p>
+            <p class="ongoing-events">You Must travel 500 miles reach the goal.<br>Click 'continue' to travel 10 miles per day.<br>Click 'rest' to heal your team members.<br>Click 'hunt' to gather more food.<br>All actions spend one day, and each team member eats 5 food per day.</p>
           </div>
         </div>
         <div class="col-md-4">
           <h2>Team Conditions</h2>
-          <div class="prettyColumn">
-            <p class="bold">Date: <span class="current-date"></span></p>
-            <p class="bold">Distance traveled: <span class="distance-traveled"></span></p>
+          <div class="prettyColumn" id="status-panel">
+            <p class="bold">Days elapsed: <span class="current-date">0</span></p>
+            <p class="bold">Distance traveled: <span class="distance-traveled">0</span></p>
             <ul>
               <li><span id="player-one-name"></span>: <span id="player-one-status"></span></li>
               <li><span id="player-two-name"></span>: <span id="player-two-status"></span></li>
@@ -158,9 +162,20 @@
               <li><span id="player-four-name"></span>: <span id="player-four-status"></span></li>
               <li><span id="player-five-name"></span>: <span id="player-five-status"></span></li>
             </ul>
-            <p class="bold"> Food left: <span id="wagon-food-remaining"></span></p>
-            <p class="bold"> Bullets left: <span id="wagon-bullets-remaining"></span></p>
-            <p class="bold"> Money left: <span class="wagon-money-remaining"></span></p>
+            <div class="row" id="supplies">
+              <div class="col-md-4">
+                <img src="img/restaurant.png" alt="food">
+                <p class="bold"> Food left <br><span id="wagon-food-remaining"></span></p>
+              </div>
+              <div class="col-md-4">
+                <img src="img/bullet.png" alt="bullets">
+                <p class="bold"> Bullets left <br><span id="wagon-bullets-remaining"></span></p>
+              </div>
+              <div class="col-md-4">
+                <img src="img/money-bag.png" alt="money">
+                <p class="bold"> Money left <br><span class="wagon-money-remaining"></span></p>
+              </div>
+            </div>
           </div>
           <span id="rest-button" class="btn btn-success">Rest</span>
           <span id="continue-button" class="btn btn-success">Continue</span>
