@@ -14,6 +14,7 @@ function Wagon() {
   this.bullets = 0;
   this.distance = 0;
   this.hunted = 0;
+  this.completed = 0.01;
 }
 // illness generator
 Character.prototype.illnessGenerator = function() {
@@ -105,8 +106,16 @@ Wagon.prototype.turn = function() {
   }
     this.days += 1
     this.distance += 10
+    this.completed = (this.completed + 2);
+    journey(this.completed);
+}
 
+function journey(dist) {
+    $( "#progressbar" ).progressbar({
+      value: dist
+    });
   }
+
   // function for resting -- cure illness, gain some health
 Wagon.prototype.rest = function() {
   wagon.resourceChecker()
@@ -233,7 +242,6 @@ function buildEndModal(value, btnID1, btn1Name) {
   )
 }
 
-
 function buildLandmarkModal(value, btnID1, btnID2, btn1Name, btn2Name) {
   $('.modal-child').html('<img src="img/' + value + '.jpg" alt="an image">' +
     '<div id="popup-text" class="button-content">' +
@@ -243,6 +251,7 @@ function buildLandmarkModal(value, btnID1, btnID2, btn1Name, btn2Name) {
     '</div>'
   )
 }
+
 Wagon.prototype.buildScore = function() {
   var finalScore = 10000;
   finalScore -= ((this.days - 50) * 20) + ((5 - this.characters.length) * 2000) - (this.food * .2) - (this.money * .3) - (this.bullets* .1)
@@ -475,6 +484,8 @@ function validateNames(profession, playerOne, playerTwo, playerThree, playerFour
   }
 }
 
+
+
 $(document).ready(function(){
   var x = 1;
   $('#wagon-images').addClass('sky1');
@@ -505,6 +516,7 @@ $(document).ready(function(){
     char4 = new Character(playerFourName)
     char5 = new Character(playerFiveName)
     wagon = new Wagon()
+    journey(0)
     wagon.characters.push(char1, char2, char3, char4, char5)
     wagon.profession(professionValue)
     textUpdateUI()

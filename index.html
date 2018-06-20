@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css?family=Londrina+Solid:300,400,900" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="css/jquery-ui.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
@@ -129,7 +130,7 @@
         <div class="col-md-8">
           <div id="faq">
             <img src="img/faq.png" alt="Help button">
-            <p class="tooltiptext">You Must travel 500 miles reach the goal.<br>Click 'continue' to travel 10 miles per day.<br>Click 'rest' to heal your team members.<br>Click 'hunt' to gather more food.<br>All actions spend one day, and each team member eats 5 food per day.</p>
+            <p class="tooltiptext">You must travel 500 miles reach the goal.<br>Click 'continue' to travel 10 miles per day.<br>Click 'rest' to heal your team members.<br>Click 'hunt' to gather more food.<br>All actions spend one day, and each team member eats 5 food per day.</p>
           </div>
           <h1>The Oregon Trail</h1>
           <div class="row" id="wagon-images">
@@ -147,8 +148,10 @@
             </div>
           </div>
           <div id="ongoing-text-box">
-            <p class="ongoing-events">You Must travel 500 miles reach the goal.<br>Click 'continue' to travel 10 miles per day.<br>Click 'rest' to heal your team members.<br>Click 'hunt' to gather more food.<br>All actions spend one day, and each team member eats 5 food per day.</p>
+            <p class="ongoing-events">You must travel 500 miles reach the goal.<br>Click 'continue' to travel 10 miles per day.<br>Click 'rest' to heal your team members.<br>Click 'hunt' to gather more food.<br>All actions spend one day, and each team member eats 5 food per day.</p>
           </div>
+          <p>Journey progress:</p>
+          <div id="progressbar"></div>
         </div>
         <div class="col-md-4">
           <h2>Team Conditions</h2>
@@ -183,6 +186,12 @@
         </div>
       </div>
     </div>
+  <!-- <div id="map">
+
+  </div>
+  <div id="map-background">
+
+  </div> -->
   </div>
   <!-- The Modal -->
   <div id="myModal" class="modal">
