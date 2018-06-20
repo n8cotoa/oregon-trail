@@ -133,21 +133,27 @@ function positiveEvent() {
   var num = Math.floor(Math.random() * Math.floor(5))
   var ranSupplyIncrease = Math.floor(Math.random() * (200 - 100) + 100)
   if (num === 1) {
-    $(".ongoing-events").prepend("As you rest by the river, you find some gold. <br>")
+    $('.ongoing-events').prepend('As you rest by the river, you find ' + ranSupplyIncrease + ' gold. <br>')
     wagon.money += ranSupplyIncrease
+    $('.wagon-money-remaining').text(wagon.money.toFixed(2));
   } else if (num === 2) {
-    $(".ongoing-events").prepend("You come across an abandoned wagon, you find some unspoiled food <br>")
+    $('.ongoing-events').prepend('You come across an abandoned wagon, you find ' + ranSupplyIncrease + ' unspoiled food <br>')
     wagon.food += ranSupplyIncrease
+    $('.wagon-food-remaining').text(wagon.food.toFixed(2));
   } else if (num === 3) {
-    $(".ongoing-events").prepend("You found a wounded deer <br>")
+    $('.ongoing-events').prepend('You found a wounded deer- food increased by ' + ranSupplyIncrease + ' <br>')
     wagon.food += ranSupplyIncrease
+    $('.wagon-food-remaining').text(wagon.food.toFixed(2));
   } else if (num === 4) {
-    $(".ongoing-events").prepend("As you travel along, you come across a group of suckers. You got some free shit. <br>")
+    $('.ongoing-events').prepend('As you travel along, you come across a group of suckers. You got some free shit- money incread by ' + ranSupplyIncrease + '. <br>')
     wagon.money += ranSupplyIncrease
+    $('.wagon-money-remaining').text(wagon.money.toFixed(2));
   } else if (num === 5){
-    $(".ongoing-events").prepend("You ambush and murder another party. We feast tonight. <br> You got " + ranSupplyIncrease + " pounds of food and " + (ranSupplyIncrease/2) + " dollars" )
+    $('.ongoing-events').prepend('You ambush and murder another party. We feast tonight. <br> You got ' + ranSupplyIncrease + ' pounds of food and ' + (ranSupplyIncrease/2) + ' dollars' )
     wagon.money += (ranSupplyIncrease/2)
     wagon.food += ranSupplyIncrease
+    $('.wagon-money-remaining').text(wagon.money.toFixed(2));
+    $('.wagon-food-remaining').text(wagon.food.toFixed(2));
   }
 }
   //random neutralEvent
@@ -177,16 +183,18 @@ function negativeEvent() {
     $(".ongoing-events").prepend("You find a small bunny and decide to keep it. The bunny bites " + wagon.characters[index].name + "." + wagon.characters[index].name + " has gonorrhea.<br>")
     wagon.characters[index].illness.push("Gonorrhea")
   } else if (num === 3) {
-    $(".ongoing-events").prepend("Your party is ambushed, they hold you hostage and take some of your food. <br>")
+    $(".ongoing-events").prepend("Your party is ambushed, they hold you hostage and take " + ranSupplyDecrease + " of your food. <br>")
     wagon.food -= ranSupplyDecrease
     wagon.days += index
+    $('.wagon-food-remaining').text(wagon.food.toFixed(2));
   } else if (num === 4) {
     $(".ongoing-events").prepend("Your wagon wheel broke, in the distance you hear Jesus Take The Wheel playing. <br>")
     wagon.days += 5
     wagon.food -= ((wagon.characters.length * 5 ) * 5)
   } else if (num === 5){
-    $(".ongoing-events").prepend("Some of your food rots because " + wagon.characters[index].name + " wet themselves as they napped on it.")
+    $(".ongoing-events").prepend(ranSupplyDecrease + " of your food rots because " + wagon.characters[index].name + " wet themselves as they napped on it.")
     wagon.food -= ranSupplyDecrease
+    $('.wagon-food-remaining').text(wagon.food.toFixed(2));
   }
 }
 //landmarkEvent for distance traveled
@@ -247,13 +255,15 @@ function deathEvent() {
     $(".ongoing-events").prepend(wagon.characters[index].name + " has developed Pica and has been secretly snackin' on the gold. They die of heavy metal toxicity. You lose 25% of your gold.<br>")
     $("#myModal").toggle();
     wagon.money -= (wagon.money * 0.25)
+    $('.wagon-money-remaining').text(wagon.money.toFixed(2));
     wagon.characters[index].health = 0
     wagon.characters[index].status = "Dead"
   } else if (num === 4) {
     buildModal(num);
-    $(".ongoing-events").prepend(wagon.characters[index].name + " got like stupid stoned the night before and ate a lot of food when their munchies kicked in.<br>")
+    $(".ongoing-events").prepend(wagon.characters[index].name + " got like stupid stoned the night before and ate a lot of food when their munchies kicked in. You lose " + (wagon.food * 0.5) + "<br>")
     $("#myModal").toggle();
-    wagon.food -= (wagon.money * 0.5)
+    wagon.food -= (wagon.food * 0.5)
+    $('.wagon-food-remaining').text(wagon.food.toFixed(2));
   } else if (num === 5 && wagon.characters[index].illness == "Gonorrhea") {
     buildModal(num);
     $(".ongoing-events").prepend(wagon.characters[index].name  + " has also contracted chlymida and it has run rampant. They run off into the woods, never to be seen again.<br>")
@@ -417,8 +427,9 @@ $("#back-button").click(function(){
     $('#player-four-status').text(char4.status);
     $('#player-five-status').text(char5.status);
     $('#wagon-food-remaining').text(wagon.food);
-    $('.current-date').text(wagon.days)
-    console.log(wagon)
+    $('.current-date').text(wagon.days);
+    $('.distance-traveled').text(wagon.distance);
+
     if (x < 4) {
       $('#wagon-' + x).toggle();
       $('#wagon-images').removeClass('sky' + x);
