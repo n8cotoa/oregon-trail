@@ -13,7 +13,7 @@ function Wagon() {
   this.characters = [];
   this.bullets = 0;
   this.distance = 0;
-
+  this.hunted = 0;
 }
 // illness generator
 Character.prototype.illnessGenerator = function() {
@@ -83,6 +83,7 @@ Character.prototype.statusAdjuster = function() {
 }
 //calculates potential illnesses
 Wagon.prototype.turn = function() {
+  this.hunted = 0;
   wagon.eventGrabber();
   landmarkEvent();
 
@@ -216,9 +217,7 @@ function buildModal(value) {
 
 Wagon.prototype.buildScore = function() {
   var finalScore = 10000;
-
   finalScore -= ((this.days - 50) * 20) + ((5 - this.characters.length) * 2000) - (this.food * .2) - (this.money * .3) - (this.bullets* .1)
-
   return finalScore.toFixed();
 }
 //Push text to class .button-content
@@ -292,13 +291,21 @@ function deathEvent() {
 
 //Hunting
 Wagon.prototype.huntingTime = function() {
-  this.food += Math.floor(Math.random() * Math.floor(150))
-  this.days += 1
-  this.bullets -= 1
-  wagon.characters.forEach(function(char){
-    char.illnessChecker() //reduces health if infected
-    char.statusAdjuster() //updates status on screen based on health
-  });
+  if (this.hunted == 1) {
+    var num = 1;
+    buildModal(num);
+    $(".ongoing-events").prepend("You have already hunted- you must continue to a new area to hunt further.<br>");
+    $("#myModal").toggle();
+  } else if (this.hunted == 0){
+    this.food += Math.floor(Math.random() * Math.floor(150))
+    this.days += 1
+    this.bullets -= 1
+    wagon.characters.forEach(function(char){
+      char.illnessChecker() //reduces health if infected
+      char.statusAdjuster() //updates status on screen based on health
+    });
+    this.hunted += 1;
+  }
   $('#wagon-bullets-remaining').text(wagon.bullets);
 }
 //Profession checker
