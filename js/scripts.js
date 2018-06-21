@@ -117,6 +117,7 @@ Wagon.prototype.turn = function() {
     landmarkEvent();
     this.completed = (this.completed + 2);
     journey(this.completed);
+    wagon.resourceChecker()
 }
 
 function journey(dist) {
@@ -495,9 +496,9 @@ function textUpdateUI() {
   $('#player-three-status').text(char3.status);
   $('#player-four-status').text(char4.status);
   $('#player-five-status').text(char5.status);
-  $('#wagon-food-remaining').text(wagon.food);
+  $('#wagon-food-remaining').text(wagon.food.toFixed(0));
   $('.wagon-money-remaining').text(wagon.money.toFixed(2));
-  $('#wagon-bullets-remaining').text(wagon.bullets);
+  $('#wagon-bullets-remaining').text(wagon.bullets.toFixed(0));
   $('.current-date').text(wagon.days);
   $('.distance-traveled').text(wagon.distance);
 }
@@ -579,7 +580,6 @@ $("#back-button").click(function(){
   $("#continue-button").click(function(){
     wagon.turn()
     console.log(wagon.characters);
-    wagon.resourceChecker()
     wagon.statusAdjuster()
     textUpdateUI()
 
