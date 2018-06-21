@@ -539,7 +539,6 @@ function enableSubmit(ele) {
 
 
 $(document).ready(function(){
-  document.getElementById('openingSong').autoplay;
   var x = 1;
   $('#wagon-images').addClass('sky1');
 
@@ -551,6 +550,7 @@ $(document).ready(function(){
   }
 
   $("#startBTN").click(function(){
+    document.getElementById('openingSong').play();
     $("#start").fadeOut(500);
     $("#characterInput").delay(500).fadeIn(500);
   });
@@ -589,6 +589,7 @@ $(document).ready(function(){
     $('#wagon-food-remaining').text(wagon.food);
     $('.wagon-money-remaining').text(wagon.money.toFixed(2));
     $('#wagon-bullets-remaining').text(wagon.bullets);
+    document.getElementById('openingSong').pause();
   });
 
 $("#preCheckout").click(function(){
