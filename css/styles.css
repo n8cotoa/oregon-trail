@@ -20,11 +20,21 @@ span {
 #gameMainScreen {
   display: none;
 }
-
+#wagon-6,
+#wagon-5,
 #wagon-4,
 #wagon-3,
 #wagon-2 {
   display: none;
+  margin-top: 36px;
+}
+
+#wagon-1 {
+  margin-top: 36px;
+}
+
+#wagon-images .col-md-2 {
+  padding: 0px 5px;
 }
 
 /* page formatting */
@@ -66,6 +76,7 @@ span {
   padding: 10px;
   border: 2px solid black;
   margin: 0;
+  min-height: 151px;
 }
 
 #start img {
@@ -73,16 +84,22 @@ span {
   margin-bottom:10px;
 }
 .sky1 {
-    background: aliceblue;
+    background: #d5e4eb;
 }
 .sky2 {
-  background: #002b80;
+  background: #bad1de;
 }
 .sky3 {
-    background: black;
+    background: #d5e4eb;
 }
 .sky4 {
-  background: #002b80;
+  background: #bad1de;
+}
+.sky5 {
+  background: #d5e4eb;
+}
+.sky6 {
+  background: #bad1de;
 }
 
 img {

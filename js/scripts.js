@@ -18,7 +18,7 @@ function Wagon() {
 }
 
 Character.prototype.healthBar = function() {
-  var pairs = {Good: "green", Fair: "yellow", Poor: "red", Dead: "black"};
+  var pairs = {Good: "#28a745", Fair: "#f0ad4e", Poor: "#d9534f", Dead: "black"};
     $( "#char1-health-bar").progressbar({value: char1.health});
     $( "#char1-health-bar .ui-widget-header").css("background", pairs[char1.status]).css("border-color", pairs[char1.status]);
     $( "#char2-health-bar").progressbar({value: char2.health});
@@ -467,7 +467,7 @@ function storeBuy(food, bullets) {
       wagon.bullets += bullets;
       $("#store").fadeOut(500);
       $("#gameMainScreen").delay(500).fadeIn(500);
-      $('.wagon-money-remaining').text(wagon.money);
+      $('.wagon-money-remaining').text(wagon.money.toFixed(2));
       $("#food-fields input, #bullet-fields input").val(0);
       $(".store-total, .bullet-total, .food-total").text("$0");
       return total;
@@ -486,7 +486,7 @@ function textUpdateUI() {
   $('#player-four-status').text(char4.status);
   $('#player-five-status').text(char5.status);
   $('#wagon-food-remaining').text(wagon.food);
-  $('.wagon-money-remaining').text(wagon.money);
+  $('.wagon-money-remaining').text(wagon.money.toFixed(2));
   $('#wagon-bullets-remaining').text(wagon.bullets);
   $('.current-date').text(wagon.days);
   $('.distance-traveled').text(wagon.distance);
@@ -572,7 +572,7 @@ $("#back-button").click(function(){
     wagon.deathChecker()
     textUpdateUI()
 
-    if (x < 4) {
+    if (x < 6) {
       $('#wagon-' + x).toggle();
       $('#wagon-images').removeClass('sky' + x);
       x++;
