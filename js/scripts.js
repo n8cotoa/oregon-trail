@@ -206,8 +206,7 @@ function neutralEvent() {
 }
   //random negativeEvent
 function negativeEvent() {
-  var num = 4
-  // var num = Math.floor(Math.random() * Math.floor(5))
+  var num = Math.floor(Math.random() * Math.floor(5))
   var ranSupplyDecrease = Math.floor(Math.random() * (200 - 100) + 100)
   var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
   if (num === 1) {
@@ -343,6 +342,9 @@ function crossRiver() {
       wagon.food -= (wagon.characters.length * 5 )
     }
   } else {
+    buildModal("riverWin");
+    $(".ongoing-events").prepend("Your wagon successfully crossed the river! <br>")
+     $("#myModal").toggle();
     wagon.days += 1
     wagon.food -= (wagon.characters.length * 5 )
   }
@@ -514,6 +516,9 @@ function validateNames(profession, playerOne, playerTwo, playerThree, playerFour
   }
 }
 
+function enableSubmit(ele) {
+  $(ele).css({"pointer-events":"auto","background-color":"#5cb85c","border-color":"#4cae4c"});
+}
 
 
 $(document).ready(function(){
@@ -579,8 +584,9 @@ $("#back-button").click(function(){
 });
 
   $("#continue-button").click(function(){
+    $("#continue-button").css({"pointer-events":"none","background-color":"lightgreen","border-color":"lightgreen"});
+    setTimeout(function() { enableSubmit("#continue-button") }, 1000);
     wagon.turn()
-    console.log(wagon.characters);
     wagon.statusAdjuster()
     textUpdateUI()
 
@@ -600,6 +606,8 @@ $("#back-button").click(function(){
   });
 
   $("#rest-button").click(function(){
+    $("#rest-button").css({"pointer-events":"none","background-color":"lightgreen","border-color":"lightgreen"});
+    setTimeout(function() { enableSubmit("#rest-button") }, 1000);
     wagon.rest()
     textUpdateUI()
   });
