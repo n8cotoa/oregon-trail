@@ -206,8 +206,7 @@ function neutralEvent() {
 }
   //random negativeEvent
 function negativeEvent() {
-  var num = 4
-  // var num = Math.floor(Math.random() * Math.floor(5))
+  var num = Math.floor(Math.random() * Math.floor(5))
   var ranSupplyDecrease = Math.floor(Math.random() * (200 - 100) + 100)
   var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
   if (num === 1) {
@@ -296,7 +295,9 @@ function landmarkEvent() {
     $(".button-content").prepend("You have reached a river. You can choose to risk supplies and your party to cross the river or take 7 days to go around. <br>")
     $("#buttonModal").toggle();
   } else if (num === 200) {
-    $(".button-content").prepend("Your party has come across a camp, make a selection for what you would like to buy. <br>")
+    buildModal("campStore");
+    $(".ongoing-events").prepend("Your party has come across a camp, make a selection for what you would like to buy. <br>")
+    $("#myModal").toggle();
     $("#gameMainScreen").fadeOut(500);
     $("#store").delay(500).fadeIn(500);
     $("#back-button").hide();
@@ -305,7 +306,9 @@ function landmarkEvent() {
     $(".button-content").prepend("As you travel along the trail you hear screams in the distance. You have no choice but to keep moving forward. When out of nowhere your wagon is surrounded by crazed cannibals. One of them steps forward and proclaims: 'I am George Donner, my family is hungry. Sacrifice one of your own and the rest are free to go on!' <br>")
     $("#buttonModal").toggle();
   } else if (num === 400) {
-    $(".button-content").prepend("Your party has come across a camp, make a selection for what you would like to buy. <br>")
+    buildModal("generalStore");
+    $(".ongoing-events").prepend("Your party has come across a trading post, make a selection for what you would like to buy. <br>")
+    $("#myModal").toggle();
     $("#gameMainScreen").fadeOut(500);
     $("#store").delay(500).fadeIn(500);
     $("#back-button").hide();
