@@ -94,7 +94,7 @@ Wagon.prototype.statusAdjuster = function() {
   })
   if (wagon.characters.length === 0) {
     buildEndModal("dead", "death", "Try Again")
-    $(".ongoing-events").prepend("Game Over! You killed everyone. Great job...")
+    $(".button-content").prepend("Game Over! You killed everyone. Great job...")
     $("#myModal").toggle();
   }
 }
@@ -205,7 +205,8 @@ function neutralEvent() {
 }
   //random negativeEvent
 function negativeEvent() {
-  var num = Math.floor(Math.random() * Math.floor(5))
+  var num = 4
+  // var num = Math.floor(Math.random() * Math.floor(5))
   var ranSupplyDecrease = Math.floor(Math.random() * (200 - 100) + 100)
   var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
   if (num === 1) {
@@ -223,6 +224,20 @@ function negativeEvent() {
     $(".ongoing-events").prepend("Your wagon wheel broke, in the distance you hear Jesus Take The Wheel playing. Your party loses 5 days. <br>")
     wagon.days += 5
     wagon.food -= ((wagon.characters.length * 5 ) * 5)
+    $("#wheel-1").fadeIn(500);
+    $("#wheel-2").delay(300).fadeIn(500);
+    $("#wheel-1").fadeOut(500);
+    $("#wheel-3").delay(400).fadeIn(500);
+    $("#wheel-2").fadeOut(500);
+    $("#wheel-4").delay(500).fadeIn(500);
+    $("#wheel-3").fadeOut(500);
+    $("#wheel-5").delay(600).fadeIn(500);
+    $("#wheel-4").fadeOut(500);
+    $("#wheel-6").delay(700).fadeIn(500);
+    $("#wheel-5").fadeOut(500);
+    $("#jesus").delay(1100).fadeIn(100);
+    $("#wheel-6").slideUp(4000).fadeOut(500);
+    $("#jesus").slideUp(4000).fadeOut(500);
   } else if (num === 5){
     $(".ongoing-events").prepend(ranSupplyDecrease + " of your food rots because " + wagon.characters[index].name + " wet themselves as they napped on it.")
     wagon.food -= ranSupplyDecrease
@@ -294,7 +309,7 @@ function landmarkEvent() {
   } else if (num === 500){
     buildEndModal(num, "win", "Play Again!")
     var endScore = wagon.buildScore()
-    $(".button-content").prepend("<h4>WINNER!</h4> <br> Your score is: " + endScore);
+    $(".button-content").prepend("<h4>WINNER!</h4>Your score is: " + endScore);
     $("#buttonModal").addClass('confetti');
     $("#buttonModal").toggle();
   }
@@ -302,13 +317,13 @@ function landmarkEvent() {
 //landmark 1 button events
 function detourRiver() {
   for(i=0; i < 8; i++) {
-    wagon.statusAdjuster()
     wagon.days += 1
     wagon.food -= (wagon.characters.length * 5 )
     wagon.resourceChecker()
+    wagon.statusAdjuster()
   }
   $(".ongoing-events").prepend("You spent seven days and went around the river. <br>")
-  wagon.deathChecker()
+  wagon.statusAdjuster()
 }
 function crossRiver() {
   var num = Math.floor(Math.random() * Math.floor(100))
@@ -565,6 +580,7 @@ $("#back-button").click(function(){
     wagon.turn()
     console.log(wagon.characters);
     wagon.resourceChecker()
+    wagon.statusAdjuster()
     textUpdateUI()
 
     if (x < 6) {
