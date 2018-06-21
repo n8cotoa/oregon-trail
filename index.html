@@ -5,16 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css?family=Londrina+Solid:300,400,900" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="css/jquery-ui.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
   <script src="js/scripts.js"></script>
+  <audio id ="jesusSnatch" src="sounds/jesusWheel.mp3" preload="auto"></audio>
+  <audio id ="shotgun-fire" src="sounds/shotgun.mp3" preload="auto"></audio>
+  <audio id ="shotgun-dry" src="sounds/dry-fire.mp3" preload="auto"></audio>
 </head>
 <body>
+    <audio control autoplay id ="openingSong" src="sounds/openingSong.mp3"></audio>
   <div class="container">
     <!-- Character setup screen -->
     <div id="characterSetup">
       <div id="start">
-        <h1>The Oregon Trail</h1>
+        <div class="main-title">
+          <h1>The Oregon Trail</h1>
+        </div>
+        <div class="icon-animate">
+          <!-- <img src="img/beans.png" alt=""> -->
+        </div>
+        <div class="icon-wagon">
+          <!-- <img src="img/beans.png" alt=""> -->
+        </div>
         <img src="img/start-cover.jpg" alt="valley">
         <span id="startBTN" class="btn btn-success">Start</span>
       </div>
@@ -24,23 +38,29 @@
             <div id="profession" class="col-md-3">
               <p>Select your profession</p>
               <div class="prettyColumn">
-                <div class="radio">
-                  <label><input type="radio" name="profession" value="1"> Banker</label>
+                <div id="radio1">
+                  <label><input type="radio" name="profession" value="1" checked> Banker</label>
+                  <span class="tooltiptext">The Banker starts with $1000 and no initial food.</span>
                 </div>
-                <div class="radio">
+                <div id="radio2">
                   <label><input type="radio" name="profession" value="2"> Doctor</label>
+                  <span class="tooltiptext">The Doctor starts with $800 and no initial food.</span>
                 </div>
-                <div class="radio">
+                <div id="radio3">
                   <label><input type="radio" name="profession" value="3"> Farmer</label>
+                  <span class="tooltiptext">The Farmer starts with $500 and 500lbs of initial food.</span>
                 </div>
-                <div class="radio">
+                <div id="radio4">
                   <label><input type="radio" name="profession" value="4"> Rancher</label>
+                  <span class="tooltiptext">The Rancher starts with $750 and 250lbs of initial food.</span>
                 </div>
-                <div class="radio">
+                <div id="radio5">
                   <label><input type="radio" name="profession" value="5"> Merchant</label>
+                  <span class="tooltiptext">The Merchant starts with $900 and 100lbs of initial food.</span>
                 </div>
-                <div class="radio">
+                <div id="radio6">
                   <label><input type="radio" name="profession" value="6"> Teacher</label>
+                  <span class="tooltiptext">The Teacher starts with $550 and no initial food.</span>
                 </div>
               </div>
               <span id="characterBTN" class="btn btn-success">Next</span>
@@ -48,11 +68,11 @@
             <div id="charNameInput" class="col-md-3">
               <p>Type in the names of your party:</p>
               <div class="prettyColumn">
-                <input id="char1" type="text" placeholder="name player 1">
-                <input id="char2" type="text" placeholder="name player 2">
-                <input id="char3" type="text" placeholder="name player 3">
-                <input id="char4" type="text" placeholder="name player 4">
-                <input id="char5" type="text" placeholder="name player 5">
+                <input id="char1" type="text" placeholder="name player 1" value="Wild Bill">
+                <input id="char2" type="text" placeholder="name player 2" value="Josephine">
+                <input id="char3" type="text" placeholder="name player 3" value="Cookie">
+                <input id="char4" type="text" placeholder="name player 4" value="Wyatt Twerp">
+                <input id="char5" type="text" placeholder="name player 5" value="Lil' Bobby">
               </div>
             </div>
             <div class="col-md-6">
@@ -64,10 +84,27 @@
     <!-- inital store screen -->
     <div id="store">
       <div class="store-fields">
+        <div class="store-titles">
         <h2>Mercantile</h2>
-        <div class="row">
+        <h3>you have: $<span class="wagon-money-remaining"></span></h3>
+        </div>
+        <div class="row" id="upper-store-fields">
           <div class="col-md-3">
-            <input type="text" name="food" placeholder="0">
+            <p>Amount</p>
+          </div>
+          <div class="col-md-3">
+            <p>Item</p>
+          </div>
+          <div class="col-md-3">
+            <p>Cost</p>
+          </div>
+          <div class="col-md-3">
+            <p>Total</p>
+          </div>
+        </div>
+        <div class="row" id="food-fields">
+          <div class="col-md-3">
+            <input type="number" name="food" placeholder="0" value="500">
           </div>
           <div class="col-md-3">
             <p>Pounds of Food</p>
@@ -76,60 +113,130 @@
             <p>$0.20</p>
           </div>
           <div class="col-md-3">
-            <p class="store-total"></p>
+            <p class="food-total"></p>
           </div>
         </div>
+        <div class="row" id="bullet-fields">
+          <div class="col-md-3">
+            <input type="number" name="bullets" placeholder="0" value="10">
+          </div>
+          <div class="col-md-3">
+            <p>Bullets</p>
+          </div>
+          <div class="col-md-3">
+            <p>$0.10</p>
+          </div>
+          <div class="col-md-3">
+            <p class="bullet-total"></p>
+          </div>
+        </div>
+        <span id="back-button" class="btn btn-danger">Back</span>
         <span id="subtotal" class="btn btn-warning">Sub-Total</span>
         <span id="storeBTN" class="btn btn-success">Buy</span>
+        <p class="store-total">$0</p>
       </div>
     </div>
     <!-- main gameplay screen -->
     <div id="gameMainScreen">
       <div class="row">
         <div class="col-md-8">
+          <div id="faq">
+            <img src="img/faq.png" alt="Help button">
+            <p class="tooltiptext">You must travel 500 miles reach the goal.<br>Click 'continue' to travel 10 miles per day.<br>Click 'rest' to heal your team members.<br>Click 'hunt' to gather more food.<br>All actions spend one day, and each team member eats 5 food per day.</p>
+          </div>
           <h1>The Oregon Trail</h1>
           <div class="row" id="wagon-images">
-            <div class="col-md-3">
+            <div class="col-md-2">
+              <img src="img/wagon.png" id="wagon-6" alt="wagon">
+              <img src="img/wheel.svg" id="wheel-6" alt="wheel">
+              <img src="img/jesus.svg" id="jesus" alt="jesus">
+              <img src="img/shining.svg" id="star" alt="star">
+            </div>
+            <div class="col-md-2">
+              <img src="img/wagon.png" id="wagon-5" alt="wagon">
+              <img src="img/wheel.svg" id="wheel-5" alt="wheel">
+            </div>
+            <div class="col-md-2">
               <img src="img/wagon.png" id="wagon-4" alt="wagon">
+              <img src="img/wheel.svg" id="wheel-4" alt="wheel">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
               <img src="img/wagon.png" id="wagon-3" alt="wagon">
+              <img src="img/wheel.svg" id="wheel-3" alt="wheel">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
               <img src="img/wagon.png" id="wagon-2" alt="wagon">
+              <img src="img/wheel.svg" id="wheel-2" alt="wheel">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
               <img src="img/wagon.png" id="wagon-1" alt="wagon">
+              <img src="img/wheel.svg" id="wheel-1" alt="wheel">
             </div>
           </div>
           <div id="ongoing-text-box">
-            <p class="ongoing-events"> ongoing prepended text for </p>
+            <p class="ongoing-events">You must travel 500 miles reach the goal.<br>Click 'continue' to travel 10 miles per day.<br>Click 'rest' to heal your team members.<br>Click 'hunt' to gather more food.<br>All actions spend one day, and each team member eats 5 food per day.</p>
           </div>
+          <p id="progress-title">Journey progress:</p>
+          <div id="progressbar"></div>
         </div>
         <div class="col-md-4">
-          <h2>Team Conditions</h2>
-          <div class="prettyColumn">
-            <p class="bold">Date: <span class="current-date"></span></p>
-            <ul>
-              <li><span id="player-one-name"></span>: <span id="player-one-status"></span></li>
-              <li><span id="player-two-name"></span>: <span id="player-two-status"></span></li>
-              <li><span id="player-three-name"></span>: <span id="player-three-status"></span></li>
-              <li><span id="player-four-name"></span>: <span id="player-four-status"></span></li>
-              <li><span id="player-five-name"></span>: <span id="player-five-status"></span></li>
-            </ul>
-            <p class="bold" >Food left: <span id="wagon-food-remaining"></span></p>
+          <div id="sacrifice-button">
+            <img id="sacrifice" src="img/skull.png" alt="Sacrifice Team">
+            <p class="tooltiptext">Clicking on this button will sacrifice your entire team. You will be reincarnated back at the start of the trail.</p>
           </div>
-          <span id="rest-button" class="btn btn-success">Rest</span>
+          <h2>Team Conditions</h2>
+          <div class="prettyColumn" id="status-panel">
+            <p class="bold">Days elapsed: <span class="current-date">0</span></p>
+            <p class="bold">Distance traveled: <span class="distance-traveled">0</span></p>
+            <ul>
+              <li><span id="player-one-name"></span>: <span id="player-one-status"></span><div id="char1-health-bar" class="health-bar"></div><span>Illnesses: <span id="player-one-illness"></span></span></li>
+              <li><span id="player-two-name"></span>: <span id="player-two-status"></span><div id="char2-health-bar" class="health-bar"></div><span>Illnesses: <span id="player-two-illness"></span></span></li>
+              <li><span id="player-three-name"></span>: <span id="player-three-status"></span><div id="char3-health-bar" class="health-bar"></div><span>Illnesses: <span id="player-three-illness"></span></span></li>
+              <li><span id="player-four-name"></span>: <span id="player-four-status"></span><div id="char4-health-bar" class="health-bar"></div><span>Illnesses: <span id="player-four-illness"></span></span></li>
+              <li><span id="player-five-name"></span>: <span id="player-five-status"></span><div id="char5-health-bar" class="health-bar"></div><span>Illnesses: <span id="player-five-illness"></span></span></li>
+            </ul>
+            <div class="row" id="supplies">
+              <div class="col-md-4">
+                <img src="img/restaurant.png" alt="food">
+                <p class="bold"> Food left <br><span id="wagon-food-remaining"></span></p>
+              </div>
+              <div class="col-md-4">
+                <img src="img/bullet.png" alt="bullets">
+                <p class="bold"> Bullets left <br><span id="wagon-bullets-remaining"></span></p>
+              </div>
+              <div class="col-md-4">
+                <img src="img/money-bag.png" alt="money">
+                <p class="bold"> Money left <br><span class="wagon-money-remaining"></span></p>
+              </div>
+            </div>
+          </div>
+          <span id="rest-button" class="btn btn-info">Rest</span>
           <span id="continue-button" class="btn btn-success">Continue</span>
-          <span id="hunt-button" class="btn btn-success">Hunt</span>
+          <span id="hunt-button" class="btn btn-danger">Hunt</span>
         </div>
       </div>
     </div>
+  <!-- <div id="map">
+
+  </div>
+  <div id="map-background">
+
+  </div> -->
   </div>
   <!-- The Modal -->
   <div id="myModal" class="modal">
     <div class="modal-child">
 
+    </div>
+  </div>
+  <div id="buttonModal" class="modal2">
+    <div class="modal-child">
+      <div class="button-content">
+
+      </div>
+      <div class="buttons">
+        <span id="option1-button" class="btn btn-success">Option 1</span> <span id="option2-button" class="btn btn-success">Option 2</span>
+      </div>
     </div>
   </div>
 </body>
