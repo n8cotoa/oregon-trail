@@ -52,15 +52,26 @@ Character.prototype.illnessGenerator = function() {
   }
 }
 //illness checker
-Character.prototype.illnessChecker = function() {
-  if (this.illness.length === 1) {
-    this.health -= 2
-  } else if (this.illness.length === 2) {
-    this.health -= 4
-  } else if (this.illness.length >= 3) {
-    this.health -= 6
-  }
-}
+// Character.prototype.illnessChecker = function() {
+//   if (this.illness.length === 1) {
+//     this.health -= 2
+//   } else if (this.illness.length === 2) {
+//     this.health -= 4
+//   } else if (this.illness.length >= 3) {
+//     this.health -= 6
+//   }
+//
+//   if (this.health >= 80) {
+//     this.status = "Good"
+//   } else if (this.health < 80 && this.health >= 20) {
+//     this.status = "Fair"
+//   } else if (this.health < 20 && this.health > 0) {
+//     this.status = "Poor"
+//   } else {
+//     this.status = "Dead"
+//   }
+//   char1.healthBar();
+// }
 
 //food checker
 Wagon.prototype.resourceChecker = function() {
@@ -76,8 +87,27 @@ Wagon.prototype.resourceChecker = function() {
 }
 
 //death checker
-Wagon.prototype.deathChecker = function() {
+Wagon.prototype.statusAdjuster = function() {
   wagon.characters.forEach(function(char){
+    if (char.illness.length === 1) {
+      char.health -= 2
+    } else if (char.illness.length === 2) {
+      char.health -= 4
+    } else if (char.illness.length >= 3) {
+      char.health -= 6
+    }
+
+    if (char.health >= 80) {
+      char.status = "Good"
+    } else if (char.health < 80 && char.health >= 20) {
+      char.status = "Fair"
+    } else if (char.health < 20 && char.health > 0) {
+      char.status = "Poor"
+    } else {
+      char.status = "Dead"
+    }
+    char.healthBar();
+
     if (char.health <= 0) {
       var index = wagon.characters.indexOf(char)
       wagon.characters.splice(index, 1)
@@ -92,27 +122,26 @@ Wagon.prototype.deathChecker = function() {
 }
 
 //status adjuster
-Character.prototype.statusAdjuster = function() {
-  if (this.health >= 80) {
-    this.status = "Good"
-  } else if (this.health < 80 && this.health >= 20) {
-    this.status = "Fair"
-  } else if (this.health < 20 && this.health > 0) {
-    this.status = "Poor"
-  } else {
-    this.status = "Dead"
-  }
-  char1.healthBar();
-}
+// Character.prototype.statusAdjuster = function() {
+//   if (this.health >= 80) {
+//     this.status = "Good"
+//   } else if (this.health < 80 && this.health >= 20) {
+//     this.status = "Fair"
+//   } else if (this.health < 20 && this.health > 0) {
+//     this.status = "Poor"
+//   } else {
+//     this.status = "Dead"
+//   }
+//   char1.healthBar();
+// }
 //calculates potential illnesses
 Wagon.prototype.turn = function() {
   this.hunted = 0;
   wagon.eventGrabber();
   wagon.characters.forEach(function(char){
     char.illnessGenerator()
-    char.illnessChecker() //reduces health if infected
-    char.statusAdjuster() //updates status on screen based on health
   });
+    wagon.statusAdjuster()
     if (wagon.food > 0) {
     wagon.food -= (wagon.characters.length * 5 )
   } else if (wagon.food <= 0) {
@@ -141,9 +170,8 @@ Wagon.prototype.rest = function() {
     if (char.health < 99) {
     char.health += 2
     }
-    char.statusAdjuster()
-    char.illnessChecker()
   });
+  wagon.statusAdjuster()
   wagon.food -= (wagon.characters.length * 5 )
   this.days += 1
 }
@@ -309,11 +337,7 @@ function landmarkEvent() {
 //landmark 1 button events
 function detourRiver() {
   for(i=0; i < 8; i++) {
-    wagon.characters.forEach(function(char){
-      char.statusAdjuster()
-      char.illnessChecker()
-      wagon.deathChecker()
-    });
+    wagon.statusAdjuster()
     wagon.days += 1
     wagon.food -= (wagon.characters.length * 5 )
     wagon.resourceChecker()
@@ -332,10 +356,7 @@ function crossRiver() {
     $(".ongoing-events").prepend("Your wagon tipped over and " + wagon.characters[index].name + " was swallowed by a giant catfish. Luckily they narrowly escaped, but were still injured. The catfish also feasted on " + (wagon.food * 0.4) + " pounds of food and stole " + (wagon.money * 0.2) + " gold. <br>")
      $("#myModal").toggle();
     for(i=0; i < 4; i++) {
-      wagon.characters.forEach(function(char){
-        char.statusAdjuster()
-        char.illnessChecker()
-      });
+      wagon.statusAdjuster()
       wagon.days += 1
       wagon.food -= (wagon.characters.length * 5 )
     }
@@ -345,7 +366,7 @@ function crossRiver() {
   }
 
   wagon.resourceChecker()
-  wagon.deathChecker()
+  wagon.statusAdjuster()
 }
 // landmark 3 button events
 function sacrifice() {
@@ -361,19 +382,16 @@ function flee() {
     wagon.characters[index].health = 0
     buildModal("fleeFail");
     $(".ongoing-events").prepend("George caught " + wagon.characters[index].name + " while trying to flee. We can only assume he was tasty af. <br>")
-     $("#myModal").toggle();
-    wagon.characters.forEach(function(char){
-      char.statusAdjuster()
-      char.illnessChecker()
-    });
-      wagon.days += 1
-      wagon.food -= (wagon.characters.length * 5 )
+    $("#myModal").toggle();
+    wagon.statusAdjuster()
+    wagon.days += 1
+    wagon.food -= (wagon.characters.length * 5 )
   } else {
     $(".ongoing-events").prepend("Everyone was lucky enough to escape unscathed. <br>")
     wagon.days += 1
     wagon.food -= (wagon.characters.length * 5 )
   }
-  wagon.deathChecker()
+  wagon.statusAdjuster()
   wagon.resourceChecker()
 }
 function deathEvent() {
@@ -426,10 +444,7 @@ Wagon.prototype.huntingTime = function() {
     this.food += Math.floor(Math.random() * Math.floor(150))
     this.days += 1
     this.bullets -= 1
-    wagon.characters.forEach(function(char){
-      char.illnessChecker() //reduces health if infected
-      char.statusAdjuster() //updates status on screen based on health
-    });
+    wagon.statusAdjuster()
     this.hunted += 1;
   }
 
@@ -577,8 +592,8 @@ $("#back-button").click(function(){
 
   $("#continue-button").click(function(){
     wagon.turn()
+    console.log(wagon.characters);
     wagon.resourceChecker()
-    wagon.deathChecker()
     textUpdateUI()
 
     if (x < 4) {

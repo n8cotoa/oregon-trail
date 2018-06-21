@@ -18,7 +18,7 @@
 ## Technologies Used
 
 * Bootstrap 4.0.0
-* jQuery UI
+* jQuery UI 1.12.1
 * jQuery 3.3.1
 
 ## Links
