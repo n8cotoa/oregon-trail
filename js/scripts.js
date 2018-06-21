@@ -249,7 +249,7 @@ function negativeEvent() {
 //landmarkEvent for distance traveled
 
 function storeModal() {
-  $('.modal-child').html('<div id="popup-text"><h2>Here is what is in your cart currently</h2><span id="wagon-food-remaining"></span></div>' + wagon.money + '<span id="back-button" class="btn btn-danger">Back</span></div>')
+  $('.modal-child').html('<div id="popup-text"><h2>Here is what is in your cart currently</h2><span id="wagon-food-remaining"></span></div>' + wagon.money.toFixed(2) + '<span id="back-button" class="btn btn-danger">Back</span></div>')
 }
 
 function buildModal(value) {
@@ -410,7 +410,7 @@ function deathEvent() {
     wagon.characters[index].status = "Dead"
   } else if (num === 4) {
     buildModal(num);
-    $(".ongoing-events").prepend(wagon.characters[index].name + " got like stupid stoned the night before and ate a lot of food when their munchies kicked in. You lose " + (wagon.food * 0.5) + "lbs of food.<br>")
+    $(".ongoing-events").prepend(wagon.characters[index].name + " got like stupid stoned the night before and ate a lot of food when their munchies kicked in. You lose " + (wagon.food * 0.5).toFixed(2) + "lbs of food.<br>")
     $("#myModal").toggle();
     wagon.food -= (wagon.food * 0.5)
     $('.wagon-food-remaining').text(wagon.food.toFixed(2));
