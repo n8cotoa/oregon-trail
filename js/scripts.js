@@ -12,7 +12,7 @@ function Wagon() {
   this.days = 0;
   this.characters = [];
   this.bullets = 0;
-  this.distance = 290;
+  this.distance = 0;
   this.hunted = 0;
   this.completed = 0.01;
 }
@@ -51,28 +51,6 @@ Character.prototype.illnessGenerator = function() {
     $(".ongoing-events").prepend(this.name + " got a Broken Arm <br>")
   }
 }
-//illness checker
-// Character.prototype.illnessChecker = function() {
-//   if (this.illness.length === 1) {
-//     this.health -= 2
-//   } else if (this.illness.length === 2) {
-//     this.health -= 4
-//   } else if (this.illness.length >= 3) {
-//     this.health -= 6
-//   }
-//
-//   if (this.health >= 80) {
-//     this.status = "Good"
-//   } else if (this.health < 80 && this.health >= 20) {
-//     this.status = "Fair"
-//   } else if (this.health < 20 && this.health > 0) {
-//     this.status = "Poor"
-//   } else {
-//     this.status = "Dead"
-//   }
-//   char1.healthBar();
-// }
-
 //food checker
 Wagon.prototype.resourceChecker = function() {
   if (this.food <= 0) {
@@ -86,7 +64,7 @@ Wagon.prototype.resourceChecker = function() {
   }
 }
 
-//death checker
+//Checks for illness, status changes, and character death
 Wagon.prototype.statusAdjuster = function() {
   wagon.characters.forEach(function(char){
     if (char.illness.length === 1) {
@@ -120,20 +98,6 @@ Wagon.prototype.statusAdjuster = function() {
     $("#myModal").toggle();
   }
 }
-
-//status adjuster
-// Character.prototype.statusAdjuster = function() {
-//   if (this.health >= 80) {
-//     this.status = "Good"
-//   } else if (this.health < 80 && this.health >= 20) {
-//     this.status = "Fair"
-//   } else if (this.health < 20 && this.health > 0) {
-//     this.status = "Poor"
-//   } else {
-//     this.status = "Dead"
-//   }
-//   char1.healthBar();
-// }
 //calculates potential illnesses
 Wagon.prototype.turn = function() {
   this.hunted = 0;
@@ -164,7 +128,6 @@ function journey(dist) {
 
   // function for resting -- cure illness, gain some health
 Wagon.prototype.rest = function() {
-  wagon.resourceChecker()
   wagon.characters.forEach(function(char){
     char.illness.splice(0, 1)
     if (char.health < 99) {
@@ -174,6 +137,7 @@ Wagon.prototype.rest = function() {
   wagon.statusAdjuster()
   wagon.food -= (wagon.characters.length * 5 )
   this.days += 1
+  wagon.resourceChecker()
 }
 
   //event grabber
@@ -373,7 +337,7 @@ function sacrifice() {
   var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
   wagon.characters[index].health = 0
   $(".ongoing-events").prepend(wagon.characters[index].name + " has been sacrificed, the rest of your party is free to go. <br>")
-  wagon.deathChecker()
+  wagon.statusAdjuster()
 }
 function flee() {
   var num = Math.floor(Math.random() * Math.floor(100))
@@ -435,17 +399,23 @@ function deathEvent() {
 }
 //Hunting
 Wagon.prototype.huntingTime = function() {
+  var hunt = Math.floor(Math.random() * Math.floor(150))
   if (this.hunted == 1) {
     var num = 1;
     buildModal(num);
     $(".ongoing-events").prepend("You have already hunted- you must continue to a new area to hunt further.<br>");
     $("#myModal").toggle();
   } else if (this.hunted == 0 && wagon.bullets > 0){
-    this.food += Math.floor(Math.random() * Math.floor(150))
-    this.days += 1
+    this.food += hunt
     this.bullets -= 1
     wagon.statusAdjuster()
     this.hunted += 1;
+  }
+
+  if (hunt === 0) {
+    buildModal("huntFail");
+    $(".ongoing-events").prepend("You came back empty handed. Your family resents you.<br>");
+    $("#myModal").toggle();
   }
 
   if (wagon.bullets <= 0) {
