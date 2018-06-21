@@ -17,6 +17,12 @@
     <div id="characterSetup">
       <div id="start">
         <h1>The Oregon Trail</h1>
+        <div class="icon-animate">
+          <!-- <img src="img/beans.png" alt=""> -->
+        </div>
+        <div class="icon-wagon">
+          <!-- <img src="img/beans.png" alt=""> -->
+        </div>
         <img src="img/start-cover.jpg" alt="valley">
         <span id="startBTN" class="btn btn-success">Start</span>
       </div>
@@ -160,6 +166,10 @@
           <div id="progressbar"></div>
         </div>
         <div class="col-md-4">
+          <div id="sacrifice-button">
+            <img id="sacrifice" src="img/skull.png" alt="Sacrifice Team">
+            <p class="tooltiptext">Clicking on this button will sacrifice your entire team. You will be reincarnated back at the start of the trail.</p>
+          </div>
           <h2>Team Conditions</h2>
           <div class="prettyColumn" id="status-panel">
             <p class="bold">Days elapsed: <span class="current-date">0</span></p>
@@ -186,9 +196,9 @@
               </div>
             </div>
           </div>
-          <span id="rest-button" class="btn btn-success">Rest</span>
+          <span id="rest-button" class="btn btn-info">Rest</span>
           <span id="continue-button" class="btn btn-success">Continue</span>
-          <span id="hunt-button" class="btn btn-success">Hunt</span>
+          <span id="hunt-button" class="btn btn-danger">Hunt</span>
         </div>
       </div>
     </div>

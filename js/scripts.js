@@ -601,6 +601,10 @@ $("#back-button").click(function(){
     history.go(0)
   });
 
+  $(document).on('click', '#sacrifice', function(){
+    history.go(0)
+  });
+
   $(document).on('click', '#crossRiverButton', function(){
     crossRiver()
     textUpdateUI()
@@ -622,4 +626,5 @@ $("#back-button").click(function(){
     textUpdateUI()
     $('#buttonModal').hide();
   });
+
 });

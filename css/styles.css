@@ -79,6 +79,73 @@ span {
   min-height: 151px;
 }
 
+.icon-animate {
+  width: 64px;
+  height: 64px;
+  position: absolute;
+  bottom: 50%;
+  left: 5%;
+  background-image: url(../img/beans.png);
+  background-size: cover;
+  animation: example 40s linear 0s infinite reverse;
+  -moz-animation: 40s linear 0s reverse none infinite example;
+  -webkit-animation: example 40s linear 0s infinite reverse;
+  -0-animation: example 40s linear 0s infinite reverse;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes example {
+  0%   {left:5%; bottom:5%; transform:rotate(0deg); background-image: url(../img/beans.png);}
+  12%  {left:90%; bottom:35%; transform:rotate(360deg); background-image: url(../img/beans.png);}
+  24%  {left:5%; bottom:45%; transform:rotate(0deg); background-image: url(../img/boots.png);}
+  36%  {left:90%; bottom:55%; transform:rotate(360deg); background-image: url(../img/boots.png);}
+  48%  {left:5%; bottom:65%; transform:rotate(0deg); background-image: url(../img/gun.png);}
+  60% {left:90%; bottom:5%; transform:rotate(360deg); background-image: url(../img/gun.png);}
+  72%  {left:5%; bottom:75%; transform:rotate(0deg); background-image: url(../img/whisky.png);}
+  80% {left:90%; bottom:25%; transform:rotate(360deg); background-image: url(../img/whisky.png);}
+  90%  {left:5%; bottom:95%; transform:rotate(0deg); background-image: url(../img/ox.png);}
+  100% {left:90%; bottom:35%; transform:rotate(360deg); background-image: url(../img/ox.png);}
+}
+
+/* Standard syntax */
+@keyframes example {
+  0%   {left:5%; bottom:5%; transform:rotate(0deg); background-image: url(../img/beans.png);}
+  12%  {left:90%; bottom:35%; transform:rotate(360deg); background-image: url(../img/beans.png);}
+  24%  {left:5%; bottom:45%; transform:rotate(0deg); background-image: url(../img/boots.png);}
+  36%  {left:90%; bottom:55%; transform:rotate(360deg); background-image: url(../img/boots.png);}
+  48%  {left:5%; bottom:65%; transform:rotate(0deg); background-image: url(../img/gun.png);}
+  60% {left:90%; bottom:5%; transform:rotate(360deg); background-image: url(../img/gun.png);}
+  72%  {left:5%; bottom:75%; transform:rotate(0deg); background-image: url(../img/whisky.png);}
+  80% {left:90%; bottom:25%; transform:rotate(360deg); background-image: url(../img/whisky.png);}
+  90%  {left:5%; bottom:95%; transform:rotate(0deg); background-image: url(../img/ox.png);}
+  100% {left:90%; bottom:35%; transform:rotate(360deg); background-image: url(../img/ox.png);}
+}
+
+.icon-wagon {
+  width: 78px;
+  height: 64px;
+  position: absolute;
+  bottom: 16%;
+  left: 5%;
+  background-image: url(../img/wagon.png);
+  background-size: cover;
+  animation: wagonwheel 40s linear 0s infinite reverse;
+  -moz-animation: 40s linear 0s reverse none infinite wagonwheel;
+  -webkit-animation: wagonwheel 40s linear 0s infinite reverse;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes wagonwheel {
+  0%   {left:5%;}
+  100% {left:90%;}
+}
+
+/* Standard syntax */
+@keyframes wagonwheel {
+  0%   {left:5%;}
+  100% {left:90%;}
+}
+
 #start img {
   width:100%;
   margin-bottom:10px;
@@ -177,7 +244,7 @@ img {
   background-image: url(../img/merc.png);
   background-size: cover;
   background-position: center;
-  height: 500px;
+  height: 597px;
   position: relative;
  }
 
@@ -342,7 +409,8 @@ img {
   z-index: 1;
 }
 
-#faq .tooltiptext {
+#faq .tooltiptext,
+#sacrifice-button .tooltiptext {
   visibility: hidden;
   width: 331px;
   background-color: black;
@@ -386,6 +454,15 @@ img {
   visibility: visible;
 }
 
+
+#sacrifice-button:hover .tooltiptext {
+  visibility: visible;
+}
+
+#sacrifice-button:hover {
+  transform: scale(1.2);
+}
+
 #supplies {
   text-align: center;
   margin-top: 15px;
@@ -409,12 +486,23 @@ img {
 
 #faq {
   position: absolute;
-  right: 0;
+  right: 15px;
 }
 
 #faq img {
   width: 38px;
 }
+
+#sacrifice-button {
+  position: absolute;
+  right: 15px;
+  transition: all .2s ease-in-out;
+}
+
+#sacrifice-button img {
+  width: 38px;
+}
+
 
 .ui-widget-header {
     border: 1px solid #28a745;
