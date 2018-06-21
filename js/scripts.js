@@ -525,7 +525,11 @@ function validateNames(profession, playerOne, playerTwo, playerThree, playerFour
 }
 
 function enableSubmit(ele) {
-  $(ele).css({"pointer-events":"auto","background-color":"#5cb85c","border-color":"#4cae4c"});
+  if (ele == "#continue-button") {
+    $(ele).css({"pointer-events":"auto","background-color":"#28a745","border-color":"#28a745"});
+  } else if (ele == "#rest-button") {
+    $(ele).css({"pointer-events":"auto","background-color":"#17a2b8","border-color":"#17a2b8"});
+  }
 }
 
 
@@ -593,7 +597,7 @@ $("#back-button").click(function(){
 
   $("#continue-button").click(function(){
     $("#continue-button").css({"pointer-events":"none","background-color":"lightgreen","border-color":"lightgreen"});
-    setTimeout(function() { enableSubmit("#continue-button") }, 1000);
+    setTimeout(function() { enableSubmit("#continue-button") }, 500);
     wagon.turn()
     wagon.statusAdjuster()
     textUpdateUI()
@@ -614,8 +618,8 @@ $("#back-button").click(function(){
   });
 
   $("#rest-button").click(function(){
-    $("#rest-button").css({"pointer-events":"none","background-color":"lightgreen","border-color":"lightgreen"});
-    setTimeout(function() { enableSubmit("#rest-button") }, 1000);
+    $("#rest-button").css({"pointer-events":"none","background-color":"lightblue","border-color":"lightblue"});
+    setTimeout(function() { enableSubmit("#rest-button") }, 500);
     wagon.rest()
     textUpdateUI()
   });
