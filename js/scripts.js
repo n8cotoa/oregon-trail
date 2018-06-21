@@ -206,7 +206,8 @@ function neutralEvent() {
 }
   //random negativeEvent
 function negativeEvent() {
-  var num = Math.floor(Math.random() * Math.floor(5))
+  var num = 4
+  // var num = Math.floor(Math.random() * Math.floor(5))
   var ranSupplyDecrease = Math.floor(Math.random() * (200 - 100) + 100)
   var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
   if (num === 1) {
@@ -239,6 +240,7 @@ function negativeEvent() {
     $("#jesus").delay(1100).fadeIn(100);
     $("#wheel-6").slideUp(5000).fadeOut(500);
     $("#jesus").slideUp(5000).fadeOut(500);
+    $("#star").delay(5250).fadeIn("puff").fadeOut();
   } else if (num === 5){
     $(".ongoing-events").prepend(ranSupplyDecrease + " of your food rots because " + wagon.characters[index].name + " wet themselves as they napped on it.")
     wagon.food -= ranSupplyDecrease
