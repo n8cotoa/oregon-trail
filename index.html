@@ -11,13 +11,17 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
   <script src="js/scripts.js"></script>
   <audio id ="jesusSnatch" src="sounds/jesusWheel.mp3" preload="auto"></audio>
+  <audio id ="shotgun-fire" src="sounds/shotgun.mp3" preload="auto"></audio>
+  <audio id ="shotgun-dry" src="sounds/dry-fire.mp3" preload="auto"></audio>
 </head>
 <body>
   <div class="container">
     <!-- Character setup screen -->
     <div id="characterSetup">
       <div id="start">
-        <h1>The Oregon Trail</h1>
+        <div class="main-title">
+          <h1>The Oregon Trail</h1>
+        </div>
         <div class="icon-animate">
           <!-- <img src="img/beans.png" alt=""> -->
         </div>
@@ -63,11 +67,11 @@
             <div id="charNameInput" class="col-md-3">
               <p>Type in the names of your party:</p>
               <div class="prettyColumn">
-                <input id="char1" type="text" placeholder="name player 1" value="Bobbie">
-                <input id="char2" type="text" placeholder="name player 2" value="Wolverine">
-                <input id="char3" type="text" placeholder="name player 3" value="Rabid Squirrel Lover">
-                <input id="char4" type="text" placeholder="name player 4" value="Your Mom">
-                <input id="char5" type="text" placeholder="name player 5" value="Herbert">
+                <input id="char1" type="text" placeholder="name player 1" value="Wild Bill">
+                <input id="char2" type="text" placeholder="name player 2" value="Josephine">
+                <input id="char3" type="text" placeholder="name player 3" value="Cookie">
+                <input id="char4" type="text" placeholder="name player 4" value="Wyatt Twerp">
+                <input id="char5" type="text" placeholder="name player 5" value="Lil' Bobby">
               </div>
             </div>
             <div class="col-md-6">
@@ -205,7 +209,7 @@
               </div>
             </div>
           </div>
-          <span id="rest-button" class="btn btn-info">Rest</span>
+          <span id="rest-button" class="btn btn-success">Rest</span>
           <span id="continue-button" class="btn btn-success">Continue</span>
           <span id="hunt-button" class="btn btn-danger">Hunt</span>
         </div>
