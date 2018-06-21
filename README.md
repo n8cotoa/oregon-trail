@@ -1,8 +1,8 @@
-# Project Title
+# The Oregon Trail
 
-#### Epicodus Intro to Programming: Lesson, Date
+#### Epicodus Intro to Programming: Group Project, June 21, 2018
 
-#### By NAME
+#### By Nate Cottle, Ryan Putman, Will Swanson, Reese Glasscock
 
 ## Description
 
@@ -17,15 +17,16 @@
 
 ## Technologies Used
 
-* Bootstrap x.x.x
+* Bootstrap 4.0.0
+* jQuery UI 1.12.1
 * jQuery 3.3.1
 
 ## Links
 
-* 
+*
 
 ## License
 
 This software is licensed under the MIT license.
 
-Copyright (c) 2018 **Name**
+Copyright (c) 2018 **Nate Cottle, Ryan Putman, Will Swanson, Reese Glasscock**

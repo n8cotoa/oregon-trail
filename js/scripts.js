@@ -51,17 +51,6 @@ Character.prototype.illnessGenerator = function() {
     $(".ongoing-events").prepend(this.name + " got a Broken Arm <br>")
   }
 }
-//illness checker
-Character.prototype.illnessChecker = function() {
-  if (this.illness.length === 1) {
-    this.health -= 2
-  } else if (this.illness.length === 2) {
-    this.health -= 4
-  } else if (this.illness.length >= 3) {
-    this.health -= 6
-  }
-}
-
 //food checker
 Wagon.prototype.resourceChecker = function() {
   if (this.food <= 0) {
@@ -75,9 +64,28 @@ Wagon.prototype.resourceChecker = function() {
   }
 }
 
-//death checker
-Wagon.prototype.deathChecker = function() {
+//Checks for illness, status changes, and character death
+Wagon.prototype.statusAdjuster = function() {
   wagon.characters.forEach(function(char){
+    if (char.illness.length === 1) {
+      char.health -= 2
+    } else if (char.illness.length === 2) {
+      char.health -= 4
+    } else if (char.illness.length >= 3) {
+      char.health -= 6
+    }
+
+    if (char.health >= 80) {
+      char.status = "Good"
+    } else if (char.health < 80 && char.health >= 20) {
+      char.status = "Fair"
+    } else if (char.health < 20 && char.health > 0) {
+      char.status = "Poor"
+    } else {
+      char.status = "Dead"
+    }
+    char.healthBar();
+
     if (char.health <= 0) {
       var index = wagon.characters.indexOf(char)
       wagon.characters.splice(index, 1)
@@ -91,28 +99,14 @@ Wagon.prototype.deathChecker = function() {
   }
 }
 
-//status adjuster
-Character.prototype.statusAdjuster = function() {
-  if (this.health >= 80) {
-    this.status = "Good"
-  } else if (this.health < 80 && this.health >= 20) {
-    this.status = "Fair"
-  } else if (this.health < 20 && this.health > 0) {
-    this.status = "Poor"
-  } else {
-    this.status = "Dead"
-  }
-  this.healthBar();
-}
 //calculates potential illnesses
 Wagon.prototype.turn = function() {
   this.hunted = 0;
   wagon.eventGrabber();
   wagon.characters.forEach(function(char){
     char.illnessGenerator()
-    char.illnessChecker() //reduces health if infected
-    char.statusAdjuster() //updates status on screen based on health
   });
+    wagon.statusAdjuster()
     if (wagon.food > 0) {
     wagon.food -= (wagon.characters.length * 5 )
   } else if (wagon.food <= 0) {
@@ -135,17 +129,16 @@ function journey(dist) {
 
   // function for resting -- cure illness, gain some health
 Wagon.prototype.rest = function() {
-  wagon.resourceChecker()
   wagon.characters.forEach(function(char){
     char.illness.splice(0, 1)
     if (char.health < 99) {
     char.health += 2
     }
-    char.statusAdjuster()
-    char.illnessChecker()
   });
+  wagon.statusAdjuster()
   wagon.food -= (wagon.characters.length * 5 )
   this.days += 1
+  wagon.resourceChecker()
 }
 
   //event grabber
@@ -309,11 +302,7 @@ function landmarkEvent() {
 //landmark 1 button events
 function detourRiver() {
   for(i=0; i < 8; i++) {
-    wagon.characters.forEach(function(char){
-      char.statusAdjuster()
-      char.illnessChecker()
-      wagon.deathChecker()
-    });
+    wagon.statusAdjuster()
     wagon.days += 1
     wagon.food -= (wagon.characters.length * 5 )
     wagon.resourceChecker()
@@ -332,10 +321,7 @@ function crossRiver() {
     $(".ongoing-events").prepend("Your wagon tipped over and " + wagon.characters[index].name + " was swallowed by a giant catfish. Luckily they narrowly escaped, but were still injured. The catfish also feasted on " + (wagon.food * 0.4).toFixed(0) + " pounds of food and stole " + (wagon.money * 0.2).toFixed(0) + " gold. <br>")
      $("#myModal").toggle();
     for(i=0; i < 4; i++) {
-      wagon.characters.forEach(function(char){
-        char.statusAdjuster()
-        char.illnessChecker()
-      });
+      wagon.statusAdjuster()
       wagon.days += 1
       wagon.food -= (wagon.characters.length * 5 )
     }
@@ -345,14 +331,14 @@ function crossRiver() {
   }
 
   wagon.resourceChecker()
-  wagon.deathChecker()
+  wagon.statusAdjuster()
 }
 // landmark 3 button events
 function sacrifice() {
   var index = Math.floor(Math.random() * Math.floor(wagon.characters.length))
   wagon.characters[index].health = 0
   $(".ongoing-events").prepend(wagon.characters[index].name + " has been sacrificed, the rest of your party is free to go. <br>")
-  wagon.deathChecker()
+  wagon.statusAdjuster()
 }
 function flee() {
   var num = Math.floor(Math.random() * Math.floor(100))
@@ -361,19 +347,16 @@ function flee() {
     wagon.characters[index].health = 0
     buildModal("fleeFail");
     $(".ongoing-events").prepend("George caught " + wagon.characters[index].name + " while trying to flee. We can only assume he was tasty af. <br>")
-     $("#myModal").toggle();
-    wagon.characters.forEach(function(char){
-      char.statusAdjuster()
-      char.illnessChecker()
-    });
-      wagon.days += 1
-      wagon.food -= (wagon.characters.length * 5 )
+    $("#myModal").toggle();
+    wagon.statusAdjuster()
+    wagon.days += 1
+    wagon.food -= (wagon.characters.length * 5 )
   } else {
     $(".ongoing-events").prepend("Everyone was lucky enough to escape unscathed. <br>")
     wagon.days += 1
     wagon.food -= (wagon.characters.length * 5 )
   }
-  wagon.deathChecker()
+  wagon.statusAdjuster()
   wagon.resourceChecker()
 }
 function deathEvent() {
@@ -417,20 +400,23 @@ function deathEvent() {
 }
 //Hunting
 Wagon.prototype.huntingTime = function() {
+  var hunt = Math.floor(Math.random() * Math.floor(150))
   if (this.hunted == 1) {
     var num = 1;
     buildModal(num);
     $(".ongoing-events").prepend("You have already hunted- you must continue to a new area to hunt further.<br>");
     $("#myModal").toggle();
   } else if (this.hunted == 0 && wagon.bullets > 0){
-    this.food += Math.floor(Math.random() * Math.floor(150))
-    this.days += 1
+    this.food += hunt
     this.bullets -= 1
-    wagon.characters.forEach(function(char){
-      char.illnessChecker() //reduces health if infected
-      char.statusAdjuster() //updates status on screen based on health
-    });
+    wagon.statusAdjuster()
     this.hunted += 1;
+  }
+
+  if (hunt === 0) {
+    buildModal("huntFail");
+    $(".ongoing-events").prepend("You came back empty handed. Your family resents you.<br>");
+    $("#myModal").toggle();
   }
 
   if (wagon.bullets <= 0) {
@@ -577,8 +563,8 @@ $("#back-button").click(function(){
 
   $("#continue-button").click(function(){
     wagon.turn()
+    console.log(wagon.characters);
     wagon.resourceChecker()
-    wagon.deathChecker()
     textUpdateUI()
 
     if (x < 6) {
