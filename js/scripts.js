@@ -432,6 +432,7 @@ Wagon.prototype.huntingTime = function() {
     this.bullets -= 1
     wagon.statusAdjuster()
     this.hunted += 1;
+    $(".ongoing-events").prepend("You got " + hunt + " pounds of food.<br>")
   }
 
   if (hunt === 0) {
@@ -501,6 +502,11 @@ function textUpdateUI() {
   $('#player-three-status').text(char3.status);
   $('#player-four-status').text(char4.status);
   $('#player-five-status').text(char5.status);
+  $('#player-one-illness').text(char1.illness.length);
+  $('#player-two-illness').text(char2.illness.length);
+  $('#player-three-illness').text(char3.illness.length);
+  $('#player-four-illness').text(char4.illness.length);
+  $('#player-five-illness').text(char5.illness.length);
   $('#wagon-food-remaining').text(wagon.food.toFixed(0));
   $('.wagon-money-remaining').text(wagon.money.toFixed(2));
   $('#wagon-bullets-remaining').text(wagon.bullets.toFixed(0));
