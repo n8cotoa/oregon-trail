@@ -5,7 +5,7 @@
 #### By Nate Cottle, Ryan Putman, Will Swanson, Reese Glasscock
 
 ## Description
-
+ _Recreation with some artistic license of the original school kid's game 'The Oregon Trail'. Includes customized bad, good, and neutral events, various illnesses, landmarks, and pick your own adventure options _
 
 
 ## Setup/Contribution Requirements
@@ -23,7 +23,8 @@
 
 ## Links
 
-*
+* _[Here](https://github.com/n8cotoa/oregon-trail) is the link to The Oregon Trail repository._
+* _[Here](https://n8cotoa.github.io/oregon-trail) is the link to The Oregon Trail online game._
 
 ## License
 

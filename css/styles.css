@@ -85,6 +85,17 @@ span {
   min-height: 244px;
 }
 
+.prettyColumn label{
+  font-size: 23px;
+  padding: 1px;
+}
+
+#characterInput .prettyColumn {
+  min-height: 298px;
+}
+
+
+
 .container {
   position: absolute;
   top: 50%;
@@ -134,37 +145,39 @@ span {
 
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes example {
-  0%   {left:5%; bottom:5%; transform:rotate(0deg); background-image: url(../img/beans.png);}
-  12%  {left:90%; bottom:35%; transform:rotate(360deg); background-image: url(../img/beans.png);}
-  24%  {left:5%; bottom:45%; transform:rotate(0deg); background-image: url(../img/boots.png);}
-  36%  {left:90%; bottom:55%; transform:rotate(360deg); background-image: url(../img/boots.png);}
-  48%  {left:5%; bottom:65%; transform:rotate(0deg); background-image: url(../img/gun.png);}
-  60% {left:90%; bottom:5%; transform:rotate(360deg); background-image: url(../img/gun.png);}
-  72%  {left:5%; bottom:75%; transform:rotate(0deg); background-image: url(../img/whisky.png);}
-  80% {left:90%; bottom:25%; transform:rotate(360deg); background-image: url(../img/whisky.png);}
-  90%  {left:5%; bottom:95%; transform:rotate(0deg); background-image: url(../img/ox.png);}
-  100% {left:90%; bottom:35%; transform:rotate(360deg); background-image: url(../img/ox.png);}
+  0%   {left:5%; bottom:50%; transform:rotate(0deg); background-image: url(../img/beans.png);}
+  10%  {left:90%; bottom:25%; transform:rotate(360deg); background-image: url(../img/beans.png);}
+  20%  {left:5%; bottom:45%; transform:rotate(0deg); background-image: url(../img/boots.png);}
+  30%  {left:90%; bottom:75%; transform:rotate(360deg); background-image: url(../img/boots.png);}
+  40%  {left:5%; bottom:55%; transform:rotate(0deg); background-image: url(../img/gun.png);}
+  50% {left:90%; bottom:25%; transform:rotate(360deg); background-image: url(../img/gun.png);}
+  60%  {left:5%; bottom:45%; transform:rotate(0deg); background-image: url(../img/whisky.png);}
+  70% {left:90%; bottom:65%; transform:rotate(360deg); background-image: url(../img/whisky.png);}
+  80%  {left:5%; bottom:35%; transform:rotate(0deg); background-image: url(../img/ox.png);}
+  90% {left:90%; bottom:25%; transform:rotate(360deg); background-image: url(../img/ox.png);}
+  100%   {left:5%; bottom:50%; transform:rotate(0deg); background-image: url(../img/beans.png);}
 }
 
 /* Standard syntax */
 @keyframes example {
-  0%   {left:5%; bottom:5%; transform:rotate(0deg); background-image: url(../img/beans.png);}
-  12%  {left:90%; bottom:35%; transform:rotate(360deg); background-image: url(../img/beans.png);}
-  24%  {left:5%; bottom:45%; transform:rotate(0deg); background-image: url(../img/boots.png);}
-  36%  {left:90%; bottom:55%; transform:rotate(360deg); background-image: url(../img/boots.png);}
-  48%  {left:5%; bottom:65%; transform:rotate(0deg); background-image: url(../img/gun.png);}
-  60% {left:90%; bottom:5%; transform:rotate(360deg); background-image: url(../img/gun.png);}
-  72%  {left:5%; bottom:75%; transform:rotate(0deg); background-image: url(../img/whisky.png);}
-  80% {left:90%; bottom:25%; transform:rotate(360deg); background-image: url(../img/whisky.png);}
-  90%  {left:5%; bottom:95%; transform:rotate(0deg); background-image: url(../img/ox.png);}
-  100% {left:90%; bottom:35%; transform:rotate(360deg); background-image: url(../img/ox.png);}
+  0%   {left:5%; bottom:50%; transform:rotate(0deg); background-image: url(../img/beans.png);}
+  10%  {left:90%; bottom:25%; transform:rotate(360deg); background-image: url(../img/beans.png);}
+  20%  {left:5%; bottom:45%; transform:rotate(0deg); background-image: url(../img/boots.png);}
+  30%  {left:90%; bottom:75%; transform:rotate(360deg); background-image: url(../img/boots.png);}
+  40%  {left:5%; bottom:55%; transform:rotate(0deg); background-image: url(../img/gun.png);}
+  50% {left:90%; bottom:25%; transform:rotate(360deg); background-image: url(../img/gun.png);}
+  60%  {left:5%; bottom:45%; transform:rotate(0deg); background-image: url(../img/whisky.png);}
+  70% {left:90%; bottom:65%; transform:rotate(360deg); background-image: url(../img/whisky.png);}
+  80%  {left:5%; bottom:35%; transform:rotate(0deg); background-image: url(../img/ox.png);}
+  90% {left:90%; bottom:25%; transform:rotate(360deg); background-image: url(../img/ox.png);}
+  100%   {left:5%; bottom:50%; transform:rotate(0deg); background-image: url(../img/beans.png);}
 }
 
 .icon-wagon {
-  width: 78px;
-  height: 64px;
+  width: 120px;
+  height: 103px;
   position: absolute;
-  bottom: 16%;
+  bottom: 24%;
   left: 5%;
   background-image: url(../img/wagon.png);
   background-size: cover;
@@ -173,16 +186,55 @@ span {
   -webkit-animation: wagonwheel 40s linear 0s infinite reverse;
 }
 
+#start {
+  text-align: center;
+}
+
+#startBTN {
+  margin-top: 3rem;
+  width: 40%;
+}
+
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes wagonwheel {
   0%   {left:5%;}
-  100% {left:90%;}
+  50% {left:85%;}
+  100% {left:5%;}
 }
 
 /* Standard syntax */
 @keyframes wagonwheel {
   0%   {left:5%;}
-  100% {left:90%;}
+  50% {left:85%;}
+  100% {left:5%;}
+}
+
+.main-title {
+  position: absolute;
+  top: 21%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+.main-title h1 {
+    font-size: 75px;
+    animation: titleeffect 10s linear 0s 1 normal;
+    -moz-animation: 10s linear 0s normal none 1 titleeffect;
+    -webkit-animation: titleeffect 10s linear 0s 1 normal;
+}
+
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes titleeffect {
+  0%   {font-size: 1px}
+  100% {font-size: 75px}
+}
+
+/* Standard syntax */
+@keyframes titleeffect {
+  0%   {font-size: 1px}
+  100% {font-size: 75px}
 }
 
 #start img {
@@ -213,7 +265,8 @@ img {
 }
 
 #characterBTN {
-  margin-top: 10px;
+  margin-top: 23px;
+  width: 108px;
 }
 
 #gameMainScreen .prettyColumn {
@@ -240,6 +293,7 @@ img {
   width: 100%;
   margin-bottom: 10px;
   padding: 5px;
+  font-size: 23px;
 }
 
 #gameMainScreen ul{
@@ -403,11 +457,13 @@ img {
     cursor: pointer;
 }
 
+
 #popup-text,
 .button-child {
   background-color: white;
   padding: 20px;
   width: 50%;
+  max-width: 673px;
   margin: 0 auto;
   font-size: 22px;
   text-align: center;
@@ -420,6 +476,7 @@ img {
 
 .modal-child img{
   width: 50%;
+  max-width: 673px;
 }
 #profession input {
   margin-right: 10px;
