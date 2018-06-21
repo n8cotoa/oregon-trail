@@ -225,6 +225,7 @@ function negativeEvent() {
     $(".ongoing-events").prepend("Your wagon wheel broke, in the distance you hear Jesus Take The Wheel playing. Your party loses 5 days. <br>")
     wagon.days += 5
     wagon.food -= ((wagon.characters.length * 5 ) * 5)
+    document.getElementById('jesusSnatch').play();
     $("#wheel-1").fadeIn(500);
     $("#wheel-2").delay(300).fadeIn(500);
     $("#wheel-1").fadeOut(500);
@@ -237,8 +238,8 @@ function negativeEvent() {
     $("#wheel-6").delay(700).fadeIn(500);
     $("#wheel-5").fadeOut(500);
     $("#jesus").delay(1100).fadeIn(100);
-    $("#wheel-6").slideUp(4000).fadeOut(500);
-    $("#jesus").slideUp(4000).fadeOut(500);
+    $("#wheel-6").slideUp(5000).fadeOut(500);
+    $("#jesus").slideUp(5000).fadeOut(500);
   } else if (num === 5){
     $(".ongoing-events").prepend(ranSupplyDecrease + " of your food rots because " + wagon.characters[index].name + " wet themselves as they napped on it.")
     wagon.food -= ranSupplyDecrease
