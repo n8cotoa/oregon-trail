@@ -422,6 +422,7 @@ Wagon.prototype.huntingTime = function() {
   var hunt = Math.floor(Math.random() * Math.floor(150))
   if (this.hunted == 1) {
     var num = 1;
+    document.getElementById('shotgun-dry').play();
     buildModal(num);
     $(".ongoing-events").prepend("You have already hunted- you must continue to a new area to hunt further.<br>");
     $("#myModal").toggle();
@@ -430,6 +431,7 @@ Wagon.prototype.huntingTime = function() {
     this.bullets -= 1
     wagon.statusAdjuster()
     this.hunted += 1;
+    document.getElementById('shotgun-fire').play();
   }
 
   if (hunt === 0) {
