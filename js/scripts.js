@@ -239,6 +239,7 @@ function negativeEvent() {
     $("#jesus").delay(1100).fadeIn(100);
     $("#wheel-6").slideUp(5000).fadeOut(500);
     $("#jesus").slideUp(5000).fadeOut(500);
+    $("#star").delay(5250).fadeIn("puff").fadeOut();
   } else if (num === 5){
     $(".ongoing-events").prepend(ranSupplyDecrease + " of your food rots because " + wagon.characters[index].name + " wet themselves as they napped on it.")
     wagon.food -= ranSupplyDecrease
@@ -294,7 +295,9 @@ function landmarkEvent() {
     $(".button-content").prepend("You have reached a river. You can choose to risk supplies and your party to cross the river or take 7 days to go around. <br>")
     $("#buttonModal").toggle();
   } else if (num === 200) {
-    $(".button-content").prepend("Your party has come across a camp, make a selection for what you would like to buy. <br>")
+    buildModal("campStore");
+    $(".ongoing-events").prepend("Your party has come across a camp, make a selection for what you would like to buy. <br>")
+    $("#myModal").toggle();
     $("#gameMainScreen").fadeOut(500);
     $("#store").delay(500).fadeIn(500);
     $("#back-button").hide();
@@ -303,7 +306,9 @@ function landmarkEvent() {
     $(".button-content").prepend("As you travel along the trail you hear screams in the distance. You have no choice but to keep moving forward. When out of nowhere your wagon is surrounded by crazed cannibals. One of them steps forward and proclaims: 'I am George Donner, my family is hungry. Sacrifice one of your own and the rest are free to go on!' <br>")
     $("#buttonModal").toggle();
   } else if (num === 400) {
-    $(".button-content").prepend("Your party has come across a camp, make a selection for what you would like to buy. <br>")
+    buildModal("generalStore");
+    $(".ongoing-events").prepend("Your party has come across a trading post, make a selection for what you would like to buy. <br>")
+    $("#myModal").toggle();
     $("#gameMainScreen").fadeOut(500);
     $("#store").delay(500).fadeIn(500);
     $("#back-button").hide();
@@ -431,6 +436,7 @@ Wagon.prototype.huntingTime = function() {
     this.bullets -= 1
     wagon.statusAdjuster()
     this.hunted += 1;
+    $(".ongoing-events").prepend("You got " + hunt + " pounds of food.<br>")
     document.getElementById('shotgun-fire').play();
   }
 
@@ -501,6 +507,11 @@ function textUpdateUI() {
   $('#player-three-status').text(char3.status);
   $('#player-four-status').text(char4.status);
   $('#player-five-status').text(char5.status);
+  $('#player-one-illness').text(char1.illness.length);
+  $('#player-two-illness').text(char2.illness.length);
+  $('#player-three-illness').text(char3.illness.length);
+  $('#player-four-illness').text(char4.illness.length);
+  $('#player-five-illness').text(char5.illness.length);
   $('#wagon-food-remaining').text(wagon.food.toFixed(0));
   $('.wagon-money-remaining').text(wagon.money.toFixed(2));
   $('#wagon-bullets-remaining').text(wagon.bullets.toFixed(0));
@@ -519,7 +530,11 @@ function validateNames(profession, playerOne, playerTwo, playerThree, playerFour
 }
 
 function enableSubmit(ele) {
-  $(ele).css({"pointer-events":"auto","background-color":"#5cb85c","border-color":"#4cae4c"});
+  if (ele == "#continue-button") {
+    $(ele).css({"pointer-events":"auto","background-color":"#28a745","border-color":"#28a745"});
+  } else if (ele == "#rest-button") {
+    $(ele).css({"pointer-events":"auto","background-color":"#17a2b8","border-color":"#17a2b8"});
+  }
 }
 
 
@@ -587,7 +602,7 @@ $("#back-button").click(function(){
 
   $("#continue-button").click(function(){
     $("#continue-button").css({"pointer-events":"none","background-color":"lightgreen","border-color":"lightgreen"});
-    setTimeout(function() { enableSubmit("#continue-button") }, 1000);
+    setTimeout(function() { enableSubmit("#continue-button") }, 500);
     wagon.turn()
     wagon.statusAdjuster()
     textUpdateUI()
@@ -608,8 +623,8 @@ $("#back-button").click(function(){
   });
 
   $("#rest-button").click(function(){
-    $("#rest-button").css({"pointer-events":"none","background-color":"lightgreen","border-color":"lightgreen"});
-    setTimeout(function() { enableSubmit("#rest-button") }, 1000);
+    $("#rest-button").css({"pointer-events":"none","background-color":"lightblue","border-color":"lightblue"});
+    setTimeout(function() { enableSubmit("#rest-button") }, 500);
     wagon.rest()
     textUpdateUI()
   });
