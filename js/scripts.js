@@ -539,6 +539,7 @@ function enableSubmit(ele) {
 
 
 $(document).ready(function(){
+  document.getElementById('openingSong').autoplay;
   var x = 1;
   $('#wagon-images').addClass('sky1');
 
