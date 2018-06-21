@@ -308,7 +308,7 @@ function detourRiver() {
     wagon.resourceChecker()
   }
   $(".ongoing-events").prepend("You spent seven days and went around the river. <br>")
-  wagon.deathChecker()
+  wagon.statusAdjuster()
 }
 function crossRiver() {
   var num = Math.floor(Math.random() * Math.floor(100))
