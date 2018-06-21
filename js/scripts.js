@@ -94,7 +94,7 @@ Wagon.prototype.statusAdjuster = function() {
   })
   if (wagon.characters.length === 0) {
     buildEndModal("dead", "death", "Try Again")
-    $(".ongoing-events").prepend("Game Over! You killed everyone. Great job...")
+    $(".button-content").prepend("Game Over! You killed everyone. Great job...")
     $("#myModal").toggle();
   }
 }
@@ -117,6 +117,7 @@ Wagon.prototype.turn = function() {
     landmarkEvent();
     this.completed = (this.completed + 2);
     journey(this.completed);
+    wagon.resourceChecker()
 }
 
 function journey(dist) {
@@ -223,6 +224,21 @@ function negativeEvent() {
     $(".ongoing-events").prepend("Your wagon wheel broke, in the distance you hear Jesus Take The Wheel playing. Your party loses 5 days. <br>")
     wagon.days += 5
     wagon.food -= ((wagon.characters.length * 5 ) * 5)
+    document.getElementById('jesusSnatch').play();
+    $("#wheel-1").fadeIn(500);
+    $("#wheel-2").delay(300).fadeIn(500);
+    $("#wheel-1").fadeOut(500);
+    $("#wheel-3").delay(400).fadeIn(500);
+    $("#wheel-2").fadeOut(500);
+    $("#wheel-4").delay(500).fadeIn(500);
+    $("#wheel-3").fadeOut(500);
+    $("#wheel-5").delay(600).fadeIn(500);
+    $("#wheel-4").fadeOut(500);
+    $("#wheel-6").delay(700).fadeIn(500);
+    $("#wheel-5").fadeOut(500);
+    $("#jesus").delay(1100).fadeIn(100);
+    $("#wheel-6").slideUp(5000).fadeOut(500);
+    $("#jesus").slideUp(5000).fadeOut(500);
   } else if (num === 5){
     $(".ongoing-events").prepend(ranSupplyDecrease + " of your food rots because " + wagon.characters[index].name + " wet themselves as they napped on it.")
     wagon.food -= ranSupplyDecrease
@@ -294,7 +310,7 @@ function landmarkEvent() {
   } else if (num === 500){
     buildEndModal(num, "win", "Play Again!")
     var endScore = wagon.buildScore()
-    $(".button-content").prepend("<h4>WINNER!</h4> <br> Your score is: " + endScore);
+    $(".button-content").prepend("<h4>WINNER!</h4>Your score is: " + endScore);
     $("#buttonModal").addClass('confetti');
     $("#buttonModal").toggle();
   }
@@ -302,10 +318,10 @@ function landmarkEvent() {
 //landmark 1 button events
 function detourRiver() {
   for(i=0; i < 8; i++) {
-    wagon.statusAdjuster()
     wagon.days += 1
     wagon.food -= (wagon.characters.length * 5 )
     wagon.resourceChecker()
+    wagon.statusAdjuster()
   }
   $(".ongoing-events").prepend("You spent seven days and went around the river. <br>")
   wagon.statusAdjuster()
@@ -326,6 +342,9 @@ function crossRiver() {
       wagon.food -= (wagon.characters.length * 5 )
     }
   } else {
+    buildModal("riverWin");
+    $(".ongoing-events").prepend("Your wagon successfully crossed the river! <br>")
+     $("#myModal").toggle();
     wagon.days += 1
     wagon.food -= (wagon.characters.length * 5 )
   }
@@ -480,9 +499,9 @@ function textUpdateUI() {
   $('#player-three-status').text(char3.status);
   $('#player-four-status').text(char4.status);
   $('#player-five-status').text(char5.status);
-  $('#wagon-food-remaining').text(wagon.food);
+  $('#wagon-food-remaining').text(wagon.food.toFixed(0));
   $('.wagon-money-remaining').text(wagon.money.toFixed(2));
-  $('#wagon-bullets-remaining').text(wagon.bullets);
+  $('#wagon-bullets-remaining').text(wagon.bullets.toFixed(0));
   $('.current-date').text(wagon.days);
   $('.distance-traveled').text(wagon.distance);
 }
@@ -497,6 +516,9 @@ function validateNames(profession, playerOne, playerTwo, playerThree, playerFour
   }
 }
 
+function enableSubmit(ele) {
+  $(ele).css({"pointer-events":"auto","background-color":"#5cb85c","border-color":"#4cae4c"});
+}
 
 
 $(document).ready(function(){
@@ -562,9 +584,10 @@ $("#back-button").click(function(){
 });
 
   $("#continue-button").click(function(){
+    $("#continue-button").css({"pointer-events":"none","background-color":"lightgreen","border-color":"lightgreen"});
+    setTimeout(function() { enableSubmit("#continue-button") }, 1000);
     wagon.turn()
-    console.log(wagon.characters);
-    wagon.resourceChecker()
+    wagon.statusAdjuster()
     textUpdateUI()
 
     if (x < 6) {
@@ -583,6 +606,8 @@ $("#back-button").click(function(){
   });
 
   $("#rest-button").click(function(){
+    $("#rest-button").css({"pointer-events":"none","background-color":"lightgreen","border-color":"lightgreen"});
+    setTimeout(function() { enableSubmit("#rest-button") }, 1000);
     wagon.rest()
     textUpdateUI()
   });

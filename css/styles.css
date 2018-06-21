@@ -27,10 +27,39 @@ span {
 #wagon-2 {
   display: none;
   margin-top: 36px;
+  position: absolute;
+  z-index: 1;
 }
 
 #wagon-1 {
+  position: absolute;
   margin-top: 36px;
+  z-index: 1;
+}
+
+#wheel-6,
+#wheel-5,
+#wheel-4,
+#wheel-3,
+#wheel-2,
+#wheel-1 {
+  display: none;
+  position: absolute;
+  margin-top: 85px;
+  z-index: 100;
+  height: 35px;
+}
+
+#wheel-6 {
+  margin-left: 25px;
+}
+
+#jesus {
+  display: none;
+  z-index: 50;
+  height: 90px;
+  margin-top: 20px;
+  margin-left: 20px;
 }
 
 #wagon-images .col-md-2 {
