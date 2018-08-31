@@ -5,7 +5,12 @@
 #### By Nate Cottle, Ryan Putman, Will Swanson, Reese Glasscock
 
 ## Description
- _Recreation with some artistic license of the original school kid's game 'The Oregon Trail'. Includes customized bad, good, and neutral events, various illnesses, landmarks, and pick your own adventure options _
+
+Recreation with some artistic license of the original school kid's game 'The Oregon Trail'. Includes customized bad, good, and neutral events, various illnesses, landmarks, and pick your own adventure options
+
+## My Contribution
+
+I worked on the core functionality of the game. Creating the constructors for both the wagon and character objects. I built functions to handle events and decrement or increment character health, illness, food, money, etc. This was the first project that I really utilized my own scripts beyond basics of JQuery and JavaScript.
 
 
 ## Setup/Contribution Requirements
